@@ -1,0 +1,13 @@
+<div class="container-search">
+  <input class="search-items" type="text"
+    placeholder="Search products..."
+    [(ngModel)] = "str"
+    #myInput (input)="checkStr(myInput.value)"
+  >
+  <button class="search-btn" (click)="filterProduct1()"> SEARCH</button>
+</div>
+<div class="category">
+  <a *ngFor="let el of category" (click)="changeCategory(el)">
+    {{el}}
+  </a>
+</div>

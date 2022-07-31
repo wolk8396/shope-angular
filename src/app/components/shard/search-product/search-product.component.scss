@@ -1,0 +1,39 @@
+.container-search {
+  display: flex;
+  justify-content: center;
+  width: 1268px;
+  border-bottom: 1px solid black;
+  height: 45px;
+  align-items: center;
+
+  .search-items {
+    width: 283px;
+    height: 25px;
+  }
+
+  .search-btn {
+    width: 78px;
+    height: 30px;
+    color: white;
+    background-color: rgb(255, 225, 0);
+  }
+}
+
+.category {
+  display: flex;
+  justify-content: center;
+  width: 1268px;
+  height: 45px;
+  border-bottom: 1px solid black;
+  align-items: center;
+
+  a {
+    margin: 10px;
+    cursor: pointer;
+  }
+
+  a:hover {
+   text-decoration: underline;
+  }
+
+}

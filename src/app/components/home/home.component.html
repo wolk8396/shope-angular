@@ -1,0 +1,19 @@
+<app-search-product></app-search-product>
+<div class="container" *ngFor="let item of steBoolean ">
+  <div class="block-photo">
+    <p class="block-photo__product">{{item.product}}</p>
+    <img class="block-photo__photo" [src]="item.photo" >
+    <p class="block-photo__author">{{item.author}}</p>
+  </div>
+  <div class="addToCart" #getBtn >
+    <button class="btn-add" [id] = 'item.bookId'
+      (click)="addCart(item, $event, 'cart')"
+    >
+      {{(item.exist) ? btn_status1 : btn_status }}
+    </button>
+    <button class="cancel"
+      (click)="deleteItem(item)"
+    >CANCEL</button>
+    <span class="cost">{{item.cost | currency}}</span>
+  </div>
+</div>

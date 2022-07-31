@@ -1,0 +1,32 @@
+<div class="table-container" >
+  <table>
+    <tr  *ngFor="let item of items">
+      <td>
+        <button (click)="removeEl(item)">X</button>
+      </td>
+        <td>
+          <img class="product-photo" [src]="item.photo" >
+        </td>
+        <td>
+          <p class="title">{{item.product}}</p>
+        </td>
+        <td>
+          <button (click)="decrease(item, item.count)">-</button>
+        </td>
+        <td #getCount>
+          <p >{{item.count}}</p>
+        </td>
+        <td>
+          <button (click)="increase(item, item.count)">+</button>
+        </td>
+        <td>
+          <p>{{item.cost * item.count | currency}}</p>
+        </td>
+    </tr>
+    <tr>
+      <td colspan="7" >
+        <div >TOTAL PRICE :{{price | currency}}</div>
+      </td>
+    </tr>
+  </table>
+</div>

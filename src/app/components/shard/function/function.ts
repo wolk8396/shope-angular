@@ -9,7 +9,7 @@ export class Operation {
 
   let setNewEl: Product[] = [];
 
-  setNewEl = [...getItems, el];
+  setNewEl = [...getItems, el].map(item => ({...item, exist: true}));
 
   new fn().saveData(setNewEl);
   }
@@ -21,13 +21,10 @@ export class Operation {
     getItems.forEach(item => dateMap.set(item.bookId, item.bookId));
 
     const arr:Product[] = books.map(item => {
-      return {
-        ...item,
-        exist:item.bookId === dateMap.get(item.bookId)
-      }
+      return (item.bookId === dateMap.get(item.bookId) ) ? {...item, exist: true} : {...item, exist: false}
     })
 
-    return arr
+    return arr;
   }
 
   static countItems(math_sign: number, books: Product, getItems:Product[], str: string): void {
@@ -50,6 +47,7 @@ export class Operation {
   }
 
   static removeItem (product:Product[], itemId:string, service: any): Product[] {
+
     const filterProduct: Product[] = product.filter(({bookId}) => bookId !== itemId);
     new LocalService().saveData(filterProduct);
     let getItems: number = LocalService.countNumber();
@@ -59,7 +57,12 @@ export class Operation {
   }
 
   static totalPrice(product:Product[]): number {
-
     return product.reduce((acc, {cost, count}) => acc +( cost * count), 0);
+  }
+
+  static setBoolean(items: Product[], element: Product, isValue: boolean): Product[] {
+    return items.map(el => {
+      return (el.bookId === element.bookId) ? ({...el, exist : isValue}) : ({...el})
+    })
   }
 }

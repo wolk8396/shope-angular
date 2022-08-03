@@ -10,6 +10,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { SearchProductComponent } from './components/shard/search-product/search-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FilterProductsPipe } from './components/shard/pipeps/filter-products.pipe';
+import { addBtnDirective } from './components/shard/directives/btn.add.directiv';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { FilterProductsPipe } from './components/shard/pipeps/filter-products.pi
     CartComponent,
     SearchProductComponent,
     FilterProductsPipe,
+    addBtnDirective
   ],
   imports: [
     BrowserModule,

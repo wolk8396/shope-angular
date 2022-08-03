@@ -7,11 +7,8 @@ import { Product } from '../interface/interface-const';
 
 export class FilterProductsPipe implements PipeTransform {
 
-  transform(books: Product[], str1: string): Product[] {
-
-
-    console.log(str1);
-     return  books.filter(item => item.product.toLowerCase().includes(str1.toLowerCase()))
+  transform(books: Product[], str: string): Product[] {
+     return  books.filter(item => item.product.toLowerCase().includes(str.toLowerCase()))
   }
 
 }

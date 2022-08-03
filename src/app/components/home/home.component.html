@@ -7,9 +7,9 @@
   </div>
   <div class="addToCart">
     <button class="btn-add" (click)="addCart(item)">
-      {{(item.exist) ? btn_status1 : btn_status }}
+      {{btn_status | status: item}}
     </button>
-    <button class="cancel"  (click)="deleteItem(item)"
+    <button class="cancel" (click)="deleteItem(item)"
       [ngStyle]="{display: !item.exist ? 'none' : 'block'}"
     >CANCEL</button>
     <span class="cost">{{item.cost | currency}}</span>

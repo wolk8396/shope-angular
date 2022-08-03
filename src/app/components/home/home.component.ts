@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   cartArray: Product[] = new LocalService().getData();
   removeEl: Product[] = [];
   btn_status: string = 'ADD TO CART';
-  btn_status1: string = 'IN YOU CART';
+  // btn_status1: string = 'IN YOU CART';
   routes: any = routes;
   countItems: number = LocalService.countNumber();
 

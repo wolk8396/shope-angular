@@ -1,5 +1,14 @@
 <nav class="header">
-  <a routerLink="/" class="link-home">Home page</a>
-  <a  routerLink="cart" class="link-cart">in cart</a>
-  <p class="number" >{{countCart}}</p>
+  <div class="header__menu">
+    <a routerLink="/" class="link-home">Home page</a>
+    <a routerLink="cart" class="link-cart">in cart</a>
+    <a>sing up</a>
+    <a>sing in</a>
+  </div>
+  <div class="header__count">
+    <div class="container-number">
+      <span  class="number">{{countCart}}</span>
+    </div>
+    <img class="cart" src="../../../assets/basket3-fill (1).svg">
+  </div>
 </nav>

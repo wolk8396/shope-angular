@@ -1,4 +1,5 @@
 <app-search-product (sendProduct)="filter($event)"></app-search-product>
+<app-modal-items [isModal]="isOpen" [isItem]="isItem"></app-modal-items>
 <div class="container" *ngFor="let item of items; let i = index ">
   <div class="block-photo">
     <p class="block-photo__product">{{item.product}}</p>
@@ -6,12 +7,14 @@
     <p class="block-photo__author">{{item.author}}</p>
   </div>
   <div class="addToCart">
-    <button class="btn-add" (click)="addCart(item)">
+    <button class="btn btn-success" (click)="addCart(item)">
       {{btn_status | status: item}}
     </button>
-    <button class="cancel" (click)="deleteItem(item)"
+    <button class="btn btn-danger" (click)="deleteItem(item)"
       [ngStyle]="{display: !item.exist ? 'none' : 'block'}"
     >CANCEL</button>
     <span class="cost">{{item.cost | currency}}</span>
   </div>
 </div>
+
+

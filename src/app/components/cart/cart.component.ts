@@ -41,9 +41,7 @@ export class CartComponent implements OnInit, AfterViewInit {
     this.price = Operation.totalPrice(this.items);
   }
 
-  ngAfterViewInit(): void {
-
-  }
+  ngAfterViewInit(): void {}
 
   decrease(number: Product, itemCount: number) {
     Operation.countItems(this.minus, number, this.items, this.minus_str);

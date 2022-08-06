@@ -4,7 +4,7 @@
     [(ngModel)] = "strInput"
     #myInput (input)="checkStr(myInput.value)"
   >
-  <button class="search-btn" (click)="filterProduct1()">SEARCH</button>
+  <button class="btn btn-dark" (click)="filterProduct1()">SEARCH</button>
 </div>
 <div class="category">
   <a *ngFor="let el of category" (click)="changeCategory(el)">

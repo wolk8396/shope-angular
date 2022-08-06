@@ -1,0 +1,23 @@
+<div class="wrapper-modal " [ngStyle]="{display: isModal ? 'block' : 'none' }">
+  <div class="modal-item">
+    <div class="empty" *ngIf="!isModal; else modal"></div>
+    <ng-template #modal>
+      <div class="container-modal">
+        <div class="information">
+          <div class="information__frame">
+            <img [src]="isItem.photo">
+          </div>
+          <div class="information__title">{{isItem.product}}</div>
+        </div>
+        <div class="additional">
+          <span class="additional__cost">{{isItem.cost |currency}}</span>
+          <p>is now in your cart</p>
+        </div>
+        <div class="block_btns">
+          <button type="button" class="btn btn-outline-primary" (click)="isModal = !isModal">Keep shopping</button>
+          <button type="button" class="btn btn-outline-dark" (click)="toCart()">Check out items({{countItems}})</button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

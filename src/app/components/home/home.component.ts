@@ -19,9 +19,10 @@ export class HomeComponent implements OnInit {
   cartArray: Product[] = new LocalService().getData();
   removeEl: Product[] = [];
   btn_status: string = 'ADD TO CART';
-  // btn_status1: string = 'IN YOU CART';
   routes: any = routes;
   countItems: number = LocalService.countNumber();
+  isOpen: boolean = false;
+  isItem: Product;
 
   constructor(
     private routing: Router,
@@ -34,11 +35,14 @@ export class HomeComponent implements OnInit {
   }
 
   addCart(item: Product): void  {
+    this.isOpen = !this.isOpen;
+    this.isItem = item
+
     if (!item.exist) {
       Operation.setValue(item, LocalService);
       this.countItems = LocalService.countNumber();
       this.simpleService.changeCount(this.countItems);
-      this.items = this.items = Operation.setBoolean(this.items, item, true)
+      this.items = this.items = Operation.setBoolean(this.items, item, true);
 
     } else this.routing.navigate(['cart']);
   }

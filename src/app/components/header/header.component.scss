@@ -1,26 +1,61 @@
 .header {
+  position: fixed;
+  top: 0px;
   display: flex;
   justify-content: space-between;
+  flex-direction: row;
   align-items: center;
   width: 1268px;
   height: 50px;
   background-color: gray;
 
-  .link-home {
-    font-weight: bold;
-    color: white;
-    margin-left: 5px;
-    cursor: pointer;
+  &__menu {
+    width: 405px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+    a {
+      font-weight: bold;
+      color: white;
+      margin-left: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
   }
 
-  .link-cart {
-    font-weight: bold;
-    color: white;
-    margin-right: 5px;
-    cursor: pointer;
+  &__count {
+    position: relative;
+    width: 65px;
+    height: 40px;
+
+    .container-number {
+      display: flex;
+      width: 23px;
+      height: 22px;
+      border-radius: 50%;
+      background-color: whitesmoke;
+      color: black;
+      position: absolute;
+      left: 13px;
+
+      .number {
+        margin: 0 auto;
+        text-align: center;
+        font-size: 12px;
+        font-weight: bold;
+      }
+    }
+
+    .cart {
+      position: absolute;
+      top: 15px;
+    }
   }
 
-  .number {
-    color: white;
-  }
 }

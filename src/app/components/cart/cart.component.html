@@ -20,12 +20,12 @@
           <button (click)="increase(item, item.count)">+</button>
         </td>
         <td>
-          <p>{{item.cost * item.count | currency}}</p>
+          <p>{{countCarts | countProduct: item.cost : item.count| currency}}</p>
         </td>
     </tr>
     <tr>
       <td colspan="7" >
-        <div >TOTAL PRICE :{{price | currency}}</div>
+        <div >TOTAL PRICE :{{price | totalPrice:items | currency}}</div>
       </td>
     </tr>
   </table>

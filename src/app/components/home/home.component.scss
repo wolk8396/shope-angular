@@ -13,6 +13,10 @@
       width: 159px;
       height: 157px;
     }
+
+    &__product {
+      font-weight: bold;
+    }
   }
 
   .addToCart {
@@ -41,7 +45,5 @@
       height: 41px;
       margin: 0 auto;
     }
-
-
   }
 }

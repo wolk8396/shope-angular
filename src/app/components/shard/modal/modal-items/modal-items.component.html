@@ -1,4 +1,4 @@
-<div class="wrapper-modal " [ngStyle]="{display: isModal ? 'block' : 'none' }">
+<div class="wrapper-modal "[ngStyle]="{display: isModal ? 'block' : 'none' }">
   <div class="modal-item">
     <div class="empty" *ngIf="!isModal; else modal"></div>
     <ng-template #modal>

@@ -1,4 +1,4 @@
-import { Component,  OnChanges, OnInit,} from '@angular/core';
+import { Component,  OnChanges, OnInit, DoCheck} from '@angular/core';
 
 import { Product } from '../shard/interface/interface-const';
 import { books } from '../shard/product/books';
@@ -19,10 +19,12 @@ export class HomeComponent implements OnInit {
   cartArray: Product[] = new LocalService().getData();
   removeEl: Product[] = [];
   btn_status: string = 'ADD TO CART';
-  routes: any = routes;
   countItems: number = LocalService.countNumber();
+  isDelete: boolean = false;
   isOpen: boolean = false;
+  getBoolean: boolean = false;
   isItem: Product;
+  isElement:Product;
 
   constructor(
     private routing: Router,
@@ -48,13 +50,18 @@ export class HomeComponent implements OnInit {
   }
 
   deleteItem(item: Product) {
-    this.cartArray = new LocalService().getData();
+    this.isDelete = !this.isDelete;
+    this.isElement = item;
+  }
 
-    this.items = Operation.setBoolean(this.items, item, false);
+  onSetValue(value: boolean) {
 
-    Operation.setBoolean(this.items, item, false);
+    if (value) {
+      this.cartArray = new LocalService().getData();
+      this.items = Operation.setBoolean(this.items, this.isElement, false);
+      Operation.removeItem(this.cartArray, this.isElement.bookId, this.simpleService);
+    }
 
-    Operation.removeItem(this.cartArray, item.bookId, this.simpleService);
   }
 
    filter(el:Product[]): void {

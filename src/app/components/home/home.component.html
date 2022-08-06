@@ -1,5 +1,6 @@
 <app-search-product (sendProduct)="filter($event)"></app-search-product>
 <app-modal-items [isModal]="isOpen" [isItem]="isItem"></app-modal-items>
+<app-modal-delete [deleteItem]="isDelete" (activeDelete)="onSetValue($event)"></app-modal-delete>
 <div class="container" *ngFor="let item of items; let i = index ">
   <div class="block-photo">
     <p class="block-photo__product">{{item.product}}</p>
@@ -16,5 +17,3 @@
     <span class="cost">{{item.cost | currency}}</span>
   </div>
 </div>
-
-

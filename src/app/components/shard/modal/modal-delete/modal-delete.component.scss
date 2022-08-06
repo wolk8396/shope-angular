@@ -1,0 +1,63 @@
+.wrapper-delete {
+  background-color: rgba(0, 0, 0, var(--bg-opacity));
+  --bg-opacity: 0.75;
+  position: fixed;
+  display: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  z-index: 100;
+
+  .container_modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    &__main {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      width: 305px;
+      height: 240px;
+      border-radius: 3px;
+      background-color: white;
+      border-radius: 5%;
+      margin: 0 auto;
+
+      .massage {
+        display: flex;
+        width: 273px;
+        height: 143px;
+        margin: 0 auto;
+
+        &__text {
+          color: black;
+          font-size: 20px;
+          text-align: center;
+          font-weight: bold;
+        }
+      }
+
+      .block_btns {
+        width: 280px;
+        height: 40px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        margin: 0 auto;
+
+        .btn {
+          width: 120px;
+        }
+      }
+    }
+  }
+}
+
+
+

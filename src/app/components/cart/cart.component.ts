@@ -12,43 +12,57 @@ import { ServicesService } from '../shard/services/services.service';
 export class CartComponent implements OnInit, AfterViewInit {
 
   items: Product[] = new LocalService().getData();
-  renderArray : Product[] = [];
+  getItem : Product;
   plus: number = 1;
   minus: number = 1;
   plus_str: string = '+';
   minus_str: string = '-'
   countItems: number;
   price: number = 0;
-  countCarts: number = 0;
+  element: number;
+  countCarts: number = 0
+  isDelete:boolean = false;
 
 
  @ViewChildren("getCount") getCount: ElementRef
 
-  constructor(private readonly simpleService: ServicesService) { }
+  constructor(
+    private readonly simpleService: ServicesService
+    ) { }
 
   ngOnInit(): void {
     this.price = Operation.totalPrice(this.items);
   }
 
   removeEl (item: Product) {
-    this.items = Operation.removeItem(this.items, item.bookId, this.simpleService);
-    this.price = Operation.totalPrice(this.items);
+    this.isDelete = !this.isDelete
+    this.getItem = item;
   }
 
 
   increase(number: Product, itemCount: number): void {
     Operation.countItems(this.minus, number, this.items, this.plus_str);
     this.price = Operation.totalPrice(this.items);
+    this.getItem = number;
   }
 
   ngAfterViewInit(): void {}
 
   decrease(number: Product, itemCount: number) {
     Operation.countItems(this.minus, number, this.items, this.minus_str);
-
     this.price = Operation.totalPrice(this.items);
 
-    (itemCount <= 1) ?
-      this.items = Operation.removeItem(this.items, number.bookId, this.simpleService) : null;
+    this.getItem = number;
+
+    (itemCount <= 1) ? this.isDelete = !this.isDelete : null;
+  }
+
+  onSetValue(value: boolean) {
+    this.price = Operation.totalPrice(this.items);
+
+    if (value) {
+      this.items = Operation.removeItem(this.items, this.getItem.bookId, this.simpleService)
+    }
+
   }
 }

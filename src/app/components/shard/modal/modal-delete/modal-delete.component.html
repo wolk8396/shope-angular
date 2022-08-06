@@ -1,0 +1,15 @@
+<div class="wrapper-delete" [ngStyle]="{display: !deleteItem ? 'none' : 'block' }">
+  <div class="container_modal">
+    <div class="container_modal__main">
+      <div class="massage">
+        <p class="massage__text">
+          Are You are sure ? Do you want to remove this item from your shopping cart
+        </p>
+      </div>
+      <div class="block_btns">
+        <button type="button" class="btn btn-dark" (click)="onDelete()">OK</button>
+        <button type="button" class="btn btn-dark" (click)="onCancel()">CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>

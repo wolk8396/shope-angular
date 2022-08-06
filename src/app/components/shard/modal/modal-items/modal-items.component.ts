@@ -30,6 +30,7 @@ export class ModalItemsComponent implements OnInit, OnChanges, DoCheck {
 
 
   ngDoCheck() {
+
   }
 
 

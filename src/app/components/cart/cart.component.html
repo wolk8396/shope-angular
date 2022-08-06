@@ -1,4 +1,5 @@
-<div class="table-container" >
+<div class="table-container">
+  <app-modal-delete [deleteItem]="isDelete" (activeDelete)="onSetValue($event)"></app-modal-delete>
   <table>
     <tr  *ngFor="let item of items">
       <td>

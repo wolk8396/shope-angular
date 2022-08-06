@@ -16,6 +16,7 @@ import { addBtnDirective } from './components/shard/directives/btn.add.directiv'
 import { TotalPricePipe } from './components/shard/pipeps/total-price.pipe';
 import { CountProductPipe } from './components/shard/pipeps/count-product.pipe';
 import { ModalItemsComponent } from './components/shard/modal/modal-items/modal-items.component';
+import { ModalDeleteComponent } from './components/shard/modal/modal-delete/modal-delete.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { ModalItemsComponent } from './components/shard/modal/modal-items/modal-
     addBtnDirective,
     TotalPricePipe,
     CountProductPipe,
-    ModalItemsComponent
+    ModalItemsComponent,
+    ModalDeleteComponent
   ],
   imports: [
     BrowserModule,

@@ -5,7 +5,6 @@ import { books } from '../shard/product/books';
 import { LocalService } from "../shard/local-storage-service/local-storage";
 import { Operation } from '../shard/function/function';
 import { Route, Router } from '@angular/router';
-import { routes } from "../../app-routing.module";
 import { ServicesService } from '../shard/services/services.service';
 
 @Component({
@@ -25,6 +24,7 @@ export class HomeComponent implements OnInit {
   getBoolean: boolean = false;
   isItem: Product;
   isElement:Product;
+  isNumber:string | number = '' || 0;
 
   constructor(
     private routing: Router,
@@ -45,7 +45,6 @@ export class HomeComponent implements OnInit {
       this.countItems = LocalService.countNumber();
       this.simpleService.changeCount(this.countItems);
       this.items = this.items = Operation.setBoolean(this.items, item, true);
-
     } else this.routing.navigate(['cart']);
   }
 
@@ -55,16 +54,31 @@ export class HomeComponent implements OnInit {
   }
 
   onSetValue(value: boolean) {
-
     if (value) {
       this.cartArray = new LocalService().getData();
       this.items = Operation.setBoolean(this.items, this.isElement, false);
       Operation.removeItem(this.cartArray, this.isElement.bookId, this.simpleService);
     }
-
   }
 
    filter(el:Product[]): void {
     this.items = el
+    console.log(this.items.length);
+  }
+
+  getInput(str:string) {
+
+  }
+
+  onPlus(number: number, el: Product) {
+   this.items = this.items.map(item => {
+    return (item.bookId === el.bookId) ? {...item, count: number + 1} : {...item}
+   })
+  }
+
+  onMinus(number: number, el: Product) {
+    this.items = this.items.map(item => {
+      return (item.bookId === el.bookId) ? {...item, count: number - 1} : {...item}
+     })
   }
 }

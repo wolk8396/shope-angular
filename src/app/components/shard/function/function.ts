@@ -17,11 +17,14 @@ export class Operation {
   static dynamicKey():Product[] {
     const getItems: Product[] =  new LocalService().getData();
     const dateMap: any = new Map <string, string> ();
+    const num: any = new Map <string, number> ();
 
     getItems.forEach(item => dateMap.set(item.bookId, item.bookId));
+    getItems.forEach(item =>num.set(item.bookId, item.count));
 
     const arr:Product[] = books.map(item => {
-      return (item.bookId === dateMap.get(item.bookId) ) ? {...item, exist: true} : {...item, exist: false}
+      return (item.bookId === dateMap.get(item.bookId) ) ?
+        {...item, exist: true, count:num.get(item.bookId)} : {...item, exist: false}
     })
 
     return arr;

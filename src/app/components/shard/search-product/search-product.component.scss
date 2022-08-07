@@ -1,27 +1,18 @@
-.container-search {
+.container-input {
   display: flex;
   justify-content: center;
   width: 1268px;
   border-bottom: 1px solid black;
-  height: 45px;
-  align-items: center;
-  margin-top: 50px;
+  height: 50px;
+  margin-top: 60px;
 
-  .search-items {
-    width: 280px;
-    height: 33px;
-    border: 4px solid;
-  }
-
-  .btn-dark {
-    width: 73px;
-    height: 33px;
-    border-radius: 0;
-    text-align: center;
-    font-size: 13px;
-    margin: 2px;
+  .input-group {
+    display: flex;
+    width: 468px;
+    align-items: center;
   }
 }
+
 
 .category {
   display: flex;
@@ -33,6 +24,7 @@
 
   a {
     margin: 10px;
+    font-weight: 800;
     cursor: pointer;
   }
 

@@ -1,9 +1,9 @@
 <div class="table-container">
   <app-modal-delete [deleteItem]="isDelete" (activeDelete)="onSetValue($event)"></app-modal-delete>
   <table>
-    <tr  *ngFor="let item of items">
+    <tr *ngFor="let item of items">
       <td>
-        <button (click)="removeEl(item)">X</button>
+        <button class="btn btn-dark" (click)="removeEl(item)">X</button>
       </td>
         <td>
           <img class="product-photo" [src]="item.photo" >
@@ -12,13 +12,13 @@
           <p class="title">{{item.product}}</p>
         </td>
         <td>
-          <button (click)="decrease(item, item.count)">-</button>
+          <button  class="btn btn-dark" (click)="decrease(item, item.count)">-</button>
         </td>
         <td #getCount>
           <p >{{item.count}}</p>
         </td>
         <td>
-          <button (click)="increase(item, item.count)">+</button>
+          <button class="btn btn-dark" (click)="increase(item, item.count)">+</button>
         </td>
         <td>
           <p>{{countCarts | countProduct: item.cost : item.count| currency}}</p>
@@ -26,7 +26,7 @@
     </tr>
     <tr>
       <td colspan="7" >
-        <div >TOTAL PRICE :{{price | totalPrice:items | currency}}</div>
+        <div class="total-price">TOTAL PRICE :{{price | currency}}</div>
       </td>
     </tr>
   </table>

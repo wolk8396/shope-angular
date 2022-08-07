@@ -1,19 +1,34 @@
 <app-search-product (sendProduct)="filter($event)"></app-search-product>
 <app-modal-items [isModal]="isOpen" [isItem]="isItem"></app-modal-items>
 <app-modal-delete [deleteItem]="isDelete" (activeDelete)="onSetValue($event)"></app-modal-delete>
-<div class="container" *ngFor="let item of items; let i = index ">
-  <div class="block-photo">
-    <p class="block-photo__product">{{item.product}}</p>
-    <img class="block-photo__photo" [src]="item.photo" >
-    <p class="block-photo__author">{{item.author}}</p>
+<div class="title-results" *ngIf="items.length === 0 else results">No results found</div>
+<ng-template #results>
+  <div class="container" *ngFor="let item of items; let i = index ">
+    <div class="block-photo">
+      <p class="block-photo__product">{{item.product}}</p>
+      <img class="block-photo__photo" [src]="item.photo" >
+      <p class="block-photo__author">{{item.author}}</p>
+    </div>
+    <div class="addToCart">
+      <div class="block-btn">
+        <button class="btn btn-success" (click)="addCart(item)">
+          {{btn_status | status: item}}
+        </button>
+        <button class="btn btn-danger" (click)="deleteItem(item)"
+          [ngStyle]="{display: !item.exist ? 'none' : 'block'}"
+        >CANCEL</button>
+      </div>
+      <div class="block-count">
+        <button
+        (click)="onPlus(item.count, item)">+</button>
+        <input type="text"
+          #myInput (input)="getInput(myInput.value)" [value]="item.count"
+        >
+        <button
+        (click)="onMinus(item.count, item)"
+        >-</button>
+      </div>
+      <span class="cost">{{item.cost * item.count| currency}}</span>
+    </div>
   </div>
-  <div class="addToCart">
-    <button class="btn btn-success" (click)="addCart(item)">
-      {{btn_status | status: item}}
-    </button>
-    <button class="btn btn-danger" (click)="deleteItem(item)"
-      [ngStyle]="{display: !item.exist ? 'none' : 'block'}"
-    >CANCEL</button>
-    <span class="cost">{{item.cost | currency}}</span>
-  </div>
-</div>
+</ng-template>

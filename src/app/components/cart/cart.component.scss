@@ -22,12 +22,8 @@
           width: 60px;
         }
 
-        button {
-          width: 31px;
-          height: 30px;
-          border-radius: 4px;
-          border: none;
-          background-color: red;
+       .btn-dark {
+          font-weight: bold;
           color: white;
           font-size: 20px;
         }
@@ -35,6 +31,11 @@
         .title {
           font-size: 28px;
           line-height: 40px;
+        }
+
+        .total-price {
+          font-weight: bold;
+          color: red;
         }
 
         button:hover {

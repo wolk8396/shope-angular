@@ -1,3 +1,11 @@
+.title-results {
+  margin: 0 auto;
+  display: flex;
+  font-size: 45px;
+  width: 335px;
+  margin-top: 100px;
+ }
+
 .container {
   display: flex;
   flex-direction: row;
@@ -25,10 +33,18 @@
     justify-content: space-around;
     width: 200px;
 
-    .btn {
-      width: 133px;
-      height: 41px;
+    .block-btn {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100px;
       margin: 0 auto;
+
+      .btn {
+        width: 133px;
+        height: 41px;
+        margin: 0 auto;
+      }
     }
 
     .cost {
@@ -37,13 +53,34 @@
       margin-top: 47px;
     }
 
-    .cancel {
-      background-color: red;
-      border: none;
-      color: white;
-      width: 133px;
-      height: 41px;
+    .block-count {
+      display: flex;
+      flex-direction: row;
+      width: 102px;
+      height: 28px;
       margin: 0 auto;
+      border: 1px solid black;
+
+      input {
+        width: 100%;
+        border: none;
+      }
+
+      button {
+        display: inline-block;
+        background: #333333;
+        color: #fff;
+        width: 20px;
+        border: none;
+        cursor: pointer;
+        transition: opacity 0.2s ease-in;
+        outline: none;
+        font-size: 10px;
+      }
+
+      button:hover {
+        opacity: 0.8;
+      }
     }
   }
 }

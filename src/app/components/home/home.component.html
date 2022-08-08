@@ -21,14 +21,14 @@
       <div class="block-count">
         <button
         (click)="onPlus(item.count, item)">+</button>
-        <input type="text"
-          #myInput (input)="getInput(myInput.value)" [value]="item.count"
+        <input type="number"
+          #myInput (input)="getInput(myInput.value, item)" [value]="item.count"
         >
         <button
         (click)="onMinus(item.count, item)"
         >-</button>
       </div>
-      <span class="cost">{{item.cost * item.count| currency}}</span>
+      <span class="cost">{{item.cost * item.count | currency}}</span>
     </div>
   </div>
 </ng-template>

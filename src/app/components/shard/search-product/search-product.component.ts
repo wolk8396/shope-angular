@@ -15,13 +15,16 @@ export class SearchProductComponent implements OnInit{
   valueIn: string = '';
   filter: Product[] = [];
   category: Array<string> = ['All', 'Novels', 'Science Fiction', 'fantasy', 'Harry Potter', 'other'];
+  searchField:string = 'product'
   arr: Product[] = [];
 
   constructor() { }
 
   @Output() sendProduct = new EventEmitter<Product[]>();
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    console.log(this.searchField);
+   }
 
   checkStr(value: string) {
     this.valueIn = value;
@@ -34,7 +37,7 @@ export class SearchProductComponent implements OnInit{
     this.arr = Operation.dynamicKey();
 
     this.filter = this.arr.filter(item =>{
-      return item.product.toLowerCase().includes(this.valueIn.toLowerCase())
+      return item[this.searchField].toLowerCase().includes(this.valueIn.toLowerCase())
     });
 
     (this.valueIn === '') ?

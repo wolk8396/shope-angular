@@ -8,8 +8,19 @@
 
   .input-group {
     display: flex;
+    position: relative;
     width: 468px;
     align-items: center;
+  }
+  .btn-primary {
+    border-radius: 0;
+  }
+
+  label {
+    position: absolute;
+    left: 17px;
+    bottom: 0;
+    font-size: 15px;
   }
 }
 

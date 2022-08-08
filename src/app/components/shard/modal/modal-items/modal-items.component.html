@@ -10,12 +10,16 @@
           <div class="information__title">{{isItem.product}}</div>
         </div>
         <div class="additional">
-          <span class="additional__cost">{{isItem.cost |currency}}</span>
+          <span class="additional__cost">{{isItem.cost * isItem.count |currency}}</span>
           <p>is now in your cart</p>
         </div>
         <div class="block_btns">
-          <button type="button" class="btn btn-outline-primary" (click)="isModal = !isModal">Keep shopping</button>
-          <button type="button" class="btn btn-outline-dark" (click)="toCart()">Check out items({{countItems}})</button>
+          <button type="button" class="btn btn-outline-primary"
+          (click)="isModal = !isModal"
+          >Keep shopping</button>
+          <button type="button" class="btn btn-outline-dark"
+          (click)="toCart()"
+          >Check out items({{countItems}})</button>
         </div>
       </div>
     </ng-template>

@@ -4,14 +4,14 @@ import { books } from "../product/books";
 
 export class Operation {
 
- static setValue (el: Product, fn: any ): void {
-  const getItems: Product[] = new fn().getData();
+  static setValue (el: Product, fn: any ): void {
+    const getItems: Product[] = new fn().getData();
 
-  let setNewEl: Product[] = [];
+    let setNewEl: Product[] = [];
 
-  setNewEl = [...getItems, el].map(item => ({...item, exist: true}));
+    setNewEl = [...getItems, el].map(item => ({...item, exist: true}));
 
-  new fn().saveData(setNewEl);
+    new fn().saveData(setNewEl);
   }
 
   static dynamicKey():Product[] {
@@ -25,7 +25,7 @@ export class Operation {
     const arr:Product[] = books.map(item => {
       return (item.bookId === dateMap.get(item.bookId) ) ?
         {...item, exist: true, count:num.get(item.bookId)} : {...item, exist: false}
-    })
+      })
 
     return arr;
   }
@@ -67,5 +67,11 @@ export class Operation {
     return items.map(el => {
       return (el.bookId === element.bookId) ? ({...el, exist : isValue}) : ({...el})
     })
+  }
+
+  static inputChange(items: Product[], id: string, num: number): Product[] {
+    return items.map(item => {
+      return (item.bookId === id) ? {...item, count: num} : {...item}
+     })
   }
 }

@@ -9,5 +9,6 @@ export interface Product {
   category: string,
   cost: number ,
   count: number
-  exist?:boolean
+  exist?:boolean,
+  [searchField:string]: any
   }

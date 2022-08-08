@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   getBoolean: boolean = false;
   isItem: Product;
   isElement:Product;
+  isValue: number = 0;
   isNumber:string | number = '' || 0;
 
   constructor(
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
   deleteItem(item: Product) {
     this.isDelete = !this.isDelete;
     this.isElement = item;
+    item.count = 1;
   }
 
   onSetValue(value: boolean) {
@@ -63,22 +65,20 @@ export class HomeComponent implements OnInit {
 
    filter(el:Product[]): void {
     this.items = el
-    console.log(this.items.length);
   }
 
-  getInput(str:string) {
-
+  getInput(str:string, el:Product) {
+    this.isValue = +str;
+    this.items = Operation.inputChange(this.items, el.bookId, this.isValue);
   }
 
   onPlus(number: number, el: Product) {
-   this.items = this.items.map(item => {
-    return (item.bookId === el.bookId) ? {...item, count: number + 1} : {...item}
-   })
+    this.isValue = number + 1;
+    this.items = Operation.inputChange(this.items, el.bookId, this.isValue);
   }
 
   onMinus(number: number, el: Product) {
-    this.items = this.items.map(item => {
-      return (item.bookId === el.bookId) ? {...item, count: number - 1} : {...item}
-     })
+    this.isValue = number - 1;
+    this.items = Operation.inputChange(this.items, el.bookId, this.isValue);
   }
 }

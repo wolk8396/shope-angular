@@ -11,7 +11,7 @@ export const books: Product[] = [
 		author:'Susan Stokes-Chapman',
 		category:'Novels',
 		cost:14.99,
-		count:4
+		count:1
 	},
 	{
 		bookId:'book2',
@@ -23,7 +23,7 @@ export const books: Product[] = [
 		author:'Tessa Hadley',
 		category:'Novels',
 		cost:14.99,
-		count:2
+		count:1
 	},
 	{
 		bookId:'book3',

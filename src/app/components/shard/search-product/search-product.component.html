@@ -1,10 +1,20 @@
 <div class="container-input">
   <div class="input-group mb-3">
-    <input type="text"  class="form-control" placeholder="Search product...."
+    <input type="text"  class="form-control"
     [(ngModel)] = "strInput"
     #myInput (input)="checkStr(myInput.value)"
     >
+    <label for="form-control"
+      [ngStyle]="{display:(valueIn === '') ? 'block' : 'none'}"
+    >Search {{searchField}}...</label>
     <button class="btn btn-primary" type="button" id="button-addon2" (click)="filterProduct1()">SEARCH</button>
+    <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+      <button type="button" class="btn btn-primary" ngbDropdownToggle></button>
+      <div class="dropdown-menu" ngbDropdownMenu>
+        <button ngbDropdownItem (click)="searchField ='product'">Title Of book</button>
+        <button ngbDropdownItem (click)="searchField ='author'">Author</button>
+      </div>
+    </div>
   </div>
 </div>
 <div class="category">
@@ -12,4 +22,3 @@
     {{el}}
   </a>
 </div>
-

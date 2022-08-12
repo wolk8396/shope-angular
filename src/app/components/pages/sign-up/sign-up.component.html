@@ -1,0 +1,73 @@
+  <div class="container-sign-up">
+    <div class="form-wrapper">
+      <form class="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h1>SIGN-UP</h1>
+        <div class="form-group">
+          <input id="firstNameInput"  class="form-control" formControlName="first_name">
+          <label for="firstNameInput">First name</label>
+          <div class="validation" *ngIf="form.get('first_name')?.invalid &&  form.get('first_name')?.touched">
+            <p class="invalid-input-message"
+              *ngIf="form.get('first_name')?.errors?.required"
+            >{{error.get('first_name')}}</p>
+          </div>
+        </div>
+        <div class="form-group ">
+          <input id="lastNameInput" class="form-control" formControlName="last_name">
+          <label for="lastNameInput">Last name</label>
+          <div class="validation"  *ngIf="form.get('last_name')?.invalid && form.get('last_name')?.touched">
+            <p class="invalid-input-message"
+              *ngIf="form.get('last_name')?.errors?.required"
+            >{{error.get('last_name')}}</p>
+          </div>
+        </div>
+        <div class="form-group ">
+          <input id="birthInput" type="date" class="form-control"  formControlName="birth">
+          <label for="birthInput">Birth</label>
+          <div class="validation" *ngIf="form.get('birth')?.invalid && form.get('birth')?.touched">
+            <p id="birthInputError" class="invalid-input-message"
+              *ngIf="form.get('birth')?.errors?.required"
+            >{{error.get('required')}}</p>
+          </div>
+        </div>
+        <div class="form-group">
+          <input id="emailInput" type="email" class="form-control" formControlName="email">
+          <label for="emailInput">Email address</label>
+          <div class="validation" *ngIf="form.get('email')?.invalid && form.get('email')?.touched">
+            <p class="invalid-input-message"
+              *ngIf="form.get('email')?.errors?.required"
+            >{{error.get('required')}}</p>
+            <p class="invalid-input-message"
+              *ngIf="form.get('email')?.errors?.email"
+            >{{error.get('email')}}</p>
+          </div>
+        </div>
+        <div class="form-group" >
+          <input  id="passwordInput1" class="form-control" formControlName="password_1">
+          <label for="passwordInput1">Password</label>
+          <div class="validation" *ngIf="form.get('password_1')?.invalid; else valid">
+            <p class="invalid-input-message">{{error_str}}</p>
+          </div>
+          <ng-template #valid>
+            <p class="valid-input-message">{{completed}}</p>
+          </ng-template>
+        </div>
+        <div class="form-group">
+          <input type="text" id="passwordInput2" class="form-control"
+          formControlName="password_2"
+          >
+          <label for="passwordInput2">Repeat password</label>
+          <div class="validation" *ngIf="form.get('password_2')?.invalid && form.get('password_2')?.touched">
+            <p class="invalid-input-message"
+            *ngIf="form.get('password_2')?.errors?.repeatPassword"
+            >{{error.get('passwords')}}</p>
+          </div>
+        </div>
+        <button id="signUpBtn" type="submit"  class="btn-sign-up" [disabled]="form.invalid" >SIGN-UP</button>
+        <ul>
+          <li>
+            <a class="link-sign-in" (click)=" onSign_in()">I've already have an account</a>
+          </li>
+        </ul>
+      </form>
+    </div>
+  </div>

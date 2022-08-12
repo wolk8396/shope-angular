@@ -17,6 +17,8 @@ import { TotalPricePipe } from './components/shard/pipeps/total-price.pipe';
 import { CountProductPipe } from './components/shard/pipeps/count-product.pipe';
 import { ModalItemsComponent } from './components/shard/modal/modal-items/modal-items.component';
 import { ModalDeleteComponent } from './components/shard/modal/modal-delete/modal-delete.component';
+import { SignInComponent } from './components/pages/sign-in/sign-in.component';
+import { SignUpComponent } from './components/pages/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import { ModalDeleteComponent } from './components/shard/modal/modal-delete/moda
     TotalPricePipe,
     CountProductPipe,
     ModalItemsComponent,
-    ModalDeleteComponent
+    ModalDeleteComponent,
+    SignInComponent,
+    SignUpComponent
   ],
   imports: [
     BrowserModule,

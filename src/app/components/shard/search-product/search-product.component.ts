@@ -29,7 +29,6 @@ export class SearchProductComponent implements OnInit{
   checkStr(value: string) {
     this.valueIn = value;
     this.arr = Operation.dynamicKey();
-
     (value === '') ? this.sendProduct.emit(this.arr): null;
   }
 

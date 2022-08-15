@@ -20,6 +20,11 @@ import { ModalDeleteComponent } from './components/shard/modal/modal-delete/moda
 import { SignInComponent } from './components/pages/sign-in/sign-in.component';
 import { SignUpComponent } from './components/pages/sign-up/sign-up.component';
 import { ErrorPipe } from './components/shard/pipeps/errors-massage';
+import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
+import { environment } from '../environments/environment';
+import { provideAuth,getAuth } from '@angular/fire/auth';
+import { provideDatabase,getDatabase } from '@angular/fire/database';
+import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 
 @NgModule({
   declarations: [
@@ -44,7 +49,11 @@ import { ErrorPipe } from './components/shard/pipeps/errors-massage';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth()),
+    provideDatabase(() => getDatabase()),
+    provideFirestore(() => getFirestore())
   ],
   providers: [HeaderComponent],
   bootstrap: [AppComponent]

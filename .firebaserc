@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "shop-angular-eb10e": {
+      "hosting": {
+        "angular-project": [
+          "shop-angular-eb10e"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "shop-angular-eb10e"
+  }
+}

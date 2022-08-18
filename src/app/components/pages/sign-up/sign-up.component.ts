@@ -2,7 +2,12 @@ import { Component, DoCheck, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { errorsMessages, massage_advance } from '../../shard/const/const';
+import { AipHandlers } from '../../shard/services/aip-handlers';
 import { MyValidator } from '../../shard/validators/my-validators';
+import { UserDate, FormValue, SignInResponse } from '../../shard/interface/interface-const';
+import { LocalService } from '../../shard/local-storage-service/local-storage';
+import { UserCredential } from '@angular/fire/auth';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -18,8 +23,6 @@ export class SignUpComponent implements OnInit, DoCheck {
   email: string | undefined = this.error.get('email');
   password: string | undefined;
   Match_password: string | undefined
-  pass_1: string = '';
-  pass_2: string = '';
   str_massages: string = '';
   error_str: string = '';
   isPasswordCheck: boolean;
@@ -28,6 +31,7 @@ export class SignUpComponent implements OnInit, DoCheck {
 
   constructor(
     private routing: Router,
+    private api: AipHandlers
   ) { }
 
   ngOnInit(): void {
@@ -48,19 +52,45 @@ export class SignUpComponent implements OnInit, DoCheck {
     this.Match_password = this.error.get('passwords');
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
 
     if (this.form.valid) {
-      console.log('submit', this.form);
+      const {email, password_1}: FormValue = this.form.value;
+      const date: Date = new Date();
+      let isRequestCount: number = 0;
 
-      console.log({...this.form.value});
-      this.form.reset();
-      this.routing.navigate(['']);
+      delete this.form.value.password_1;
+      delete this.form.value.password_2;
+
+      await this.api.createUserAuthRequest(email, password_1)
+        .then(({user}): void => {
+          this.form.value['authId'] = user.uid;
+          this.form.value['date'] = date;
+          isRequestCount++
+        })
+
+      await this.api.signInRequest(email, password_1)
+        .then(({ user: { accessToken} }: SignInResponse | any): void =>  {
+          LocalService.setToken(accessToken)
+          isRequestCount++
+        })
+
+      if (isRequestCount === 2) {
+        this.api.addUser(this.form.value).subscribe((res): void => {
+          this.form.value['idLink'] = res.name;
+          LocalService.setUserDate(this.form.value);
+          this.routing.navigate(['/'])
+        });
+      }
     }
   }
 
   onSign_in (): void {
     this.routing.navigate(['sign-in']);
+  }
+
+  onDelete() {
+    LocalService.onRemove()
   }
 
 }

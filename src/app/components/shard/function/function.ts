@@ -74,4 +74,8 @@ export class Operation {
       return (item.bookId === id) ? {...item, count: num} : {...item}
      })
   }
+
+  static responseMapper(response: {[key: string]: any}, dynamicKey: string): any[] {
+    return Object.keys(response).map(key => ({ ...response[key], [dynamicKey]: key}));
+  }
 }

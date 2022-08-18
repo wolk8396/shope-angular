@@ -1,2 +1,42 @@
-<p>sign-in works!</p>
-<H2>sign-in</H2>
+<div class="container-sign-in">
+  <form class="form" [formGroup]="form" (ngSubmit)="onSignIn()">
+    <h1>{{title | titlecase}}</h1>
+    <div class="form-group">
+      <input id="emailInput" type="email"  formControlName="email">
+      <label for="emailInput">Email address</label>
+      <div class="validation"
+        *ngIf="form.get('email')?.touched"
+      >
+        <p class="invalid-input-message"
+          *ngIf="form.get('email')?.errors?.email"
+        >{{error_email}}</p>
+        <p class="invalid-input-message"
+          *ngIf="form.get('email')?.errors?.required"
+        >{{error_required}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <input id="passwordInput"   formControlName="password">
+      <label for="passwordInput">Password</label>
+      <div class="validation"
+        *ngIf="form.get('password')?.touched"
+      >
+        <p class="invalid-input-message"
+          *ngIf="form.get('password')?.errors?.required"
+        >
+          {{error_required}}
+        </p>
+        <p class="invalid-input-message"
+          *ngIf="form.get('password')?.errors?.minlength"
+        >{{error_password}}</p>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">SING-IN</button>
+    <p class="massage-error">{{error}}</p>
+    <ul>
+      <li> {{tsr_title}}
+        <a (click)="isLink()"> Sign up now.</a>
+      </li>
+    </ul>
+  </form>
+</div>

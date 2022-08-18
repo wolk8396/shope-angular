@@ -1,3 +1,5 @@
+import { environment } from "src/environments/environment";
+
 export interface Massage {
   [x: string]: any;
   uppercase: string,
@@ -5,6 +7,13 @@ export interface Massage {
   numbers: string,
   characters: string,
   completed: string
+}
+
+export interface Errors {
+  email: string,
+  required: string,
+  password: string,
+  error: string
 }
 
 export const errorsMessages = new Map<string, string>([
@@ -29,3 +38,12 @@ export const massage_advance:Massage = {
   characters: 'your password must contain at least 8 symbols',
   completed: 'Password verification hsa been completed successfully'
 }
+
+export const massage_error: Errors = {
+  email:'Please enter a valid email.',
+  required:'This field is required.',
+  password:'your password must contain at least 8 symbol',
+  error: 'email or password is incorrect'
+}
+
+ export const DateStorage: string = `firebase:authUser:${environment.firebase.apiKey}:[DEFAULT]`

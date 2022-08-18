@@ -1,0 +1,117 @@
+.container-sign-in {
+  display: flex;
+  background-color: #e1e1e3;
+  width: 1268px;
+  height: 900px;
+
+
+  .form {
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    width: 488px;
+    height: 488px;
+    box-sizing: border-box;
+    margin: 0 auto;
+    margin-top: 90px;
+    background-color: white;
+
+    h1 {
+      margin-left: 14px;
+      margin-bottom: 28px;
+      color: black;
+    }
+
+    .form-group {
+      width: 100%;
+      height: 50px;
+      margin-bottom: 59px;
+      position: relative;
+
+       input {
+        width: 445px;
+        height: 50px;
+        background-color: #333;
+        border: none;
+        border-radius: 0.3rem;
+        outline: none;
+        color: #fff;
+        padding: 16px 20px 0;
+        font-size: 1rem;
+        margin-left: 14px;
+
+
+        &.ng-invalid.ng-touched {
+          background-color: #333;
+        }
+
+        &.ng-valid.ng-touched {
+          background-color: rgb(232, 240, 254);
+          color: black;
+        }
+      }
+
+      label {
+        position: absolute;
+        font-size: .7rem;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-100%);
+        color: #8c8c8c;
+        pointer-events: none;
+      }
+
+      .validation {
+        margin-left: 14px;
+
+        .invalid-input-message {
+          color: red;
+        }
+      }
+
+      // input:focus ~ label,
+      // input:valid ~ label {
+      //   transform: translateY(-1.20rem);
+      //   // font-size: .7rem;
+      // }
+    }
+
+
+
+    ul {
+      li {
+        list-style-type: none;
+        color: #573ba3;
+
+        a {
+          font-weight: bold;
+          text-decoration: none;
+          cursor: pointer;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .btn-primary {
+      width: 444px;
+      height: 50px;
+      cursor: pointer;
+      margin: 15px 0 58px;
+      margin-left: 14px;
+
+      &:disabled {
+        background: #ccc;
+        color: #000;
+        cursor: not-allowed;
+      }
+    }
+
+    .massage-error {
+      color: red;
+      margin-left: 34px;
+    }
+  }
+}

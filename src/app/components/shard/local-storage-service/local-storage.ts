@@ -34,4 +34,12 @@ export class LocalService {
     localStorage.removeItem('UserDate');
     localStorage.removeItem(DateStorage)
   }
+
+  static getUserDate(): UserDate {
+    return JSON.parse(localStorage.getItem('UserDate') || '[]')
+  }
+
+  static getDateAll():any {
+    return JSON.parse(localStorage.getItem(DateStorage) || '[]')
+  }
 }

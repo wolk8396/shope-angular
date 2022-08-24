@@ -5,7 +5,7 @@
 <ng-template #results>
   <div class="container" *ngFor="let item of items; let i = index ">
     <div class="block-photo">
-      <p class="block-photo__product">{{item.product}}</p>
+      <p class="block-photo__product">{{item.product | titlecase}}</p>
       <img class="block-photo__photo" [src]="item.photo" >
       <p class="block-photo__author">{{item.author}}</p>
     </div>

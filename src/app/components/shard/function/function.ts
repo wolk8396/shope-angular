@@ -1,6 +1,7 @@
-import { Product } from "../interface/interface-const";
+import { Product, UserBasket } from "../interface/interface-const";
 import { LocalService } from "../local-storage-service/local-storage";
 import { books } from "../product/books";
+import { CartItem } from "../services/aip-handlers";
 
 export class Operation {
 
@@ -77,5 +78,10 @@ export class Operation {
 
   static responseMapper(response: {[key: string]: any}, dynamicKey: string): any[] {
     return Object.keys(response).map(key => ({ ...response[key], [dynamicKey]: key}));
+  }
+
+  static dynamicKeyHttp(el:CartItem | any, id: string): CartItem {
+    return Object.keys(el).map((users) => ({...el[users], idCart:users}))
+                          .find(({userId}) => userId ===  id);
   }
 }

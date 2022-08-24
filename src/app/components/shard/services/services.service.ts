@@ -7,10 +7,15 @@ import { Subject } from 'rxjs';
 export class ServicesService {
 
   public count$ = new Subject<number>();
+  public spinner$ = new Subject<boolean>();
 
   constructor() { }
 
   public changeCount(count: number) {
     this.count$.next(count);
+  }
+
+  public SpinnerShow(isShow: boolean): void {
+    this.spinner$.next(isShow)
   }
 }

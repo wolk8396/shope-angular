@@ -26,6 +26,7 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { AngularFireModule } from '@angular/fire/compat';
+import { SpinnerComponent } from './components/shard/spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { AngularFireModule } from '@angular/fire/compat';
     ModalItemsComponent,
     ModalDeleteComponent,
     SignInComponent,
-    SignUpComponent
+    SignUpComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,

@@ -24,7 +24,8 @@ export interface Product {
     lastName: string,
     name?: string,
     idDate?: string,
-    key:string
+    key:string,
+    basketId:string
   }
 
   export interface UserDate2 {
@@ -53,7 +54,13 @@ export interface Product {
         accessToken: string;
         uid: string;
     }
-}
+  }
+
+  export interface UserBasket {
+    goods: Product[],
+    userId: string,
+    idCart?: string
+  }
 
 interface Identifier {
   [users: string]: any;

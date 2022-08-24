@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { Auth, Config, getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { createUserWithEmailAndPassword, UserCredential } from '@firebase/auth';
 import { Observable, Subject } from 'rxjs';
-import { UserDate, UserDate2 } from '../interface/interface-const';
+import { Product, UserBasket, UserDate, UserDate2 } from '../interface/interface-const';
+import { LocalService } from '../local-storage-service/local-storage';
 
 interface CreateConfig {
   auth: Auth,
@@ -11,10 +12,17 @@ interface CreateConfig {
   password: string
 }
 
+export interface CartItem {
+  goods:Product[],
+  userId: string,
+  idCart?:string,
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AipHandlers {
+  getUserId:string = LocalService.getUserDate().authId;
 
   constructor(
     private http: HttpClient,
@@ -34,12 +42,33 @@ export class AipHandlers {
   }
 
   getUserDate(id: string | undefined):Observable<UserDate> {
-    console.log(id, 'id');
     return this.http.get<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users/${id}.json`)
   }
 
   getUsersDate():Observable<UserDate2[]> {
     return this.http.get<UserDate2[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users.json`)
+  }
+
+  addCart(items: Product[]| number): Observable<Product> {
+    return this.http.post<Product>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket.json`, {
+      goods: items,
+      userId: this.getUserId,
+    })
+  }
+
+  getProduct():Observable<CartItem> {
+    return this.http.get<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/.json`)
+  }
+
+  upDateCart(id: string | undefined, items: Product[]):Observable<CartItem> {
+    return this.http.put<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`, {
+      goods: items,
+      userId: this.getUserId
+    })
+  }
+
+  getUserItems(id: string | undefined):Observable<UserBasket[]> {
+    return this.http.get<UserBasket[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`)
   }
 }
 

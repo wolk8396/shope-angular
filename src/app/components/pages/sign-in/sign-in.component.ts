@@ -3,12 +3,13 @@ import { object } from '@angular/fire/database';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable} from 'rxjs';
-import { map, filter, switchMap, observeOn, tap, take, takeLast, takeWhile, scan, reduce, find, last} from "rxjs/operators";
+import { map, filter} from "rxjs/operators";
 import { massage_advance, massage_error } from '../../shard/const/const';
-import { SignInResponse, UserDate, UserDate2 } from '../../shard/interface/interface-const';
+import { Operation } from '../../shard/function/function';
+import { Product, SignInResponse, UserDate, UserDate2 } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
-import { AipHandlers } from '../../shard/services/aip-handlers';
-
+import { AipHandlers, CartItem } from '../../shard/services/aip-handlers';
+import { ServicesService } from '../../shard/services/services.service';
 
 @Component({
   selector: 'app-sign-in',
@@ -24,13 +25,14 @@ export class SignInComponent implements OnInit {
   error_password: string = massage_error.password;
   error:string = '';
   dateUser:UserDate2[] | any = [];
+  isShow: boolean = false;
   isCheck: boolean = false;
   streamGetUsers$: Observable<UserDate2[]>
 
-
   constructor(
     private routing: Router,
-    private api: AipHandlers
+    private api: AipHandlers,
+    private  simpleService: ServicesService,
     ) { }
 
   ngOnInit(): void {
@@ -45,6 +47,7 @@ export class SignInComponent implements OnInit {
     if (this.form.valid) {
       const {email, password} = this.form.value;
       let userId: string = '';
+      this.isShow = !this.isShow;
 
      await this.api.signInRequest(email, password)
         .then(({ user: { accessToken, uid } }: SignInResponse | any): void => {
@@ -58,14 +61,22 @@ export class SignInComponent implements OnInit {
           this.dateUser = Object.keys(usersDate)
               .map((users: any) => ({...usersDate[users], idLink:users}))
               .find(({authId}) => authId === userId);
-
           LocalService.setUserDate(this.dateUser);
+
+          this.api.getProduct().subscribe((el:CartItem | any):void => {
+            const {goods} = Operation.dynamicKeyHttp(el, userId);
+
+            this.simpleService.changeCount(goods.length);
+            new LocalService().saveData(goods)
+          });
+
+
           this.routing.navigate(['/']);
         })
       }
     }
-
   }
+
 
   isLink() {
     this.routing.navigate(['sign-up']);

@@ -33,15 +33,26 @@
           line-height: 40px;
         }
 
-        .total-price {
-          font-weight: bold;
-          color: red;
-        }
-
         button:hover {
           box-shadow: inset 0 0 0 2px #3a7999;
         }
 
+        .block-up_date {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          width: 593px;
+          margin-left: auto;
+          margin-right: 0;
+
+          .total-price {
+            font-weight: bold;
+            color: red;
+            display: flex;
+            align-items: center;
+            font-size: 25px;
+          }
+        }
       }
     }
   }

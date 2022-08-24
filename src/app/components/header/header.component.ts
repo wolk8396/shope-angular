@@ -22,4 +22,9 @@ export class HeaderComponent implements OnInit {
     this.countCart = data;
   }
 
+  onOut():void {
+    LocalService.onRemove();
+    console.log('out');
+  }
+
 }

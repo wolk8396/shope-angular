@@ -26,6 +26,7 @@ export class SignUpComponent implements OnInit, DoCheck {
   str_massages: string = '';
   error_str: string = '';
   isPasswordCheck: boolean;
+  isShow:boolean = false
   completed: string = massage_advance.completed;
   sing_in: string = "I've already have an account";
 
@@ -61,6 +62,8 @@ export class SignUpComponent implements OnInit, DoCheck {
 
       delete this.form.value.password_1;
       delete this.form.value.password_2;
+      this.isShow = !this.isShow;
+
 
       await this.api.createUserAuthRequest(email, password_1)
         .then(({user}): void => {
@@ -76,11 +79,18 @@ export class SignUpComponent implements OnInit, DoCheck {
         })
 
       if (isRequestCount === 2) {
-        this.api.addUser(this.form.value).subscribe((res): void => {
-          this.form.value['idLink'] = res.name;
+        this.api.addCart(0).subscribe(({name}) => {
+          this.form.value['basketId'] = name;
+
+          this.api.addUser(this.form.value).subscribe((res): void => {
+            this.form.value['idLink'] = res.name;
+          });
+
           LocalService.setUserDate(this.form.value);
+
           this.routing.navigate(['/'])
-        });
+        })
+
       }
     }
   }

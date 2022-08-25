@@ -6,8 +6,9 @@ import { Subject } from 'rxjs';
 })
 export class ServicesService {
 
-  public count$ = new Subject<number>();
-  public spinner$ = new Subject<boolean>();
+  count$ = new Subject<number>();
+  spinner$ = new Subject<boolean>();
+  isShowModal$ = new Subject<boolean>()
 
   constructor() { }
 
@@ -17,5 +18,9 @@ export class ServicesService {
 
   public SpinnerShow(isShow: boolean): void {
     this.spinner$.next(isShow)
+  }
+
+  Registration (value: boolean) {
+    this.isShowModal$.next(value)
   }
 }

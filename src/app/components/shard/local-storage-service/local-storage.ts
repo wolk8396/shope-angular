@@ -4,13 +4,11 @@ import { Product, UserDate } from "../interface/interface-const";
 
 export class LocalService {
 
-  constructor() {}
-
-  public saveData(el:Product[]): void {
+  static saveData(el:Product[]): void {
     localStorage.setItem("products", JSON.stringify(el));
   }
 
-  public getData(): Product[] {
+  static getData(): Product[] {
     return JSON.parse(localStorage.getItem('products') || '[]')
   }
 
@@ -41,5 +39,14 @@ export class LocalService {
 
   static getDateAll():any {
     return JSON.parse(localStorage.getItem(DateStorage) || '[]')
+  }
+
+  static getToken():string | null {
+    return localStorage.getItem('accessToken')
+  }
+
+  static getUserId():string | null {
+    const userDate: UserDate = JSON.parse(localStorage.getItem('UserDate') || '[]')
+    return userDate.authId
   }
 }

@@ -1,4 +1,3 @@
-import { user } from "@angular/fire/auth"
 
 export interface Product {
   bookId: string,
@@ -61,12 +60,4 @@ export interface Product {
     userId: string,
     idCart?: string
   }
-
-interface Identifier {
-  [users: string]: any;
-}
-
-type KEY = {
-  [key: string]: number | string;
-}
 

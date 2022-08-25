@@ -1,0 +1,132 @@
+.main-window {
+  background-color: rgba(0, 0, 0, var(--bg-opacity));
+  --bg-opacity: 0.75;
+  position: fixed;
+  display: block;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  z-index: 100;
+
+  &__confirmation {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    .block-window {
+      display: flex;
+      flex-direction: column;
+      justify-content: normal;
+      width: 300px;
+      height: 240px;
+      border-radius: 3px;
+      background-color: white;
+      border-radius: 5%;
+
+      &__container-text {
+        position: relative;
+        height: 110px;
+        width: 298px;
+
+        .massage-text{
+          position: ABSOLUTE;
+          left: 21px;
+          top: 43px;
+          color: black;
+          font-size: 23px;
+        }
+      }
+
+      .blocks-btns {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        height: 123px;
+        width: 259px;
+        margin: 0 auto;
+
+        .btn-dark {
+          height: 31px;
+          font-size: 14px;
+        }
+
+      }
+    }
+  }
+}
+
+@media(max-width: 768px) {
+  .main-window{
+
+    &__confirmation {
+
+      .block-window {
+        width: 225px;
+        height: 215px;
+
+        &__container-text {
+          height: 94px;
+          width: 206px;
+
+          .massage-text{
+            left: 29px;
+            top: 49px;
+            font-size: 16px;
+          }
+        }
+
+        .blocks-btns {
+          width: 228px;
+
+          &__link_sign_in,
+          &__link_sign_up,
+          &__cancel {
+            width: 162px;
+            height: 21px;
+            font-size: 11px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media(max-width: 448px) {
+  .main-window{
+
+    &__confirmation {
+
+      .block-window {
+        width: 159px;
+        height: 188px;
+
+        &__container-text {
+          height: 64px;
+          width: 155px;
+
+          .massage-text{
+            left: 14px;
+            top: 26px;
+            font-size: 12px;
+          }
+        }
+
+        .blocks-btns {
+          width: 167px;
+
+          &__link_sign_in,
+          &__link_sign_up,
+          &__cancel {
+            width: 92px;
+            height: 21px;
+          }
+        }
+      }
+    }
+  }
+}

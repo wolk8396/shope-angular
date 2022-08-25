@@ -6,32 +6,30 @@ import { CartItem } from "../services/aip-handlers";
 export class Operation {
 
   static setValue (el: Product, fn: any ): void {
-    const getItems: Product[] = new fn().getData();
+    const getItems: Product[] = fn.getData();
 
     let setNewEl: Product[] = [];
 
     setNewEl = [...getItems, el].map(item => ({...item, exist: true}));
 
-    new fn().saveData(setNewEl);
+    fn.saveData(setNewEl);
   }
 
-  static dynamicKey():Product[] {
-    const getItems: Product[] =  new LocalService().getData();
-    const dateMap: any = new Map <string, string> ();
+  static dynamicKey(): Product[] {
+    const getItems: Product[] =  LocalService.getData();
+    const dateMap = new Map <string, string> ();
     const num: any = new Map <string, number> ();
 
     getItems.forEach(item => dateMap.set(item.bookId, item.bookId));
     getItems.forEach(item =>num.set(item.bookId, item.count));
 
-    const arr:Product[] = books.map(item => {
+    return books.map(item => {
       return (item.bookId === dateMap.get(item.bookId) ) ?
         {...item, exist: true, count:num.get(item.bookId)} : {...item, exist: false}
       })
-
-    return arr;
   }
 
-  static countItems(math_sign: number, books: Product, getItems:Product[], str: string): void {
+  static countItems(math_sign: number, books: Product, getItems: Product[], str: string): void {
 
     const count: Product[] = getItems.map(item => {
       if (item.bookId === books.bookId) {
@@ -41,26 +39,25 @@ export class Operation {
           item.count = item.count + math_sign
         }
       } else item.count
-      return {
-        ...item,
-        count: item.count,
-      }
+        return {
+          ...item,
+          count: item.count,
+        }
     })
 
-    new LocalService().saveData(count);
+    LocalService.saveData(count);
   }
 
-  static removeItem (product:Product[], itemId:string, service: any): Product[] {
-
+  static removeItem (product: Product[], itemId: string, service: any): Product[] {
     const filterProduct: Product[] = product.filter(({bookId}) => bookId !== itemId);
-    new LocalService().saveData(filterProduct);
+    LocalService.saveData(filterProduct);
     let getItems: number = LocalService.countNumber();
-
     service.changeCount(getItems);
+
     return filterProduct;
   }
 
-  static totalPrice(product:Product[]): number {
+  static totalPrice(product: Product[]): number {
     return product.reduce((acc, {cost, count}) => acc +( cost * count), 0);
   }
 
@@ -80,7 +77,7 @@ export class Operation {
     return Object.keys(response).map(key => ({ ...response[key], [dynamicKey]: key}));
   }
 
-  static dynamicKeyHttp(el:CartItem | any, id: string): CartItem {
+  static dynamicKeyHttp(el: CartItem | any, id: string): CartItem {
     return Object.keys(el).map((users) => ({...el[users], idCart:users}))
                           .find(({userId}) => userId ===  id);
   }

@@ -16,82 +16,91 @@ import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
 
 export class HomeComponent implements OnInit {
   items = books;
-  cartArray: Product[] = new LocalService().getData();
+  cartArray: Product[] = LocalService.getData();
   removeEl: Product[] = [];
   btn_status: string = 'ADD TO CART';
   countItems: number = LocalService.countNumber();
   isDelete: boolean = false;
   isOpen: boolean = false;
-  getBoolean: boolean = false;
   isItem: Product;
   isElement:Product;
   isValue: number = 0;
-  isNumber:string | number = '' || 0;
-  getUserId:string = LocalService.getUserDate().authId;
+  #isTets: string = 'test'
 
   constructor(
     private routing: Router,
-    private readonly simpleService: ServicesService,
+    private simpleService: ServicesService,
     private api: AipHandlers,
     ) {}
 
   ngOnInit(): void {
-    (this.cartArray.length === 0) ? new LocalService().saveData([]) : null;
+    (this.cartArray.length === 0) ? LocalService.saveData([]) : null;
     this.items = Operation.dynamicKey();
   }
 
   addCart(item: Product): void  {
     this.isOpen = !this.isOpen;
-    this.isItem = item
+    this.isItem = item;
 
-    if (!item.exist) {
-      Operation.setValue(item, LocalService);
-      this.countItems = LocalService.countNumber();
-      this.simpleService.changeCount(this.countItems);
-      this.items = this.items = Operation.setBoolean(this.items, item, true);
-      this.onUpDateCart();
-    } else this.routing.navigate(['cart']);
+    (!item.exist) ? this.setLocalStorage(item) :
+      this.routing.navigate(['cart']);
+
+      console.log(this.#isTets);
+
   }
 
-  deleteItem(item: Product) {
+  setLocalStorage(item: Product): void {
+    Operation.setValue(item, LocalService);
+    this.countItems = LocalService.countNumber();
+    this.simpleService.changeCount(this.countItems);
+    this.items = this.items = Operation.setBoolean(this.items, item, true);
+    this.onUpDateCart();
+  }
+
+  deleteItem(item: Product): void {
     this.isDelete = !this.isDelete;
     this.isElement = item;
     item.count = 1;
   }
 
-  onSetValue(value: boolean) {
+  onSetValue(value: boolean): void {
     if (value) {
-      this.cartArray = new LocalService().getData();
+      this.cartArray = LocalService.getData();
       this.items = Operation.setBoolean(this.items, this.isElement, false);
       Operation.removeItem(this.cartArray, this.isElement.bookId, this.simpleService);
       this.onUpDateCart();
     }
   }
 
-   filter(el:Product[]): void {
-    this.items = el
+   filter(el: Product[]): void {
+    this.items = el;
   }
 
-  getInput(str:string, el:Product) {
+  getInput(str:string, el:Product): void {
     this.isValue = +str;
     this.items = Operation.inputChange(this.items, el.bookId, this.isValue);
   }
 
-  onPlus(number: number, el: Product) {
+  onPlus(number: number, el: Product): void {
     this.isValue = number + 1;
     this.items = Operation.inputChange(this.items, el.bookId, this.isValue);
   }
 
-  onMinus(number: number, el: Product) {
+  onMinus(number: number, el: Product): void {
     this.isValue = number - 1;
     this.items = Operation.inputChange(this.items, el.bookId, this.isValue);
   }
 
-  onUpDateCart():void {
-    this.cartArray = new LocalService().getData()
-    this.api.getProduct().subscribe((el:CartItem | any):void => {
-      const {idCart} = Operation.dynamicKeyHttp(el, this.getUserId);
-      this.api.upDateCart(idCart,  this.cartArray).subscribe();
-    });
+  onUpDateCart(): void {
+    if (LocalService.getToken() && LocalService.getUserId()) {
+      const { authId } = LocalService.getUserDate();
+      this.cartArray = LocalService.getData();
+
+      this.api.getProduct().subscribe((el: CartItem | any): void => {
+        const {idCart} = Operation.dynamicKeyHttp(el, authId);
+        this.api.upDateCart(idCart,  this.cartArray, authId).subscribe();
+      });
+    }
   }
+
 }

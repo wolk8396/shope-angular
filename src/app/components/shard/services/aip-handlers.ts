@@ -6,11 +6,7 @@ import { Observable, Subject } from 'rxjs';
 import { Product, UserBasket, UserDate, UserDate2 } from '../interface/interface-const';
 import { LocalService } from '../local-storage-service/local-storage';
 
-interface CreateConfig {
-  auth: Auth,
-  email: string,
-  password: string
-}
+
 
 export interface CartItem {
   goods:Product[],
@@ -49,10 +45,10 @@ export class AipHandlers {
     return this.http.get<UserDate2[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users.json`)
   }
 
-  addCart(items: Product[]| number): Observable<Product> {
-    return this.http.post<Product>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket.json`, {
+  addCart(items: Product[] | number, userId: string): Observable<CartItem> {
+    return this.http.post<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket.json`, {
       goods: items,
-      userId: this.getUserId,
+      userId: userId,
     })
   }
 
@@ -60,10 +56,11 @@ export class AipHandlers {
     return this.http.get<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/.json`)
   }
 
-  upDateCart(id: string | undefined, items: Product[]):Observable<CartItem> {
+  upDateCart(id: string | undefined, items: Product[], authId: string ):Observable<CartItem> {
+    console.log(this.getUserId);
     return this.http.put<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`, {
       goods: items,
-      userId: this.getUserId
+      userId: authId
     })
   }
 

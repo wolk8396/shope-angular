@@ -3,10 +3,9 @@ import { object } from '@angular/fire/database';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable} from 'rxjs';
-import { map, filter} from "rxjs/operators";
-import { massage_advance, massage_error } from '../../shard/const/const';
+import { massage_error } from '../../shard/const/const';
 import { Operation } from '../../shard/function/function';
-import { Product, SignInResponse, UserDate, UserDate2 } from '../../shard/interface/interface-const';
+import { SignInResponse, UserDate2 } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
 import { AipHandlers, CartItem } from '../../shard/services/aip-handlers';
 import { ServicesService } from '../../shard/services/services.service';
@@ -20,11 +19,11 @@ export class SignInComponent implements OnInit {
   form: FormGroup;
   title: string = 'SIGN-IN'
   tsr_title: string = 'New to bookshop? :'
-  error_email:string = massage_error.email;
+  error_email: string = massage_error.email;
   error_required: string = massage_error.required;
   error_password: string = massage_error.password;
-  error:string = '';
-  dateUser:UserDate2[] | any = [];
+  error: string = '';
+  dateUser: UserDate2[] | any = [];
   isShow: boolean = false;
   isCheck: boolean = false;
   streamGetUsers$: Observable<UserDate2[]>
@@ -53,7 +52,7 @@ export class SignInComponent implements OnInit {
         .then(({ user: { accessToken, uid } }: SignInResponse | any): void => {
           userId = uid;
           LocalService.setToken(accessToken);
-          this.isCheck = true
+          this.isCheck = true;
         }).catch(() => this.error = massage_error.error);
 
       if(this.isCheck) {
@@ -67,9 +66,8 @@ export class SignInComponent implements OnInit {
             const {goods} = Operation.dynamicKeyHttp(el, userId);
 
             this.simpleService.changeCount(goods.length);
-            new LocalService().saveData(goods)
+            LocalService.saveData(goods);
           });
-
 
           this.routing.navigate(['/']);
         })
@@ -78,9 +76,7 @@ export class SignInComponent implements OnInit {
   }
 
 
-  isLink() {
+  isLink(): void {
     this.routing.navigate(['sign-up']);
   }
 }
-
-

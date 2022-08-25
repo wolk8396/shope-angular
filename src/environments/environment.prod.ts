@@ -12,3 +12,6 @@ export const environment = {
   },
   production: true
 };
+
+
+export const TestToken:string =`https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${environment.firebase.apiKey}`

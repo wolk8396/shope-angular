@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { errorsMessages, massage_advance } from '../../shard/const/const';
 import { AipHandlers } from '../../shard/services/aip-handlers';
 import { MyValidator } from '../../shard/validators/my-validators';
-import { UserDate, FormValue, SignInResponse } from '../../shard/interface/interface-const';
+import { UserDate, FormValue, SignInResponse, Product } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
 import { UserCredential } from '@angular/fire/auth';
 
@@ -26,9 +26,10 @@ export class SignUpComponent implements OnInit, DoCheck {
   str_massages: string = '';
   error_str: string = '';
   isPasswordCheck: boolean;
-  isShow:boolean = false
+  isShow:boolean = false;
   completed: string = massage_advance.completed;
   sing_in: string = "I've already have an account";
+  userId:string = '';
 
   constructor(
     private routing: Router,
@@ -69,6 +70,7 @@ export class SignUpComponent implements OnInit, DoCheck {
         .then(({user}): void => {
           this.form.value['authId'] = user.uid;
           this.form.value['date'] = date;
+          this.userId = user.uid;
           isRequestCount++
         })
 
@@ -79,17 +81,14 @@ export class SignUpComponent implements OnInit, DoCheck {
         })
 
       if (isRequestCount === 2) {
-        this.api.addCart(0).subscribe(({name}) => {
-          this.form.value['basketId'] = name;
-
-          this.api.addUser(this.form.value).subscribe((res): void => {
-            this.form.value['idLink'] = res.name;
-          });
-
+        const addItems: Product[] = LocalService.getData()
+        this.api.addUser(this.form.value).subscribe((res): void => {
+          this.form.value['idLink'] = res.name;
           LocalService.setUserDate(this.form.value);
 
-          this.routing.navigate(['/'])
-        })
+          this.api.addCart(addItems, this.userId).subscribe();
+          this.routing.navigate(['/']);
+        });
 
       }
     }

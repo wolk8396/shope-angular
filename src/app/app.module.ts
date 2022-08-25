@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -25,8 +24,9 @@ import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { AngularFireModule } from '@angular/fire/compat';
 import { SpinnerComponent } from './components/shard/spinner/spinner.component';
+import { RegistrationComponent } from './components/shard/modal/registration/registration.component';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +44,8 @@ import { SpinnerComponent } from './components/shard/spinner/spinner.component';
     ModalDeleteComponent,
     SignInComponent,
     SignUpComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +54,6 @@ import { SpinnerComponent } from './components/shard/spinner/spinner.component';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
-    // AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
@@ -62,6 +62,5 @@ import { SpinnerComponent } from './components/shard/spinner/spinner.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-
 
 export class AppModule { }

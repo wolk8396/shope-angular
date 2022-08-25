@@ -1,55 +1,29 @@
-import { Component, ElementRef, OnInit, ViewChild, ViewChildren, AfterViewInit } from '@angular/core';
-import { Auth, getAuth, getIdToken, UserInfo, UserMetadata } from '@angular/fire/auth';
-import { getDatabase } from '@angular/fire/database';
-import { auth } from 'firebase-admin';
-// import * as firebase from 'firebase/compat';
-import { map } from 'rxjs';
+import { Component, OnInit} from '@angular/core';
 import { Operation } from '../shard/function/function';
 import { Product } from '../shard/interface/interface-const';
 import { LocalService } from '../shard/local-storage-service/local-storage';
 import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
 import { ServicesService } from '../shard/services/services.service';
 
-interface getToken {
-  emailVerified: boolean;
-  isAnonymous: boolean;
-  metadata: UserMetadata;
-  providerData: UserInfo[];
-  refreshToken: string;
-  tenantId: string | null;
-  uid?: string | undefined;
-  email?: string | null
-}
-
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss']
 })
-export class CartComponent implements OnInit, AfterViewInit {
-
-  items: Product[] = new LocalService().getData();
-  getUserId:string = LocalService.getUserDate().authId;
+export class CartComponent implements OnInit {
+  items: Product[] = LocalService.getData();
   getDateAll: any = LocalService.getDateAll();
-  gatItemCart: CartItem;
   getItem : Product;
   plus: number = 1;
   minus: number = 1;
   plus_str: string = '+';
   minus_str: string = '-';
-  countItems: number;
   price: number = 0;
-  element: number;
   countCarts: number = 0;
   isDelete:boolean = false;
-  isKey:Object = Object['keys'];
-  isTime: string | undefined;
-  private auth: Auth;
-
- @ViewChildren("getCount") getCount: ElementRef
 
   constructor(
-    private readonly simpleService: ServicesService,
+    private simpleService: ServicesService,
     private api: AipHandlers,
     ) { }
 
@@ -58,7 +32,7 @@ export class CartComponent implements OnInit, AfterViewInit {
   }
 
   removeEl (item: Product) {
-    this.isDelete = !this.isDelete
+    this.isDelete = !this.isDelete;
     this.getItem = item;
   }
 
@@ -68,9 +42,7 @@ export class CartComponent implements OnInit, AfterViewInit {
     this.getItem = number;
   }
 
-  ngAfterViewInit(): void {}
-
-  decrease(number: Product, itemCount: number) {
+  decrease(number: Product, itemCount: number) : void {
     Operation.countItems(this.minus, number, this.items, this.minus_str);
     this.price = Operation.totalPrice(this.items);
 
@@ -79,21 +51,29 @@ export class CartComponent implements OnInit, AfterViewInit {
     (itemCount <= 1) ? this.isDelete = !this.isDelete : null;
   }
 
-  onSetValue(value: boolean) {
+  onSetValue(value: boolean): void {
     this.price = Operation.totalPrice(this.items);
 
     if (value) {
-      this.items = Operation.removeItem(this.items, this.getItem.bookId, this.simpleService)
-      this.onUpDateCart();
+      this.items = Operation.removeItem(this.items, this.getItem.bookId, this.simpleService);
+
+      (LocalService.getToken() && LocalService.getUserId()) ? this.onUpDateCart() : null;
     }
   }
 
   onUpDateCart():void {
-    this.api.getProduct().subscribe((el:CartItem | any):void => {
-      const{idCart} = Operation.dynamicKeyHttp(el, this.getUserId);
 
-      this.api.upDateCart(idCart, this.items).subscribe();
-    });
+    if (LocalService.getToken() && LocalService.getUserId()) {
+      const{ authId } = LocalService.getUserDate();
+
+      this.api.getProduct().subscribe((el:CartItem | any):void => {
+        const{idCart} = Operation.dynamicKeyHttp(el, authId);
+
+        this.api.upDateCart(idCart, this.items, authId).subscribe();
+      });
+
+    } else this.simpleService.Registration(true)
+
   }
 
 }

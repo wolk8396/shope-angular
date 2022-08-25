@@ -1,0 +1,19 @@
+<div class="main-window"
+  [ngStyle]="{display: !isShowModal ? 'none' : 'block'}"
+>
+  <div class="main-window__confirmation">
+    <div class="block-window">
+      <div class="block-window__container-text">
+        <p class="massage-text">{{title| titlecase}}</p>
+      </div>
+      <div class="blocks-btns">
+        <button class="btn btn-dark"(click)="onSign_in()">SIGN-IN</button>
+        <button class="btn btn-dark"  (click)="onSign_up()">SIGN-UP</button>
+        <button class="btn btn-dark"
+          (click)="isShowModal = !isShowModal"
+        >CANCEL</button>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,8 +1,6 @@
-import { Component, EventEmitter, Input,  OnInit, Output, Pipe } from '@angular/core';
-import { HomeComponent } from '../../home/home.component';
+import { Component, EventEmitter, OnInit, Output} from '@angular/core';
 import { Operation } from '../function/function';
 import { Product } from '../interface/interface-const';
-import { books } from '../product/books';
 
 @Component({
   selector: 'app-search-product',

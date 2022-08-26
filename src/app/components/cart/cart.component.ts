@@ -1,4 +1,5 @@
 import { Component, OnInit} from '@angular/core';
+import { cart_massage } from '../shard/const/const';
 import { Operation } from '../shard/function/function';
 import { Product } from '../shard/interface/interface-const';
 import { LocalService } from '../shard/local-storage-service/local-storage';
@@ -18,6 +19,8 @@ export class CartComponent implements OnInit {
   minus: number = 1;
   plus_str: string = '+';
   minus_str: string = '-';
+  isUpDate: string = cart_massage.upDate
+  errorCart: string = cart_massage.error
   price: number = 0;
   countCarts: number = 0;
   isDelete:boolean = false;
@@ -67,9 +70,11 @@ export class CartComponent implements OnInit {
       const{ authId } = LocalService.getUserDate();
 
       this.api.getProduct().subscribe((el:CartItem | any):void => {
-        const{idCart} = Operation.dynamicKeyHttp(el, authId);
+        const{ idCart } = Operation.dynamicKeyHttp(el, authId);
 
-        this.api.upDateCart(idCart, this.items, authId).subscribe();
+        this.api.upDateCart(idCart, this.items, authId).subscribe((res) => {
+          this.simpleService.Notification(true, this.isUpDate, false)
+        });
       });
 
     } else this.simpleService.Registration(true)

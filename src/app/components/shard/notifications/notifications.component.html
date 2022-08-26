@@ -1,0 +1,12 @@
+<div class="notifications">
+  <div class="block">
+    <p>
+      <ngb-alert [dismissible]="false"
+        [ngStyle]="{
+          display: !isShow ? 'none' : 'block',
+          color: !error ? 'black' : 'red'
+        }"
+      >{{massage | titlecase}}</ngb-alert>
+    </p>
+  </div>
+</div>

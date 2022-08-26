@@ -26,6 +26,7 @@ import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { SpinnerComponent } from './components/shard/spinner/spinner.component';
 import { RegistrationComponent } from './components/shard/modal/registration/registration.component';
+import { NotificationsComponent } from './components/shard/notifications/notifications.component';
 
 
 @NgModule({
@@ -45,7 +46,8 @@ import { RegistrationComponent } from './components/shard/modal/registration/reg
     SignInComponent,
     SignUpComponent,
     SpinnerComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

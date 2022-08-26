@@ -1,0 +1,13 @@
+.notifications {
+  position: fixed;
+  display: block;
+  top: 60px;
+  left: 12px;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+
+  .block {
+    position: absolute;
+  }
+}

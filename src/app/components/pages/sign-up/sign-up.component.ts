@@ -4,10 +4,8 @@ import { Router } from '@angular/router';
 import { errorsMessages, massage_advance } from '../../shard/const/const';
 import { AipHandlers } from '../../shard/services/aip-handlers';
 import { MyValidator } from '../../shard/validators/my-validators';
-import { UserDate, FormValue, SignInResponse, Product } from '../../shard/interface/interface-const';
+import { FormValue, SignInResponse, Product } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
-import { UserCredential } from '@angular/fire/auth';
-
 
 @Component({
   selector: 'app-sign-up',
@@ -19,10 +17,10 @@ export class SignUpComponent implements OnInit, DoCheck {
   error:Map<string, string> = errorsMessages;
   first_name: string | undefined = this.error.get('first_name');
   last_name: string | undefined = this.error.get('last_name');
-  required: string | undefined =  this.error.get('required');
+  required: string | undefined = this.error.get('required');
   email: string | undefined = this.error.get('email');
   password: string | undefined;
-  Match_password: string | undefined
+  Match_password: string | undefined;
   str_massages: string = '';
   error_str: string = '';
   isPasswordCheck: boolean;
@@ -65,23 +63,23 @@ export class SignUpComponent implements OnInit, DoCheck {
       delete this.form.value.password_2;
       this.isShow = !this.isShow;
 
-
       await this.api.createUserAuthRequest(email, password_1)
         .then(({user}): void => {
           this.form.value['authId'] = user.uid;
           this.form.value['date'] = date;
           this.userId = user.uid;
           isRequestCount++
-        })
+        });
 
       await this.api.signInRequest(email, password_1)
         .then(({ user: { accessToken} }: SignInResponse | any): void =>  {
           LocalService.setToken(accessToken)
           isRequestCount++
-        })
+        });
 
       if (isRequestCount === 2) {
-        const addItems: Product[] = LocalService.getData()
+        const addItems: Product[] = LocalService.getData();
+
         this.api.addUser(this.form.value).subscribe((res): void => {
           this.form.value['idLink'] = res.name;
           LocalService.setUserDate(this.form.value);
@@ -89,7 +87,6 @@ export class SignUpComponent implements OnInit, DoCheck {
           this.api.addCart(addItems, this.userId).subscribe();
           this.routing.navigate(['/']);
         });
-
       }
     }
   }
@@ -97,9 +94,4 @@ export class SignUpComponent implements OnInit, DoCheck {
   onSign_in (): void {
     this.routing.navigate(['sign-in']);
   }
-
-  onDelete() {
-    LocalService.onRemove()
-  }
-
 }

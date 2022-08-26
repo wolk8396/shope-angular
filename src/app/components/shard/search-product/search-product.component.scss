@@ -14,7 +14,10 @@
   }
   .btn-primary {
     border-radius: 0;
+    border-top-right-radius: 15%;
+    border-bottom-right-radius: 15%;
   }
+
 
   label {
     position: absolute;
@@ -23,7 +26,6 @@
     font-size: 15px;
   }
 }
-
 
 .category {
   display: flex;

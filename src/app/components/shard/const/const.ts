@@ -16,6 +16,11 @@ export interface Errors {
   error: string
 }
 
+export interface ShoppingCart {
+  upDate: string,
+  error: string
+}
+
 export const errorsMessages = new Map<string, string>([
   ['email', 'Please enter a valid email.'],
   ['first_name', 'Please enter a valid name'],
@@ -46,4 +51,9 @@ export const massage_error: Errors = {
   error: 'email or password is incorrect'
 }
 
- export const DateStorage: string = `firebase:authUser:${environment.firebase.apiKey}:[DEFAULT]`
+export const cart_massage: ShoppingCart = {
+  upDate:"your cart has been update successfully",
+  error: "ERROR!! Unfortunately, it is not possible to update your shopping cart. Try again later"
+}
+
+export const DateStorage: string = `firebase:authUser:${environment.firebase.apiKey}:[DEFAULT]`

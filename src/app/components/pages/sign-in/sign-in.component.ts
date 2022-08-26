@@ -1,8 +1,6 @@
-import { Component, OnInit, Type } from '@angular/core';
-import { object } from '@angular/fire/database';
+import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Observable} from 'rxjs';
 import { massage_error } from '../../shard/const/const';
 import { Operation } from '../../shard/function/function';
 import { SignInResponse, UserDate2 } from '../../shard/interface/interface-const';
@@ -26,7 +24,7 @@ export class SignInComponent implements OnInit {
   dateUser: UserDate2[] | any = [];
   isShow: boolean = false;
   isCheck: boolean = false;
-  streamGetUsers$: Observable<UserDate2[]>
+  isGoods: CartItem[] |  CartItem;
 
   constructor(
     private routing: Router,
@@ -45,36 +43,39 @@ export class SignInComponent implements OnInit {
 
     if (this.form.valid) {
       const {email, password} = this.form.value;
-      let userId: string = '';
+      let idUser: string = '';
       this.isShow = !this.isShow;
 
      await this.api.signInRequest(email, password)
         .then(({ user: { accessToken, uid } }: SignInResponse | any): void => {
-          userId = uid;
+          idUser = uid;
           LocalService.setToken(accessToken);
           this.isCheck = true;
-        }).catch(() => this.error = massage_error.error);
+        }).catch(() => {
+          this.isShow = false;
+          this.error = massage_error.error
+        });
 
       if(this.isCheck) {
         this.api.getUsersDate().subscribe((usersDate): void => {
-          this.dateUser = Object.keys(usersDate)
-              .map((users: any) => ({...usersDate[users], idLink:users}))
-              .find(({authId}) => authId === userId);
+          this.dateUser = Operation.responseMapper(usersDate, 'idLink')
+                          .find(({authId}) => authId === idUser);
+
           LocalService.setUserDate(this.dateUser);
 
-          this.api.getProduct().subscribe((el:CartItem | any):void => {
-            const {goods} = Operation.dynamicKeyHttp(el, userId);
+          this.api.getProduct().subscribe((update ):void => {
+            const {goods} = Operation.responseMapper(update, 'idCart')
+                            .find(({userId}) => userId === idUser);
 
             this.simpleService.changeCount(goods.length);
             LocalService.saveData(goods);
-          });
+          })
 
           this.routing.navigate(['/']);
         })
       }
     }
   }
-
 
   isLink(): void {
     this.routing.navigate(['sign-up']);

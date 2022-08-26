@@ -2,11 +2,11 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Auth, Config, getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { createUserWithEmailAndPassword, UserCredential } from '@firebase/auth';
-import { Observable, Subject } from 'rxjs';
+import { catchError, Observable, Subject } from 'rxjs';
+import { cart_massage } from '../const/const';
 import { Product, UserBasket, UserDate, UserDate2 } from '../interface/interface-const';
 import { LocalService } from '../local-storage-service/local-storage';
-
-
+import { ServicesService } from './services.service';
 
 export interface CartItem {
   goods:Product[],
@@ -19,10 +19,12 @@ export interface CartItem {
 })
 export class AipHandlers {
   getUserId:string = LocalService.getUserDate().authId;
+  errorCart: string = cart_massage.error;
 
   constructor(
     private http: HttpClient,
-    private auth: Auth
+    private auth: Auth,
+    private simpleService: ServicesService,
     ) { }
 
   createUserAuthRequest( email: string, password: string):Promise<UserCredential> {
@@ -56,12 +58,17 @@ export class AipHandlers {
     return this.http.get<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/.json`)
   }
 
-  upDateCart(id: string | undefined, items: Product[], authId: string ):Observable<CartItem> {
-    console.log(this.getUserId);
+  upDateCart(id: string | undefined, items: Product[], authId: string):Observable<CartItem> {
     return this.http.put<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`, {
       goods: items,
       userId: authId
     })
+    .pipe(
+      catchError(err => {
+        this.simpleService.Notification(true, this.errorCart, true);
+        throw 'error'
+      })
+    )
   }
 
   getUserItems(id: string | undefined):Observable<UserBasket[]> {

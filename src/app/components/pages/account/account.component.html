@@ -1,0 +1,52 @@
+<app-modal-add-photo
+  [isShowModal]="isModal"
+  (isHiddenModal)="onHiddenModal($event)"
+></app-modal-add-photo>
+<div class="account">
+  <div class="account__block-photo"
+    (mouseleave)="isMouse = false"
+    >
+    <img [src]="avatar"
+    (mouseover)="isMouse = !isMouse"
+    >
+    <div class="delete"*ngIf="isMouse" (click)="onRemovePhoto()">X</div>
+    <ul class="menu-photo" *ngIf="isMouse" (click)="onAddPhoto()">
+      <li>Add photo</li>
+    </ul>
+    <div class="menu-photo"></div>
+    <div class="block-btn">
+      <button type="button" class="btn btn-primary">Edit Profile</button>
+    </div>
+  </div>
+  <div class="account__information">
+    <h2 class="fullName">{{fullName| titlecase}}</h2>
+    <div class="additional-information">
+      <ul>
+        <li>
+          <strong>birth:</strong>
+           {{birth | date}}
+        </li>
+        <li>
+          <strong>email:</strong>
+          {{email}}
+        </li>
+        <li>
+          <strong>date of registration:</strong>
+          {{date | date}}
+        </li>
+        <li>
+          <strong>country:</strong>
+          {{country}}
+        </li>
+        <li>
+          <strong>city:</strong>
+          {{city}}
+        </li>
+        <li>
+          <strong>address:</strong>
+          {{address}}
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

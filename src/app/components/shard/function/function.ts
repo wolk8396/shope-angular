@@ -80,4 +80,8 @@ export class Operation {
   static dynamicKeyHttp(el: CartItem | any, id: string): CartItem {
     return Object.keys(el).map((users) => ({...el[users], idCart:users})).find(({userId}) => userId ===  id);
   }
+
+  static isCheckAcc (): string | null{
+    return LocalService.getToken() && LocalService.getUserId()
+  }
 }

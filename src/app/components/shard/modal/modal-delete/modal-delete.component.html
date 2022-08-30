@@ -1,10 +1,8 @@
-<div class="wrapper-delete" [ngStyle]="{display: !deleteItem ? 'none' : 'block' }">
+<div class="wrapper-delete" [ngStyle]="{display: !isClose ? 'none' : 'block' }">
   <div class="container_modal">
     <div class="container_modal__main">
       <div class="massage">
-        <p class="massage__text">
-          Are You are sure ? Do you want to remove this item from your shopping cart
-        </p>
+        <p class="massage__text">{{isMassage}}</p>
       </div>
       <div class="block_btns">
         <button type="button" class="btn btn-dark" (click)="onDelete()">OK</button>

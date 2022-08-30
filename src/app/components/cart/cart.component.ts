@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import { cart_massage } from '../shard/const/const';
+import { cart_massage, modal_delete } from '../shard/const/const';
 import { Operation } from '../shard/function/function';
 import { Product } from '../shard/interface/interface-const';
 import { LocalService } from '../shard/local-storage-service/local-storage';
@@ -24,6 +24,7 @@ export class CartComponent implements OnInit {
   price: number = 0;
   countCarts: number = 0;
   isDelete:boolean = false;
+  isRemove:boolean;
 
   constructor(
     private simpleService: ServicesService,
@@ -32,11 +33,13 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.price = Operation.totalPrice(this.items);
+    this.simpleService.isDelete$.subscribe((value) => this.onDelete(value));
   }
 
-  removeEl (item: Product) {
+  removeEl (item: Product): void {
     this.isDelete = !this.isDelete;
     this.getItem = item;
+    this.simpleService.delete(true, modal_delete.item);
   }
 
   increase(number: Product, itemCount: number): void {
@@ -54,15 +57,18 @@ export class CartComponent implements OnInit {
     (itemCount <= 1) ? this.isDelete = !this.isDelete : null;
   }
 
-  onSetValue(value: boolean): void {
+  onDelete(value: boolean): void {
+    console.log('work');
+
     this.price = Operation.totalPrice(this.items);
 
-    if (value) {
+    if (!value) {
       this.items = Operation.removeItem(this.items, this.getItem.bookId, this.simpleService);
 
       (LocalService.getToken() && LocalService.getUserId()) ? this.onUpDateCart() : null;
     }
   }
+
 
   onUpDateCart():void {
 

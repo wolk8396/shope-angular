@@ -27,6 +27,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { SpinnerComponent } from './components/shard/spinner/spinner.component';
 import { RegistrationComponent } from './components/shard/modal/registration/registration.component';
 import { NotificationsComponent } from './components/shard/notifications/notifications.component';
+import { AccountComponent } from './components/pages/account/account.component';
+import { ModalAddPhotoComponent } from './components/shard/modal/modal-add-photo/modal-add-photo.component';
 
 
 @NgModule({
@@ -47,7 +49,9 @@ import { NotificationsComponent } from './components/shard/notifications/notific
     SignUpComponent,
     SpinnerComponent,
     RegistrationComponent,
-    NotificationsComponent
+    NotificationsComponent,
+    AccountComponent,
+    ModalAddPhotoComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,8 @@ import { NotificationsComponent } from './components/shard/notifications/notific
     provideFirestore(() => getFirestore())
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+
 })
 
 export class AppModule { }

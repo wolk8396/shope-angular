@@ -1,6 +1,6 @@
 <app-search-product (sendProduct)="filter($event)"></app-search-product>
 <app-modal-items [isModal]="isOpen" [isItem]="isItem"></app-modal-items>
-<app-modal-delete [deleteItem]="isDelete" (activeDelete)="onSetValue($event)"></app-modal-delete>
+<!-- <app-modal-delete [deleteItem]="isDelete" (activeDelete)="onSetValue($event)"></app-modal-delete> -->
 <div class="title-results" *ngIf="items.length === 0 else results">No results found</div>
 <ng-template #results>
   <div class="container" *ngFor="let item of items; let i = index ">

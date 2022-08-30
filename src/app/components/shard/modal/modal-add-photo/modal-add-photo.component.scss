@@ -1,0 +1,108 @@
+.wrapper-addPhoto{
+  background-color: rgba(0, 0, 0, var(--bg-opacity));
+  --bg-opacity: 0.75;
+  position: fixed;
+  display: none;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  z-index: 100;
+
+  .container {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+    &__addPhoto {
+      display: flex;
+      flex-direction: column;
+      // justify-content: space-between;
+      width: 598px;
+      height: 314px;
+      background-color: white;
+      border-radius: 15px;
+      margin: 0 auto;
+
+      .block-title {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+        width: 590px;
+        margin: 0 auto;
+        border-bottom: 1px solid black;
+        padding: 12px;
+
+        .btn-outline-dark {
+          margin-left: 62px;
+        }
+
+      }
+
+      .massage {
+        width: 590px;
+        margin: 0 auto;
+        margin-top: 15px;
+        border-bottom: 1px solid black;
+
+        p {
+          font-size: 22px;
+          margin-left: 9px;
+        }
+      }
+
+      .progress-bars {
+        width: 570px;
+        margin: 0 auto;
+        margin-top: 38px;
+      }
+
+      .btn-block {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 587px;
+        margin-top: 63px;
+
+        &__wrapper {
+          margin-left: auto;
+
+          .label {
+            width: 150px;
+            height: 38px;
+            background: #333333;
+            color: #fff;
+            border-radius: 5px;
+            display: flex;
+            transition: border 300ms ease;
+            cursor: pointer;
+
+            &__title {
+              color: #fff;
+              margin: 0 auto;
+              margin-top: 7px;
+              font-weight: bold;
+            }
+          }
+
+          .label:hover {
+            opacity: 0.8;
+          }
+
+          input[type=file] {
+            display: none;
+            outline: 0;
+            opacity: 0;
+            pointer-events: none;
+            user-select: none
+          }
+        }
+      }
+
+    }
+  }
+}

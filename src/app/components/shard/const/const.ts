@@ -1,4 +1,5 @@
 import { environment } from "src/environments/environment";
+import { Modal_Photo } from "../interface/interface-const";
 
 export interface Massage {
   [x: string]: any;
@@ -54,6 +55,16 @@ export const massage_error: Errors = {
 export const cart_massage: ShoppingCart = {
   upDate:"your cart has been update successfully",
   error: "ERROR!! Unfortunately, it is not possible to update your shopping cart. Try again later"
+}
+
+export const modal_add: Modal_Photo = {
+  type: 'Pleas use files .png, .jpeg, .jpg, jpeg',
+  title: 'Add photo to your account'
+}
+
+export const modal_delete = {
+  item: 'Are You are sure ? Do you want to remove this item from your shopping cart',
+  photo: 'Are You are sure ? Do you want to remove this photo form your account'
 }
 
 export const DateStorage: string = `firebase:authUser:${environment.firebase.apiKey}:[DEFAULT]`

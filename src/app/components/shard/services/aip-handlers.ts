@@ -7,6 +7,17 @@ import { cart_massage } from '../const/const';
 import { Product, UserBasket, UserDate, UserDate2 } from '../interface/interface-const';
 import { LocalService } from '../local-storage-service/local-storage';
 import { ServicesService } from './services.service';
+import {
+  getStorage,
+  ref,
+  uploadBytesResumable,
+  getDownloadURL,
+  StorageReference,
+  UploadTask,
+  UploadTaskSnapshot
+} from 'firebase/storage';
+
+import { v4 as uuidv4 } from 'uuid';
 
 export interface CartItem {
   goods:Product[],
@@ -20,6 +31,7 @@ export interface CartItem {
 export class AipHandlers {
   getUserId:string = LocalService.getUserDate().authId;
   errorCart: string = cart_massage.error;
+  isProgressBar$ = new Subject<number>();
 
   constructor(
     private http: HttpClient,
@@ -73,6 +85,34 @@ export class AipHandlers {
 
   getUserItems(id: string | undefined):Observable<UserBasket[]> {
     return this.http.get<UserBasket[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`)
+  }
+
+  upDateUser() {
+
+  }
+
+  photoUser(file: any, photoName: string | undefined) {
+    const storage = getStorage();
+    const fileName: string = `${uuidv4()}_${photoName}`;
+    const storageRef: StorageReference = ref(storage, 'photo/' + fileName);
+    const uploadTask: UploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      'state_changed',
+      (snapshot: UploadTaskSnapshot): void => {
+        const progress: number = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log('Upload is ' + progress + '% done');
+
+        this.isProgressBar$.next(progress)
+      },
+      (): void => {},
+      async (): Promise<void> => {
+        await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: string) => {
+            console.log('File available at', downloadURL);
+        }).catch((error) =>  error);
+
+      }
+  );
   }
 }
 

@@ -7,6 +7,7 @@ import { Operation } from '../shard/function/function';
 import { Route, Router } from '@angular/router';
 import { ServicesService } from '../shard/services/services.service';
 import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
+import { modal_delete } from '../shard/const/const';
 
 @Component({
   selector: 'app-home',
@@ -36,6 +37,7 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     (this.cartArray.length === 0) ? LocalService.saveData([]) : null;
     this.items = Operation.dynamicKey();
+    this.simpleService.isDelete$.subscribe((value) => this.onSetValue(value));
   }
 
   addCart(item: Product): void  {
@@ -61,10 +63,11 @@ export class HomeComponent implements OnInit {
     this.isDelete = !this.isDelete;
     this.isElement = item;
     item.count = 1;
+    this.simpleService.delete(true, modal_delete.item);
   }
 
   onSetValue(value: boolean): void {
-    if (value) {
+    if (!value) {
       this.cartArray = LocalService.getData();
       this.items = Operation.setBoolean(this.items, this.isElement, false);
       Operation.removeItem(this.cartArray, this.isElement.bookId, this.simpleService);

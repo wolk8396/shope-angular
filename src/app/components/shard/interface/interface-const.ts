@@ -19,8 +19,8 @@ export interface Product {
     email: string,
     birth: string,
     date?: Date,
-    firstName: string,
-    lastName: string,
+    first_name: string,
+    last_name: string,
     name?: string,
     idDate?: string,
     key:string,
@@ -61,3 +61,24 @@ export interface Product {
     idCart?: string
   }
 
+export interface Url_photo {
+  avatar: string
+}
+
+export interface Modal_Photo {
+  type: string,
+  title: string
+}
+
+export interface FileLis {
+  0:{
+    lastModified: number
+    lastModifiedDate?:Date
+    name: string,
+    size:number,
+    type: string,
+    webkitRelativePath: string
+  }
+  length: number
+}
+// FileList {0: File, length: 1}

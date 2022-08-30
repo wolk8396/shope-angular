@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Operation } from '../shard/function/function';
 import { LocalService } from '../shard/local-storage-service/local-storage';
 import { ServicesService } from '../shard/services/services.service';
 
@@ -11,7 +13,8 @@ export class HeaderComponent implements OnInit {
  countCart: number = 0;
 
   constructor(
-    private simpleService: ServicesService
+    private simpleService: ServicesService,
+    private routing: Router,
     ) {}
 
   ngOnInit(): void {
@@ -25,6 +28,12 @@ export class HeaderComponent implements OnInit {
 
   onOut(): void {
     LocalService.onRemove();
+  }
+
+  onAccount(): void {
+    (Operation.isCheckAcc()) ?
+      this.routing.navigate(['account']) :
+      this.simpleService.Registration(true);
   }
 
 }

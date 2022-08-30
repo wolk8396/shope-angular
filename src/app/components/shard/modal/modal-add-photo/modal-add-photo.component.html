@@ -1,0 +1,30 @@
+<div class="wrapper-addPhoto"
+  [ngStyle]="{display: !isShowModal ? 'none' : 'block' }"
+>
+  <div class="container">
+    <div class="container__addPhoto">
+      <div class="block-title">
+        <h2>{{title | titlecase | uppercase}}</h2>
+        <button type="button" class="btn btn-outline-dark"
+        (click)="onClose()"
+        >X</button>
+        <br>
+      </div>
+      <div class="massage">
+        <p>{{massage | titlecase | uppercase}}</p>
+      </div>
+      <div class="progress-bars" *ngIf="isShowBar">
+        <p><ngb-progressbar type="dark" textType="white" [value]="isValue" [showValue]="true"></ngb-progressbar></p>
+      </div>
+      <div class="btn-block">
+        <div class="btn-block__wrapper">
+          <label class="label">
+            <span class="label__title">Change photo</span>
+            <input type="file" class="input_file" name="fileList"
+            (change)="onFileSelected($event)" #fileUpload
+            >
+          </label>
+        </div>
+    </div>
+  </div>
+</div>

@@ -1,4 +1,4 @@
-import { Product, UserBasket } from "../interface/interface-const";
+import { Product, UserBasket, UserDate } from "../interface/interface-const";
 import { LocalService } from "../local-storage-service/local-storage";
 import { books } from "../product/books";
 import { CartItem } from "../services/aip-handlers";
@@ -83,5 +83,11 @@ export class Operation {
 
   static isCheckAcc (): string | null{
     return LocalService.getToken() && LocalService.getUserId()
+  }
+
+  static onSetPhoto (date: UserDate, url: string) :UserDate {
+    date['photoUrl'] = url;
+    LocalService.setUserDate(date);
+    return LocalService.getUserDate();
   }
 }

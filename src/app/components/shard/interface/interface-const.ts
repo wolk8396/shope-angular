@@ -22,9 +22,10 @@ export interface Product {
     first_name: string,
     last_name: string,
     name?: string,
-    idDate?: string,
+    idLink?: string,
     key:string,
-    basketId:string
+    // basketId:string
+    photoUrl: string
   }
 
   export interface UserDate2 {

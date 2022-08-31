@@ -4,6 +4,8 @@ import { Url_img } from '../../shard/url-img/url-photo';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
 import { ServicesService } from '../../shard/services/services.service';
 import { modal_delete } from '../../shard/const/const';
+import { AipHandlers } from '../../shard/services/aip-handlers';
+import { Operation } from '../../shard/function/function';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { modal_delete } from '../../shard/const/const';
   styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
-  avatar: string = Url_img.avatar;
+  avatar: string  = '';
   dateUser: UserDate;
   fullName: string = '';
   date: Date | undefined;
@@ -23,13 +25,18 @@ export class AccountComponent implements OnInit {
   address: string = '';
   isMouse: boolean = false;
   isModal: boolean;
+  getDate: UserDate;
+
 
   constructor(
     private simpleService: ServicesService,
+    private api: AipHandlers,
   ) { }
 
   ngOnInit(): void {
     this.getDateUser();
+    this.onSetAvatar();
+    this.simpleService.isDelete$.subscribe((value) => this.onDelete(value));
   }
 
   getDateUser():void {
@@ -44,25 +51,39 @@ export class AccountComponent implements OnInit {
     this.address = '---';
   }
 
-  onAddPhoto() {
+  onAddPhoto(): void {
     this.isModal = true;
-
-    console.log('add', this.isModal);
-
   }
 
   onHiddenModal(event: boolean): void {
     this.isModal = event;
-    console.log(event, 'e');
+    this.onSetAvatar();
+
   }
 
-  onRemovePhoto() {
+  onRemovePhoto(): void {
     this.simpleService.delete(true, modal_delete.photo);
   }
 
-  onDelete() {
-    console.log('account');
+  onDelete(value: boolean): void {
+    this.getDate = LocalService.getUserDate();
 
+    if (value === false) {
+      this.api.onDeletePhoto(this.getDate.photoUrl)
+      this.getDate = Operation.onSetPhoto(this.getDate, 'none')
+      this.api.upDateUser(this.getDate.idLink, this.getDate).subscribe();
+      this.onSetAvatar();
+    }
+  }
+
+
+
+  onSetAvatar(): void {
+    const{photoUrl} = LocalService.getUserDate();
+
+    (photoUrl !== 'none') ?
+      this.avatar = photoUrl :
+      this.avatar = Url_img.avatar
   }
 
 }

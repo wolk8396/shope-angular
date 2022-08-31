@@ -14,7 +14,8 @@ import {
   getDownloadURL,
   StorageReference,
   UploadTask,
-  UploadTaskSnapshot
+  UploadTaskSnapshot,
+  deleteObject
 } from 'firebase/storage';
 
 import { v4 as uuidv4 } from 'uuid';
@@ -32,6 +33,7 @@ export class AipHandlers {
   getUserId:string = LocalService.getUserDate().authId;
   errorCart: string = cart_massage.error;
   isProgressBar$ = new Subject<number>();
+  isDownloadURL$ = new Subject<string>();
 
   constructor(
     private http: HttpClient,
@@ -87,11 +89,16 @@ export class AipHandlers {
     return this.http.get<UserBasket[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`)
   }
 
-  upDateUser() {
-
+  upDateUser(id : string | undefined, date: UserDate): Observable<UserDate> {
+    delete date.idLink
+    return this.http.put<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users/${id}.json`,
+    {
+      ...date,
+    }
+    )
   }
 
-  photoUser(file: any, photoName: string | undefined) {
+  photoUser(file: any, photoName: string | undefined): void {
     const storage = getStorage();
     const fileName: string = `${uuidv4()}_${photoName}`;
     const storageRef: StorageReference = ref(storage, 'photo/' + fileName);
@@ -109,10 +116,20 @@ export class AipHandlers {
       async (): Promise<void> => {
         await getDownloadURL(uploadTask.snapshot.ref).then((downloadURL: string) => {
             console.log('File available at', downloadURL);
+            this.isDownloadURL$.next(downloadURL)
         }).catch((error) =>  error);
 
       }
-  );
+    );
+  }
+
+
+  async onDeletePhoto(url: string): Promise<void> {
+    const storage = getStorage();
+
+    const desertRef = ref(storage, url);
+
+    await deleteObject(desertRef);
   }
 }
 

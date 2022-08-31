@@ -21,7 +21,7 @@
     &__addPhoto {
       display: flex;
       flex-direction: column;
-      // justify-content: space-between;
+      justify-content: space-around;
       width: 598px;
       height: 314px;
       background-color: white;
@@ -46,7 +46,6 @@
       .massage {
         width: 590px;
         margin: 0 auto;
-        margin-top: 15px;
         border-bottom: 1px solid black;
 
         p {

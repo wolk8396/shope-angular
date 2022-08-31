@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import { modal_add } from '../../const/const';
-import { FileLis} from '../../interface/interface-const';
+import { Operation } from '../../function/function';
+import { FileLis, UserDate} from '../../interface/interface-const';
+import { LocalService } from '../../local-storage-service/local-storage';
 import { AipHandlers } from '../../services/aip-handlers';
 
 @Component({
@@ -15,6 +17,7 @@ export class ModalAddPhotoComponent implements OnInit, OnChanges {
   photoName: string | undefined;
   isValue: number = 0
   isShowBar: boolean = false;
+  date: UserDate;
 
   @Input() isShowModal: boolean;
   @Output() isHiddenModal = new EventEmitter<boolean>();
@@ -23,9 +26,7 @@ export class ModalAddPhotoComponent implements OnInit, OnChanges {
     private api: AipHandlers,
   ) { }
 
-  ngOnInit(): void {
-    this.onShowBar(this.isValue, false)
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(changes: SimpleChanges): void {
 
@@ -34,22 +35,38 @@ export class ModalAddPhotoComponent implements OnInit, OnChanges {
   onClose() {
     this.isShowModal = false
     this.isHiddenModal.emit(false);
+    this.isValue = 0;
+    this.isShowBar = false
   }
 
-  onShowBar(progress: number, isValue: boolean) {
+  onShowBar(progress: number) {
     (progress > 0) ? this.isShowBar = true : this.isShowBar = false;
-
-    (progress === 100) ? this.isShowModal = false : this.isShowModal = isValue;
   }
+
+  onSetPhoto (date: UserDate, url: string) :UserDate {
+    date['photoUrl'] = url;
+    LocalService.setUserDate(date);
+    return LocalService.getUserDate();
+  }
+
+
 
   onFileSelected(event: Event ) {
     this.file = (event.target as HTMLInputElement).files?.item(0);
     this.photoName = (event.target as HTMLInputElement).files?.item(0)?.name;
-    this.api.photoUser(this.file,  this.photoName)
+    this.api.photoUser(this.file,  this.photoName);
+    this.date = LocalService.getUserDate();
 
     this.api.isProgressBar$.subscribe((progress) => {
       this.isValue = progress;
-      this.onShowBar(this.isValue, true);
+      this.onShowBar(this.isValue);
+    })
+
+    this.api.isDownloadURL$.subscribe((url) => {
+      this.date = Operation.onSetPhoto(this.date, url)
+      // this.onSetPhoto(this.date, url)
+      this.api.upDateUser(this.date.idLink, this.date).subscribe();
+      this.onClose();
     })
 
   }

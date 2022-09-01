@@ -59,12 +59,16 @@ export const cart_massage: ShoppingCart = {
 
 export const modal_add: Modal_Photo = {
   type: 'Pleas use files .png, .jpeg, .jpg, jpeg',
-  title: 'Add photo to your account'
+  title: 'Add photo to your account',
+  error:'your file is incorrect. Pleas use files .png, .jpeg, .jpg, jpeg',
 }
 
 export const modal_delete = {
   item: 'Are You are sure ? Do you want to remove this item from your shopping cart',
   photo: 'Are You are sure ? Do you want to remove this photo form your account'
 }
+
+export const File_Type: string[] = ['image/png','image/jpg','image/peg','image/jpeg'];
+
 
 export const DateStorage: string = `firebase:authUser:${environment.firebase.apiKey}:[DEFAULT]`

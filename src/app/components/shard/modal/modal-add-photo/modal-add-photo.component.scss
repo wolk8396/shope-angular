@@ -32,13 +32,23 @@
         display: flex;
         justify-content: space-between;
         flex-direction: row;
+        position: relative;
         width: 590px;
         margin: 0 auto;
         border-bottom: 1px solid black;
         padding: 12px;
 
-        .btn-outline-dark {
-          margin-left: 62px;
+        h2 {
+          color: #0d6efd;
+          width: 375px;
+          margin-left: 94px;
+          font-size: 25px !important;
+        }
+
+        .btn-dark {
+          position: absolute;
+          right: 0;
+          top: 0;
         }
 
       }
@@ -50,14 +60,34 @@
 
         p {
           font-size: 22px;
-          margin-left: 9px;
+          text-align: center;
+          font-weight: bold;
         }
       }
 
-      .progress-bars {
-        width: 570px;
+      .status-download {
+        display: flex;
         margin: 0 auto;
-        margin-top: 38px;
+        width: 570px;
+        height: 104px;
+
+        .progress-bars {
+          width: 570px;
+          margin: 0 auto;
+          margin-top: 38px;
+        }
+
+        .error-type {
+          width: 376px;
+          margin: 0 auto;
+
+          &__massage {
+            font-size: 20px;
+            color: red;
+            text-align: center;
+            font-weight: bold;
+          }
+        }
       }
 
       .btn-block {
@@ -65,7 +95,7 @@
         flex-direction: column;
         justify-content: space-around;
         width: 587px;
-        margin-top: 63px;
+        // margin-top: 63px;
 
         &__wrapper {
           margin-left: auto;

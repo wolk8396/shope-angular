@@ -67,6 +67,7 @@ export class SignUpComponent implements OnInit, DoCheck {
         .then(({user}): void => {
           this.form.value['authId'] = user.uid;
           this.form.value['date'] = date;
+          this.form.value['photoUrl'] = 'none';
           this.userId = user.uid;
           isRequestCount++
         });

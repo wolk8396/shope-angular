@@ -68,7 +68,8 @@ export interface Url_photo {
 
 export interface Modal_Photo {
   type: string,
-  title: string
+  title: string,
+  error: string
 }
 
 export interface FileLis {

@@ -29,6 +29,7 @@ import { RegistrationComponent } from './components/shard/modal/registration/reg
 import { NotificationsComponent } from './components/shard/notifications/notifications.component';
 import { AccountComponent } from './components/pages/account/account.component';
 import { ModalAddPhotoComponent } from './components/shard/modal/modal-add-photo/modal-add-photo.component';
+import { ServicesService } from './components/shard/services/services.service';
 
 
 @NgModule({

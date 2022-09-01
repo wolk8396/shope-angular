@@ -11,7 +11,8 @@ import { Operation } from '../../shard/function/function';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.scss']
+  styleUrls: ['./account.component.scss'],
+  providers: [ServicesService]
 })
 export class AccountComponent implements OnInit {
   avatar: string  = '';
@@ -75,8 +76,6 @@ export class AccountComponent implements OnInit {
       this.onSetAvatar();
     }
   }
-
-
 
   onSetAvatar(): void {
     const{photoUrl} = LocalService.getUserDate();

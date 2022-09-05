@@ -55,25 +55,23 @@ export class CartComponent implements OnInit {
 
     this.getItem = number;
 
-    (itemCount <= 1) ? this.isDelete = !this.isDelete : null;
+    (itemCount <= 1) ? this.simpleService.delete(true, modal_delete.item) : null;
   }
 
   onDelete(value: boolean): void {
-    console.log('work');
-
     this.price = Operation.totalPrice(this.items);
 
     if (!value) {
       this.items = Operation.removeItem(this.items, this.getItem.bookId, this.simpleService);
 
-      (LocalService.getToken() && LocalService.getUserId()) ? this.onUpDateCart() : null;
+      (Operation.isCheckAcc()) ? this.onUpDateCart() : null;
     }
   }
 
 
   onUpDateCart():void {
 
-    if (LocalService.getToken() && LocalService.getUserId()) {
+    if (Operation.isCheckAcc()) {
       const{ authId } = LocalService.getUserDate();
 
       this.api.getProduct().subscribe((el:CartItem | any):void => {
@@ -84,7 +82,7 @@ export class CartComponent implements OnInit {
         });
       });
 
-    } else this.simpleService.Registration(true)
+    } else this.simpleService.Registration(true);
 
   }
 

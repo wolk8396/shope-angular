@@ -50,7 +50,6 @@
           right: 0;
           top: 0;
         }
-
       }
 
       .massage {
@@ -101,6 +100,7 @@
           margin-left: auto;
 
           .label {
+            position: relative;
             width: 150px;
             height: 38px;
             background: #333333;
@@ -109,6 +109,13 @@
             display: flex;
             transition: border 300ms ease;
             cursor: pointer;
+
+            .spinner-grow {
+              display: none;
+              position: absolute;
+              left: 6px;
+              top: 11px;
+            }
 
             &__title {
               color: #fff;

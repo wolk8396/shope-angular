@@ -1,0 +1,23 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-top: 200px;
+  width: 400px;
+  border: #ccc 1px dotted;
+
+  .title {
+    margin: 0 auto;
+    font-size: 60px;
+  }
+
+  a {
+    margin: 0 auto;
+    margin-top: 25px;
+    font-size: 20px;
+  }
+
+  a:hover {
+    color: red;
+  }
+}

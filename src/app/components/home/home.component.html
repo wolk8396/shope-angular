@@ -1,12 +1,13 @@
 <app-modal-delete></app-modal-delete>
 <app-search-product (sendProduct)="filter($event)"></app-search-product>
 <app-modal-items [isModal]="isOpen" [isItem]="isItem"></app-modal-items>
-<!-- <app-modal-delete [deleteItem]="isDelete" (activeDelete)="onSetValue($event)"></app-modal-delete> -->
 <div class="title-results" *ngIf="items.length === 0 else results">No results found</div>
 <ng-template #results>
   <div class="container" *ngFor="let item of items; let i = index ">
     <div class="block-photo">
-      <p class="block-photo__product">{{item.product | titlecase}}</p>
+      <p class="block-photo__product">
+        <a [routerLink]="['/about', item.bookId]">{{item.product | titlecase}}</a>
+      </p>
       <img class="block-photo__photo" [src]="item.photo" >
       <p class="block-photo__author">{{item.author}}</p>
     </div>

@@ -10,26 +10,19 @@ import { HomeComponent } from './components/home/home.component';
 import { CartComponent } from './components/cart/cart.component';
 import { SearchProductComponent } from './components/shard/search-product/search-product.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FilterProductsPipe } from './components/shard/pipeps/filter-products.pipe';
-import { addBtnDirective } from './components/shard/directives/btn.add.directiv';
-import { TotalPricePipe } from './components/shard/pipeps/total-price.pipe';
-import { CountProductPipe } from './components/shard/pipeps/count-product.pipe';
-import { ModalItemsComponent } from './components/shard/modal/modal-items/modal-items.component';
-import { ModalDeleteComponent } from './components/shard/modal/modal-delete/modal-delete.component';
 import { SignInComponent } from './components/pages/sign-in/sign-in.component';
 import { SignUpComponent } from './components/pages/sign-up/sign-up.component';
-import { ErrorPipe } from './components/shard/pipeps/errors-massage';
 import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { SpinnerComponent } from './components/shard/spinner/spinner.component';
-import { RegistrationComponent } from './components/shard/modal/registration/registration.component';
 import { NotificationsComponent } from './components/shard/notifications/notifications.component';
 import { AccountComponent } from './components/pages/account/account.component';
-import { ModalAddPhotoComponent } from './components/shard/modal/modal-add-photo/modal-add-photo.component';
-import { ServicesService } from './components/shard/services/services.service';
+import { ShardModule } from './components/shard/shard-module/shard-modal';
+import { ErrorPageComponent } from './components/pages/error-page/error-page.component';
+import { AboutComponent } from './components/pages/about/about.component';
 
 
 @NgModule({
@@ -39,20 +32,13 @@ import { ServicesService } from './components/shard/services/services.service';
     HomeComponent,
     CartComponent,
     SearchProductComponent,
-    FilterProductsPipe,
-    addBtnDirective,
-    TotalPricePipe,
-    CountProductPipe,
-    ErrorPipe,
-    ModalItemsComponent,
-    ModalDeleteComponent,
     SignInComponent,
     SignUpComponent,
     SpinnerComponent,
-    RegistrationComponent,
     NotificationsComponent,
     AccountComponent,
-    ModalAddPhotoComponent
+    ErrorPageComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
@@ -61,6 +47,7 @@ import { ServicesService } from './components/shard/services/services.service';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    ShardModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),

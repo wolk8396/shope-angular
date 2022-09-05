@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { flush } from '@angular/core/testing';
 import { File_Type, modal_add } from '../../const/const';
 import { Operation } from '../../function/function';
 import { FileLis, UserDate} from '../../interface/interface-const';
@@ -16,10 +17,11 @@ export class ModalAddPhotoComponent implements OnInit, OnChanges {
   file: File | null | undefined;
   photoName: string | undefined;
   isTypeFile: string | undefined;
-  isValue: number = 0
+  isValue: number = 0;
   isShowBar: boolean = false;
   date: UserDate;
   ShowError: string = '';
+  isSpinner: boolean = false;
 
   @Input() isShowModal: boolean;
   @Output() isHiddenModal = new EventEmitter<boolean>();
@@ -42,9 +44,9 @@ export class ModalAddPhotoComponent implements OnInit, OnChanges {
     this.ShowError = '';
   }
 
-  // onShowBar(progress: number) {
-  //   (progress > 0) ? this.isShowBar = true : this.isShowBar = false;
-  // }
+  onSpinner(progress: number): void {
+    (progress > 0) ? this.isSpinner = false : this.isSpinner = true;
+  }
 
   onSetPhoto (date: UserDate, url: string) :UserDate {
     date['photoUrl'] = url;
@@ -64,15 +66,19 @@ export class ModalAddPhotoComponent implements OnInit, OnChanges {
       this.api.isProgressBar$.subscribe((progress) => {
         this.isValue = progress;
         this.isShowBar = true;
-      })
+        this.onSpinner(this.isValue);
+      });
 
       this.api.isDownloadURL$.subscribe((url) => {
-        this.date = Operation.onSetPhoto(this.date, url)
+        this.date = Operation.onSetPhoto(this.date, url);
         this.api.upDateUser(this.date.idLink, this.date).subscribe();
         this.onClose();
-      })
+      });
 
-    } else this.ShowError = modal_add.error;
+    } else {
+      this.ShowError = modal_add.error;
+      this.isSpinner = false;
+    }
 
   }
 }

@@ -7,7 +7,8 @@ import { ServicesService } from '../shard/services/services.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  providers: [ServicesService]
 })
 export class HeaderComponent implements OnInit {
  countCart: number = 0;

@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { Product } from '../interface/interface-const';
+import { books } from '../product/books'
 
 @Injectable({
   providedIn: 'root'
@@ -45,5 +47,9 @@ export class ServicesService {
 
   isDelete(value: boolean) {
     this.isDelete$.next(value)
+  }
+
+  FindBookPage(id: string): Product | undefined {
+    return books.find(({bookId}) => bookId === id)
   }
 }

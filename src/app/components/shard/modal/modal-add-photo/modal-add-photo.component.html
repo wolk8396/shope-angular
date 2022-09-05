@@ -25,6 +25,9 @@
       <div class="btn-block">
         <div class="btn-block__wrapper">
           <label class="label">
+            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"
+              [ngStyle]="{display: !isSpinner ? 'none' : 'block'}"
+            ></span>
             <span class="label__title">Change photo</span>
             <input type="file" class="input_file" name="fileList"
             (change)="onFileSelected($event)" #fileUpload

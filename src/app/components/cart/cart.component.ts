@@ -4,6 +4,7 @@ import { Operation } from '../shard/function/function';
 import { Product } from '../shard/interface/interface-const';
 import { LocalService } from '../shard/local-storage-service/local-storage';
 import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
+import { HeaderCounter } from '../shard/services/header.servis';
 import { ServicesService } from '../shard/services/services.service';
 
 @Component({
@@ -29,6 +30,7 @@ export class CartComponent implements OnInit {
 
   constructor(
     private simpleService: ServicesService,
+    private headerService : HeaderCounter,
     private api: AipHandlers,
     ) { }
 
@@ -62,7 +64,7 @@ export class CartComponent implements OnInit {
     this.price = Operation.totalPrice(this.items);
 
     if (!value) {
-      this.items = Operation.removeItem(this.items, this.getItem.bookId, this.simpleService);
+      this.items = Operation.removeItem(this.items, this.getItem.bookId, this.headerService);
 
       (Operation.isCheckAcc()) ? this.onUpDateCart() : null;
     }

@@ -14,7 +14,7 @@ import { AboutComponent } from './components/pages/about/about.component';
   {path: 'sign-in', component: SignInComponent},
   {path: 'sign-up', component: SignUpComponent},
   {path: 'account', component: AccountComponent},
-  {path: 'about/:id',  component: AboutComponent},
+  {path: 'about/:product',  component: AboutComponent},
   {path: 'error-page', component: ErrorPageComponent},
   {path: '**', redirectTo: '/error-page'}
 ];

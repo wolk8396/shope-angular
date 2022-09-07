@@ -5,17 +5,17 @@
       <div class="container-modal">
         <div class="information">
           <div class="information__frame">
-            <img [src]="isItem.photo">
+            <img [src]="isItem?.photo">
           </div>
-          <div class="information__title">{{isItem.product}}</div>
+          <div class="information__title">{{isItem?.product}}</div>
         </div>
         <div class="additional">
-          <span class="additional__cost">{{isItem.cost * isItem.count |currency}}</span>
+          <span class="additional__cost">{{isItem?.cost |currency}}</span>
           <p>is now in your cart</p>
         </div>
         <div class="block_btns">
           <button type="button" class="btn btn-outline-primary"
-          (click)="isModal = !isModal"
+            (click)="isModal = !isModal"
           >Keep shopping</button>
           <button type="button" class="btn btn-outline-dark"
           (click)="toCart()"

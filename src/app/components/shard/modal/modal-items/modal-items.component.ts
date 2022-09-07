@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, DoCheck } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, DoCheck, SimpleChanges } from '@angular/core';
 import { Router } from '@angular/router';
 import { Product } from '../../interface/interface-const';
 import { LocalService } from '../../local-storage-service/local-storage';
@@ -8,33 +8,32 @@ import { LocalService } from '../../local-storage-service/local-storage';
   templateUrl: './modal-items.component.html',
   styleUrls: ['./modal-items.component.scss']
 })
-export class ModalItemsComponent implements OnInit, OnChanges, DoCheck {
-  item:Product;
+export class ModalItemsComponent implements OnInit, OnChanges {
+  item:Product | undefined;
   countItems:number = 0;
+
   constructor(
     private routing: Router
   ) { }
 
   @Input() isModal: boolean;
-  @Input() isItem: Product;
+  @Input() isItem: Product | undefined;
 
-  ngOnChanges() {
-    this.isModal = true;
+
+  ngOnChanges(changes: SimpleChanges) {
+    // this.isModal;
     this.countItems = LocalService.countNumber();
   }
 
+
   ngOnInit(): void {
     this.isModal = false;
-    console.log(this.isItem);
+    console.log('OnIint');
   }
-
-
-  ngDoCheck() {
-
-  }
-
 
   toCart() {
-    this.routing.navigate(['cart'])
+    this.routing.navigate(['cart']);
+    console.log('fuck');
+
   }
 }

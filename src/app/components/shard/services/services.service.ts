@@ -7,7 +7,7 @@ import { books } from '../product/books'
   providedIn: 'root'
 })
 export class ServicesService {
-  count$ = new Subject<number>();
+  count1$ = new Subject<number>();
   spinner$ = new Subject<boolean>();
   isShowModal$ = new Subject<boolean>();
   isMassages$ = new Subject<string>();
@@ -20,15 +20,15 @@ export class ServicesService {
 
   constructor() { }
 
-  changeCount(count: number) {
-    this.count$.next(count);
+  changeCount(count: number): void {
+    this.count1$.next(count);
   }
 
   SpinnerShow(isShow: boolean): void {
     this.spinner$.next(isShow)
   }
 
-  Registration (value: boolean) {
+  Registration (value: boolean): void {
     this.isShowModal$.next(value)
   }
 
@@ -38,18 +38,16 @@ export class ServicesService {
     this.error$.next(error)
   }
 
-  delete(value: boolean, massage: string) {
-    console.log(value,  massage);
-
+  delete(value: boolean, massage: string): void {
     this.isModalDelete$.next(value);
     this.isModalDeleteMassage$.next(massage);
   }
 
-  isDelete(value: boolean) {
+  isDelete(value: boolean): void {
     this.isDelete$.next(value)
   }
 
-  FindBookPage(id: string): Product | undefined {
-    return books.find(({bookId}) => bookId === id)
+  FindBookPage(title: string): Product | undefined {
+    return books.find(({product}) => product === title)
   }
 }

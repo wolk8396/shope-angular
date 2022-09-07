@@ -18,7 +18,6 @@ export class ModalDeleteComponent implements OnInit, OnChanges {
   @Input() deleteItem: boolean;
   @Output() activeDelete = new EventEmitter<boolean>();
 
-
   ngOnInit(): void {
     this.deleteItem = false;
     this.simpleService.isModalDelete$.subscribe((res) =>  this.onDeletePhoto(res));

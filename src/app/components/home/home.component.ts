@@ -8,6 +8,7 @@ import { Route, Router } from '@angular/router';
 import { ServicesService } from '../shard/services/services.service';
 import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
 import { modal_delete } from '../shard/const/const';
+import { HeaderCounter } from '../shard/services/header.servis';
 
 @Component({
   selector: 'app-home',
@@ -26,11 +27,11 @@ export class HomeComponent implements OnInit {
   isItem: Product;
   isElement:Product;
   isValue: number = 0;
-  #isTets: string = 'test'
 
   constructor(
     private routing: Router,
     private simpleService: ServicesService,
+    private headerService : HeaderCounter,
     private api: AipHandlers,
     ) {}
 
@@ -46,15 +47,12 @@ export class HomeComponent implements OnInit {
 
     (!item.exist) ? this.setLocalStorage(item) :
       this.routing.navigate(['cart']);
-
-      console.log(this.#isTets);
-
   }
 
   setLocalStorage(item: Product): void {
     Operation.setValue(item, LocalService);
     this.countItems = LocalService.countNumber();
-    this.simpleService.changeCount(this.countItems);
+    this.headerService.changeCount(this.countItems);
     this.items = this.items = Operation.setBoolean(this.items, item, true);
     this.onUpDateCart();
   }
@@ -70,7 +68,7 @@ export class HomeComponent implements OnInit {
     if (!value) {
       this.cartArray = LocalService.getData();
       this.items = Operation.setBoolean(this.items, this.isElement, false);
-      Operation.removeItem(this.cartArray, this.isElement.bookId, this.simpleService);
+      Operation.removeItem(this.cartArray, this.isElement.bookId, this.headerService);
       this.onUpDateCart();
     }
   }

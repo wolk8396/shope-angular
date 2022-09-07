@@ -23,6 +23,7 @@ import { AccountComponent } from './components/pages/account/account.component';
 import { ShardModule } from './components/shard/shard-module/shard-modal';
 import { ErrorPageComponent } from './components/pages/error-page/error-page.component';
 import { AboutComponent } from './components/pages/about/about.component';
+import { ServicesService } from './components/shard/services/services.service';
 
 
 @NgModule({
@@ -39,6 +40,7 @@ import { AboutComponent } from './components/pages/about/about.component';
     AccountComponent,
     ErrorPageComponent,
     AboutComponent,
+
   ],
   imports: [
     BrowserModule,

@@ -5,12 +5,14 @@ import { CartItem } from "../services/aip-handlers";
 
 export class Operation {
 
-  static setValue (el: Product, fn: any ): void {
+  static setValue (el: Product | undefined, fn: any ): void {
     const getItems: Product[] = fn.getData();
 
     let setNewEl: Product[] = [];
 
-    setNewEl = [...getItems, el].map(item => ({...item, exist: true}));
+    if (typeof el !== 'undefined') {
+      setNewEl = [...getItems, el].map(item => ({...item, exist: true}));
+    }
 
     fn.saveData(setNewEl);
   }

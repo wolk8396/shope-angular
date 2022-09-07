@@ -1,29 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Operation } from '../shard/function/function';
 import { LocalService } from '../shard/local-storage-service/local-storage';
+import { HeaderCounter } from '../shard/services/header.servis';
 import { ServicesService } from '../shard/services/services.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  providers: [ServicesService]
+  providers: [ServicesService, HeaderCounter]
 })
 export class HeaderComponent implements OnInit {
- countCart: number = 0;
+ countCart: number = LocalService.countNumber();
 
   constructor(
-    private simpleService: ServicesService,
+    private  service: ServicesService,
+    private header: HeaderCounter,
     private routing: Router,
     ) {}
 
   ngOnInit(): void {
     this.countCart = LocalService.countNumber();
-    this.simpleService.count$.subscribe((count) => this.countCarts(count));
+    this.header.count$.subscribe((count) => this.countCarts(count));
   }
 
-  countCarts(data: number): void {
+ 
+
+  countCarts(data: number):void {
     this.countCart = data;
   }
 
@@ -34,7 +38,7 @@ export class HeaderComponent implements OnInit {
   onAccount(): void {
     (Operation.isCheckAcc()) ?
       this.routing.navigate(['account']) :
-      this.simpleService.Registration(true);
+      this.service.Registration(true);
   }
 
 }

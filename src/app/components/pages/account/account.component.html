@@ -3,7 +3,7 @@
   [isShowModal]="isModal"
   (isHiddenModal)="onHiddenModal($event)"
 ></app-modal-add-photo>
-<div class="account">
+<div class="account" *ngIf="!isProfile; else Profile">
   <div class="account__block-photo"
     (mouseleave)="isMouse = false"
     >
@@ -16,7 +16,9 @@
     </ul>
     <div class="menu-photo"></div>
     <div class="block-btn">
-      <button type="button" class="btn btn-primary">Edit Profile</button>
+      <button type="button" class="btn btn-primary"
+      (click)="goToProfile()"
+      >Edit Profile</button>
     </div>
   </div>
   <div class="account__information">
@@ -51,3 +53,8 @@
     </div>
   </div>
 </div>
+<ng-template #Profile>
+  <router-outlet></router-outlet>
+</ng-template>
+
+

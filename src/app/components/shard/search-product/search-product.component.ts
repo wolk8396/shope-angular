@@ -13,7 +13,7 @@ export class SearchProductComponent implements OnInit{
   valueIn: string = '';
   filter: Product[] = [];
   category: Array<string> = ['All', 'Novels', 'Science Fiction', 'fantasy', 'Harry Potter', 'other'];
-  searchField:string = 'product'
+  searchField: string = 'product'
   arr: Product[] = [];
 
   constructor() { }

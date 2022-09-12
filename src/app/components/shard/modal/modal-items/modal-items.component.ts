@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, OnChanges, DoCheck, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, DoCheck, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
-import { Product } from '../../interface/interface-const';
+import { InputModal, Product } from '../../interface/interface-const';
 import { LocalService } from '../../local-storage-service/local-storage';
 
 @Component({
@@ -9,8 +9,9 @@ import { LocalService } from '../../local-storage-service/local-storage';
   styleUrls: ['./modal-items.component.scss']
 })
 export class ModalItemsComponent implements OnInit, OnChanges {
-  item:Product | undefined;
-  countItems:number = 0;
+  item: Product | undefined;
+  countItems: number = 0;
+  element: Product | undefined;
 
   constructor(
     private routing: Router
@@ -18,6 +19,8 @@ export class ModalItemsComponent implements OnInit, OnChanges {
 
   @Input() isModal: boolean;
   @Input() isItem: Product | undefined;
+  @Input() date: InputModal;
+
 
 
   ngOnChanges(changes: SimpleChanges) {
@@ -28,7 +31,8 @@ export class ModalItemsComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.isModal = false;
-    console.log('OnIint');
+    console.log(this.date);
+
   }
 
   toCart() {

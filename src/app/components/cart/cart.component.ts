@@ -76,8 +76,8 @@ export class CartComponent implements OnInit {
     if (Operation.isCheckAcc()) {
       const{ authId } = LocalService.getUserDate();
 
-      this.api.getProduct().subscribe((el:CartItem | any):void => {
-        const{ idCart } = Operation.dynamicKeyHttp(el, authId);
+      this.api.getProduct().subscribe((el:CartItem | any): void => {
+        const { idCart } = Operation.dynamicKeyHttp(el, authId);
 
         this.api.upDateCart(idCart, this.items, authId).subscribe((res) => {
           this.simpleService.Notification(true, this.isUpDate, false)

@@ -1,0 +1,52 @@
+<div class="profile">
+  <form class="wrapper" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="block-input">
+      <div class="block-title">First Name :</div>
+      <div class="input-block">
+        <input type="text"  class="form-control"
+        formControlName="first_name"
+        >
+      </div>
+    </div>
+    <div class="block-input">
+      <div class="block-title">Last Name :</div>
+      <div class="input-block">
+        <input type="text"  class="form-control"
+         formControlName="last_name"
+        >
+      </div>
+    </div>
+    <div class="block-input">
+      <div class="block-title">birth :</div>
+      <div class="input-block">
+        <input id="birthInput" type="date" class="form-control"
+          formControlName="birth"
+        >
+      </div>
+    </div>
+    <div class="block-input">
+      <div class="block-title">Country :</div>
+      <div class="input-block">
+        <input type="text"  class="form-control"
+         formControlName="country"
+        >
+      </div>
+    </div>
+    <div class="block-input">
+      <div class="block-title">City:</div>
+      <div class="input-block">
+        <input type="text"  class="form-control"
+         formControlName="city"
+        >
+      </div>
+    </div>
+    <div class="block-BtnSubmit">
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
+  </form>
+  <div class="block-btn-back">
+    <button type="button" class="btn btn-dark">Back to account</button>
+  </div>
+</div>
+
+

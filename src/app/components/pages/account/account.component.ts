@@ -6,6 +6,7 @@ import { ServicesService } from '../../shard/services/services.service';
 import { modal_delete } from '../../shard/const/const';
 import { AipHandlers } from '../../shard/services/aip-handlers';
 import { Operation } from '../../shard/function/function';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -27,11 +28,13 @@ export class AccountComponent implements OnInit {
   isMouse: boolean = false;
   isModal: boolean;
   getDate: UserDate;
+  isProfile: boolean = false;
 
 
   constructor(
     private simpleService: ServicesService,
     private api: AipHandlers,
+    private routing: Router,
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +43,7 @@ export class AccountComponent implements OnInit {
     this.simpleService.isDelete$.subscribe((value) => this.onDelete(value));
   }
 
-  getDateUser():void {
+  getDateUser(): void {
     this.dateUser = LocalService.getUserDate()
     const{first_name, last_name, date, birth, email} = this.dateUser;
     this.fullName = `${first_name} ${last_name}`
@@ -83,6 +86,11 @@ export class AccountComponent implements OnInit {
     (photoUrl !== 'none') ?
       this.avatar = photoUrl :
       this.avatar = Url_img.avatar
+  }
+
+  goToProfile (): void {
+    this.isProfile = !this.isProfile
+    this.routing.navigate(['account','profile']);
   }
 
 }

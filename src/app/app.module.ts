@@ -24,6 +24,7 @@ import { ShardModule } from './components/shard/shard-module/shard-modal';
 import { ErrorPageComponent } from './components/pages/error-page/error-page.component';
 import { AboutComponent } from './components/pages/about/about.component';
 import { ServicesService } from './components/shard/services/services.service';
+import { ProfileComponent } from './components/pages/profile/profile.component';
 
 
 @NgModule({
@@ -40,7 +41,7 @@ import { ServicesService } from './components/shard/services/services.service';
     AccountComponent,
     ErrorPageComponent,
     AboutComponent,
-
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

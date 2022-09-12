@@ -24,8 +24,10 @@ export interface Product {
     name?: string,
     idLink?: string,
     key:string,
-    // basketId:string
-    photoUrl: string
+    photoUrl: string,
+    city?: string,
+    country?: string
+    [str: string]: any,
   }
 
   export interface UserDate2 {
@@ -82,5 +84,10 @@ export interface FileLis {
     webkitRelativePath: string
   }
   length: number
+}
+
+export interface InputModal {
+  items: Product | undefined,
+  value: boolean
 }
 // FileList {0: File, length: 1}

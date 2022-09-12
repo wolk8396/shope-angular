@@ -1,0 +1,46 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 500px;
+  height: 455px;
+  margin: 0 auto;
+  margin-top: 150px;
+
+  .wrapper {
+    width: 500px;
+    height: 406px;
+    border: #ccc 1px dotted;
+
+    .block-input {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      // border: 1px solid;
+      width: 376px;
+      margin: 0 auto;
+      margin-top: 22px;
+
+      .block-title {
+        margin-top: 7px;
+        font-weight: bold;
+      }
+
+      .input-block {
+        width: 272px;
+      }
+    }
+
+    .block-BtnSubmit {
+      display: flex;
+      margin-left: auto;
+      width: 80px;
+      margin-top: 59px;
+    }
+  }
+
+  .block-btn-back {
+    width: 300px;
+    height: 39px;
+  }
+}

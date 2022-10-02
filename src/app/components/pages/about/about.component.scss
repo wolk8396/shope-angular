@@ -1,6 +1,6 @@
 .wrapper {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 1348px;
 
   &__container {
@@ -66,4 +66,12 @@
       height: 100%;
     }
   }
+
+  .container-todo {
+    display: flex;
+    margin: 0 auto;
+    margin-top: 100px;
+  }
 }
+
+

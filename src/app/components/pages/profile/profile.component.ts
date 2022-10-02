@@ -1,7 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormArray, FormControl, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { upUser_massage } from '../../shard/const/const';
 import { UserDate } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
+import { NotificationsComponent } from '../../shard/notifications/notifications.component';
+import { AipHandlers } from '../../shard/services/aip-handlers';
+import { AccountService } from '../../shard/services/routing-service';
+import { ServicesService } from '../../shard/services/services.service';
 
 @Component({
   selector: 'app-profile',
@@ -14,10 +20,17 @@ export class ProfileComponent implements OnInit {
   firstName: string = '';
   lastName: string = '';
   birth: string = '';
-  city: string = '---';
-  country: string = '---';
+  city: string | undefined;
+  country: string | undefined;
+  isAccount: boolean = false;
+  additional :FormArray;
 
-  constructor() { }
+  constructor(
+    private routing: Router,
+    private service: ServicesService,
+    private showAccount: AccountService,
+    private api: AipHandlers,
+  ) { }
 
   ngOnInit(): void {
     this.onSetValue();
@@ -30,19 +43,35 @@ export class ProfileComponent implements OnInit {
     this.firstName = this.getUserDate.first_name;
     this.lastName = this.getUserDate.last_name;
     this.birth = this.getUserDate.birth;
+    this.city = this.getUserDate.city;
+    this.country = this.getUserDate.country;
 
     this.onCheckOut(this.getUserDate, 'city',  this.city);
     this.onCheckOut(this.getUserDate, 'country',  this.country);
   }
 
-  onCheckOut (date: UserDate, str: string, strValue: string): void {
+  onCheckOut (date: UserDate, str: string, strValue: string | undefined): void {
     (date[str] !== undefined) ? strValue = date[str] : strValue;
   }
 
   onSubmit(): void {
-    this.getUserDate = LocalService.getUserDate();
+    const {update, error} = upUser_massage;
 
-    console.log(Object.assign(this.getUserDate, this.form.value));
+    this.getUserDate = LocalService.getUserDate();
+    this.getUserDate = Object.assign(this.getUserDate, this.form.value)
+
+
+    this.api.upDateUser(this.getUserDate.idLink, this.getUserDate).subscribe({
+      next: () => {
+        this.service.Notification(true, update, false);
+        LocalService.setUserDate(this.getUserDate);
+      },
+
+      error: () => {
+        this.service.Notification(true, error, true);
+      }
+
+    });
   }
 
   onForm (): void {
@@ -52,7 +81,23 @@ export class ProfileComponent implements OnInit {
       birth: new FormControl(this.birth),
       country: new FormControl(this.country),
       city: new FormControl(this.city),
+      addInform: new FormArray([])
     })
+
+    this.additional = this.form.controls["addInform"] as FormArray
+  }
+
+  onBack () {
+    this.routing.navigate(['account']);
+    this.isAccount =!this.isAccount;
+
+    this.showAccount.showAccount(false);
+  }
+
+
+  onAddDate () {
+    const control = new FormControl('');
+    this.additional.push(control)
   }
 
 }

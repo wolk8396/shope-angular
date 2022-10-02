@@ -9,6 +9,8 @@ import { ServicesService } from '../shard/services/services.service';
 import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
 import { modal_delete } from '../shard/const/const';
 import { HeaderCounter } from '../shard/services/header.servis';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
     private simpleService: ServicesService,
     private headerService : HeaderCounter,
     private api: AipHandlers,
+    private http: HttpClient,
     ) {}
 
   ngOnInit(): void {

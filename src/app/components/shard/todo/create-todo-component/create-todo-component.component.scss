@@ -1,0 +1,43 @@
+.wrapper-todo {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 950px;
+  height: 300px;
+  border: #ccc 2px dotted;
+  padding: 16px;
+
+
+  &__avatar {
+    width: 270px;
+    height: 100%;
+
+    .photo-user {
+      width: 230px;
+      height: 200px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .fullName {
+      margin-top: 11px;
+    }
+  }
+
+  &__comment {
+    width: 670px;
+
+    .form-floating {
+      height: 199px;
+    }
+
+    .btn-dark {
+      display: flex;
+      margin-left: auto;
+      margin-top: 33px;
+    }
+  }
+}

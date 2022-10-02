@@ -22,6 +22,11 @@ export interface ShoppingCart {
   error: string
 }
 
+export interface Profile {
+  update: string,
+  error: string
+}
+
 export const errorsMessages = new Map<string, string>([
   ['email', 'Please enter a valid email.'],
   ['first_name', 'Please enter a valid name'],
@@ -55,6 +60,11 @@ export const massage_error: Errors = {
 export const cart_massage: ShoppingCart = {
   upDate:"your cart has been update successfully",
   error: "ERROR!! Unfortunately, it is not possible to update your shopping cart. Try again later"
+}
+
+export const upUser_massage: Profile = {
+  update: "your profile has been update successfully",
+  error: "ERROR!! Unfortunately, it is not possible to update your profile. Try again later"
 }
 
 export const modal_add: Modal_Photo = {

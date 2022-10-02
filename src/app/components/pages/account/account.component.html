@@ -3,7 +3,7 @@
   [isShowModal]="isModal"
   (isHiddenModal)="onHiddenModal($event)"
 ></app-modal-add-photo>
-<div class="account" *ngIf="!isProfile; else Profile">
+<div class="account" *ngIf="!isProfile;">
   <div class="account__block-photo"
     (mouseleave)="isMouse = false"
     >
@@ -53,8 +53,7 @@
     </div>
   </div>
 </div>
-<ng-template #Profile>
-  <router-outlet></router-outlet>
-</ng-template>
+<router-outlet></router-outlet>
+
 
 

@@ -25,6 +25,8 @@ import { ErrorPageComponent } from './components/pages/error-page/error-page.com
 import { AboutComponent } from './components/pages/about/about.component';
 import { ServicesService } from './components/shard/services/services.service';
 import { ProfileComponent } from './components/pages/profile/profile.component';
+import { CreateTodoComponentComponent } from './components/shard/todo/create-todo-component/create-todo-component.component';
+import { CommentsTodoComponentComponent } from './components/shard/todo/comments-todo-component/comments-todo-component.component';
 
 
 @NgModule({
@@ -42,6 +44,8 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
     ErrorPageComponent,
     AboutComponent,
     ProfileComponent,
+    CreateTodoComponentComponent,
+    CommentsTodoComponentComponent,
   ],
   imports: [
     BrowserModule,

@@ -27,9 +27,7 @@ export class NotificationsComponent implements OnInit {
     });
 
     this.simpleService.error$.subscribe((errorColor) => {
-      console.log(errorColor);
-
-       this.error = errorColor;
+      this.error = errorColor;
     })
 
   }

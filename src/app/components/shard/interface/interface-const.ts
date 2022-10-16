@@ -90,4 +90,23 @@ export interface InputModal {
   items: Product | undefined,
   value: boolean
 }
-// FileList {0: File, length: 1}
+
+export interface  createToDo {
+  value: boolean,
+  date: {
+    book_id: string | undefined,
+    userId: string,
+    comment: string,
+    time: Date | string,
+    likes?: string[]
+  }
+}
+
+export interface commentUser {
+  first_name: string,
+  last_name: string,
+  userId: string,
+  comment: string
+  time: Date | string,
+  likes?: string[]
+}

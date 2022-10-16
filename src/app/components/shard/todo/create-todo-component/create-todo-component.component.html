@@ -7,9 +7,11 @@
   </div>
   <div class="wrapper-todo__comment">
     <div class="form-floating">
-      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100%"></textarea>
+      <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100%"  [disabled]="isValue"
+        [(ngModel)] = "getInputValue"
+      ></textarea>
       <label for="floatingTextarea2">Comments</label>
     </div>
-    <button type="button" class="btn btn-dark">Leave comment</button>
+    <button type="button" class="btn btn-dark" (click)="onBtn()">Leave comment</button>
   </div>
 </div>

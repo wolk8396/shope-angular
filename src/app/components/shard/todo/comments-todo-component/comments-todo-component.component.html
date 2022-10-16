@@ -1,1 +1,10 @@
-<p>comments-todo-component works!</p>
+<div class="todo-list">
+  <div class="todo-list__avatar"></div>
+  <div class="todo-list__information">
+    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
+      [disabled]="true"
+      [(ngModel)]="dateComments.comment"
+    ></textarea>
+  </div>
+</div>
+

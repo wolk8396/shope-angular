@@ -24,20 +24,16 @@ export class ModalItemsComponent implements OnInit, OnChanges {
 
 
   ngOnChanges(changes: SimpleChanges) {
-    // this.isModal;
     this.countItems = LocalService.countNumber();
   }
 
 
   ngOnInit(): void {
     this.isModal = false;
-    console.log(this.date);
 
   }
 
   toCart() {
     this.routing.navigate(['cart']);
-    console.log('fuck');
-
   }
 }

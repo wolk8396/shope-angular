@@ -4,7 +4,7 @@ import { Auth, Config, getAuth, signInWithEmailAndPassword } from '@angular/fire
 import { createUserWithEmailAndPassword, UserCredential } from '@firebase/auth';
 import { catchError, Observable, Subject } from 'rxjs';
 import { cart_massage } from '../const/const';
-import { Product, UserBasket, UserDate, UserDate2 } from '../interface/interface-const';
+import { commentUser, Product, UserBasket, UserDate, UserDate2 } from '../interface/interface-const';
 import { LocalService } from '../local-storage-service/local-storage';
 import { ServicesService } from './services.service';
 import {
@@ -53,6 +53,21 @@ export class AipHandlers {
     return  this.http.post<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users.json`, dateUser)
   }
 
+  addCart(items: Product[] | number, userId: string): Observable<CartItem> {
+    return this.http.post<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket.json`, {
+      goods: items,
+      userId: userId,
+    })
+  }
+
+  addComment(date : any): Observable<commentUser> {
+    return this.http.post<commentUser>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/comments.json`, date)
+  }
+
+  // getComments(): commentUser {
+  //   return this.http.get<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users/${id}.json`)
+  // }
+
   getUserDate(id: string | undefined):Observable<UserDate> {
     return this.http.get<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users/${id}.json`)
   }
@@ -61,15 +76,14 @@ export class AipHandlers {
     return this.http.get<UserDate2[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users.json`)
   }
 
-  addCart(items: Product[] | number, userId: string): Observable<CartItem> {
-    return this.http.post<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket.json`, {
-      goods: items,
-      userId: userId,
-    })
-  }
+
 
   getProduct():Observable<CartItem> {
     return this.http.get<CartItem>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/.json`)
+  }
+
+  getUserItems(id: string | undefined):Observable<UserBasket[]> {
+    return this.http.get<UserBasket[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`)
   }
 
   upDateCart(id: string | undefined, items: Product[], authId: string):Observable<CartItem> {
@@ -85,9 +99,7 @@ export class AipHandlers {
     )
   }
 
-  getUserItems(id: string | undefined):Observable<UserBasket[]> {
-    return this.http.get<UserBasket[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/basket/${id}.json`)
-  }
+
 
   upDateUser(id : string | undefined, date: UserDate): Observable<UserDate> {
     delete date.idLink

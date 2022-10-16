@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { Operation } from '../../shard/function/function';
-import { InputModal, Product } from '../../shard/interface/interface-const';
+import { commentUser, createToDo, InputModal, Product } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
 import { AipHandlers, CartItem } from '../../shard/services/aip-handlers';
 import { HeaderCounter } from '../../shard/services/header.servis';
@@ -11,7 +11,8 @@ import { ServicesService } from '../../shard/services/services.service';
 @Component({
   selector: 'app-about',
   templateUrl: './about.component.html',
-  styleUrls: ['./about.component.scss']
+  styleUrls: ['./about.component.scss'],
+  providers: [ServicesService]
 })
 export class AboutComponent implements OnInit {
   item: Product | undefined;
@@ -27,6 +28,7 @@ export class AboutComponent implements OnInit {
   #product: Product[] = [];
   isHidden$ = new BehaviorSubject<boolean>(false);
   dateModal: InputModal;
+  post: commentUser[] = [];
 
   constructor(
     private routerActive:ActivatedRoute,
@@ -37,6 +39,7 @@ export class AboutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.service.Registration(true);
 
     this.routerActive.params.subscribe((params: Params) => {
       this.item = this.service.FindBookPage(params.product);
@@ -117,6 +120,17 @@ export class AboutComponent implements OnInit {
       this.isOpen = !this.isOpen;
       this.onSetDateModal(el, true);
     }
+  }
+
+
+  onOpenModal (value: createToDo | any): void {
+    this.service.Registration(value.value);
+    this.post.push(value.date);
+
+    // if (!value.value) {
+    //  this.api.addComment(value.date).subscribe()
+
+    // }
   }
 
 }

@@ -1,4 +1,5 @@
 <app-modal-items [isModal]="isOpen" [isItem]="isItem" [date]="onSetDateModal(item, false)"></app-modal-items>
+<app-registration></app-registration>
 <div class="wrapper">
   <div class="wrapper__container">
     <div class="block-photo">
@@ -32,6 +33,7 @@
     </div>
   </div>
   <div class="container-todo">
-    <app-create-todo-component></app-create-todo-component>
+    <app-create-todo-component [bookId]="item?.bookId" (openModal)='onOpenModal($event)'></app-create-todo-component>
+    <app-comments-todo-component  *ngFor="let item of post" [dateComments]="item"></app-comments-todo-component>
   </div>
 </div>

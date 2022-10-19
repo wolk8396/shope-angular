@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Auth, Config, getAuth, signInWithEmailAndPassword } from '@angular/fire/auth';
 import { createUserWithEmailAndPassword, UserCredential } from '@firebase/auth';
-import { catchError, Observable, Subject } from 'rxjs';
+import { catchError, map, Observable, Subject } from 'rxjs';
 import { cart_massage } from '../const/const';
 import { commentUser, Product, UserBasket, UserDate, UserDate2 } from '../interface/interface-const';
 import { LocalService } from '../local-storage-service/local-storage';
@@ -64,16 +64,17 @@ export class AipHandlers {
     return this.http.post<commentUser>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/comments.json`, date)
   }
 
-  // getComments(): commentUser {
-  //   return this.http.get<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users/${id}.json`)
-  // }
+  getComments(): Observable<commentUser> {
+    return this.http.get<commentUser>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/comments.json`,{
+    })
+  }
 
   getUserDate(id: string | undefined):Observable<UserDate> {
     return this.http.get<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users/${id}.json`)
   }
 
-  getUsersDate():Observable<UserDate2[]> {
-    return this.http.get<UserDate2[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users.json`)
+  getUsersDate():Observable<UserDate[]> {
+    return this.http.get<UserDate[]>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users.json`)
   }
 
 
@@ -106,9 +107,17 @@ export class AipHandlers {
     return this.http.put<UserDate>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/users/${id}.json`,
     {
       ...date,
-    }
-    )
+    })
   }
+
+  upDateComments(id: string | undefined, date: commentUser):Observable<commentUser> {
+    delete date.item_id
+    return this.http.put<commentUser>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/comments/${id}.json`,
+    {
+      ...date,
+    })
+  }
+
 
   photoUser(file: any, photoName: string | undefined): void {
     const storage = getStorage();
@@ -142,6 +151,10 @@ export class AipHandlers {
     const desertRef = ref(storage, url);
 
     await deleteObject(desertRef);
+  }
+
+  removeComment(id: string | undefined): any {
+   return this.http.delete<any>(`https://shop-angular-eb10e-default-rtdb.firebaseio.com/comments/${id}.json`)
   }
 }
 

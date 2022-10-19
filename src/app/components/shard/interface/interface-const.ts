@@ -98,15 +98,19 @@ export interface  createToDo {
     userId: string,
     comment: string,
     time: Date | string,
-    likes?: string[]
+    likes?: string[],
+    authId?: string
   }
 }
 
 export interface commentUser {
-  first_name: string,
-  last_name: string,
+  photoUrl?: string,
+  book_id:string,
+  item_id?: string,
   userId: string,
   comment: string
   time: Date | string,
   likes?: string[]
+  first_name: string,
+  last_name: string
 }

@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Operation } from '../shard/function/function';
 import { LocalService } from '../shard/local-storage-service/local-storage';
@@ -11,7 +11,7 @@ import { ServicesService } from '../shard/services/services.service';
   styleUrls: ['./header.component.scss'],
   providers: [ServicesService, HeaderCounter]
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
  countCart: number = LocalService.countNumber();
 
   constructor(
@@ -25,8 +25,6 @@ export class HeaderComponent implements OnInit {
     this.header.count$.subscribe((count) => this.countCarts(count));
   }
 
- 
-
   countCarts(data: number):void {
     this.countCart = data;
   }
@@ -39,6 +37,12 @@ export class HeaderComponent implements OnInit {
     (Operation.isCheckAcc()) ?
       this.routing.navigate(['account']) :
       this.service.Registration(true);
+  }
+
+  ngOnDestroy(): void {
+    console.log('header');
+
+    this.header.count$.unsubscribe();
   }
 
 }

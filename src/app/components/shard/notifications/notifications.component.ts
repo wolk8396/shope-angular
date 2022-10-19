@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { ServicesService } from '../services/services.service';
 
 @Component({
@@ -6,7 +6,7 @@ import { ServicesService } from '../services/services.service';
   templateUrl: './notifications.component.html',
   styleUrls: ['./notifications.component.scss']
 })
-export class NotificationsComponent implements OnInit {
+export class NotificationsComponent implements OnInit, OnDestroy {
   massage: string = '';
   isShow: boolean = false;
   error:boolean = false;
@@ -30,6 +30,12 @@ export class NotificationsComponent implements OnInit {
       this.error = errorColor;
     })
 
+  }
+
+  ngOnDestroy(): void {
+    this.simpleService.isShowMassage$.unsubscribe();
+    this.simpleService.isMassages$.unsubscribe();
+    this.simpleService.error$.unsubscribe();
   }
 
 }

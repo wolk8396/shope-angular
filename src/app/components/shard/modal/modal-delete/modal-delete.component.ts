@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, Output,  EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, OnChanges,  Output,  EventEmitter, OnDestroy } from '@angular/core';
 import { Product } from '../../interface/interface-const';
 import { ServicesService } from '../../services/services.service';
 
@@ -7,7 +7,7 @@ import { ServicesService } from '../../services/services.service';
   templateUrl: './modal-delete.component.html',
   styleUrls: ['./modal-delete.component.scss']
 })
-export class ModalDeleteComponent implements OnInit, OnChanges {
+export class ModalDeleteComponent implements OnInit, OnChanges, OnDestroy {
   isClose: boolean = false;
   isMassage: string = '';
 
@@ -26,8 +26,11 @@ export class ModalDeleteComponent implements OnInit, OnChanges {
 
   ngOnChanges() {
     this.deleteItem = true;
-    console.log(this.isClose);
+  }
 
+  ngOnDestroy(): void {
+    this.simpleService.isModalDelete$.unsubscribe();
+    this.simpleService.isModalDeleteMassage$.unsubscribe();
   }
 
   onDeletePhoto(res: boolean) {

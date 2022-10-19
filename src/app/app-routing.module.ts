@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { PreloadAllModules, PreloadingStrategy, RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { CartComponent } from "../app/components/cart/cart.component";
 import { SignInComponent } from './components/pages/sign-in/sign-in.component';
@@ -22,6 +22,7 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
   {path: 'error-page', component: ErrorPageComponent},
   {path: '**', redirectTo: '/error-page'}
 ];
+
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

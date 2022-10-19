@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { Operation } from '../../shard/function/function';
-import { commentUser, createToDo, InputModal, Product } from '../../shard/interface/interface-const';
+import { commentUser, createToDo, InputModal, Product, UserDate, UserDate2 } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
 import { AipHandlers, CartItem } from '../../shard/services/aip-handlers';
 import { HeaderCounter } from '../../shard/services/header.servis';
@@ -29,6 +29,8 @@ export class AboutComponent implements OnInit {
   isHidden$ = new BehaviorSubject<boolean>(false);
   dateModal: InputModal;
   post: commentUser[] = [];
+  todo: commentUser[] = [];
+  usersDate:UserDate[] = [];
 
   constructor(
     private routerActive:ActivatedRoute,
@@ -39,6 +41,7 @@ export class AboutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.onGetComments();
     this.service.Registration(true);
 
     this.routerActive.params.subscribe((params: Params) => {
@@ -48,13 +51,14 @@ export class AboutComponent implements OnInit {
     this.onRedirect(this.item);
     this.onSetStr();
     this.onChangeBtn();
+
   }
 
   onRedirect(item: Product | undefined): void {
     (item === undefined) ? this.routing.navigate(['**']) : null;
   }
 
-  onSetDateModal(element: Product | undefined, flag: boolean): InputModal {
+  onSetDateModal(_element: Product | undefined, flag: boolean): InputModal {
     this.dateModal = {
       items: this.item,
       value: flag
@@ -94,7 +98,6 @@ export class AboutComponent implements OnInit {
 
   defineCondition(): Product | undefined {
     const products : Product [] = LocalService.getData();
-
     return products.find(({bookId}) => bookId === this.item?.bookId);
   }
 
@@ -122,15 +125,57 @@ export class AboutComponent implements OnInit {
     }
   }
 
-
   onOpenModal (value: createToDo | any): void {
     this.service.Registration(value.value);
-    this.post.push(value.date);
 
-    // if (!value.value) {
-    //  this.api.addComment(value.date).subscribe()
+    if (!value.value) {
+      this.api.addComment(value.date).subscribe({
+        next: () => {
+          this.onGetComments();
+        }
+      });
+    }
+  }
 
-    // }
+  onGetComments(): void {
+    const values = new Map();
+    const date = new Map();
+
+    this.api.getComments().subscribe({
+      next: ((res) => {
+      this.todo = Operation.responseMapper(res, 'item_id')
+                              .filter((el) => el.book_id === this.item?.bookId);
+
+        this.todo.forEach(element => values.set(element.userId, element.userId));
+
+        this.api.getUsersDate().subscribe({
+          next: ((res) => {
+            this.usersDate = Object.values(res).filter(({authId}) => authId === values.get(authId));
+
+            this.usersDate.forEach(({authId, first_name, last_name, photoUrl}) => {
+              date.set(authId, {first_name, last_name, photoUrl});
+            });
+
+            this.post = this.todo.map((item) => {
+              const {first_name, last_name, photoUrl} = date.get(item.userId);
+
+              return {...item,
+                photoUrl:photoUrl,
+                first_name: first_name,
+                last_name: last_name
+              }
+            })
+          })
+        })
+      })
+    })
+  }
+
+
+  onDelete(value: boolean): void {
+    if (value) {
+      this.onGetComments()
+    }
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ServicesService } from '../../services/services.service';
 
@@ -7,7 +7,7 @@ import { ServicesService } from '../../services/services.service';
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss']
 })
-export class RegistrationComponent implements OnInit {
+export class RegistrationComponent implements OnInit, OnDestroy {
   isShowModal: boolean = false;
   title:string = 'Please log in or register'
 
@@ -30,6 +30,10 @@ export class RegistrationComponent implements OnInit {
   onSign_up():void {
     this.isShowModal = !this.isShowModal
     this.routing.navigate(['sign-up']);
+  }
+
+  ngOnDestroy(): void {
+    this.simpleService.isShowModal$.unsubscribe();
   }
 
 }

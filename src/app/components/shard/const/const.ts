@@ -75,7 +75,8 @@ export const modal_add: Modal_Photo = {
 
 export const modal_delete = {
   item: 'Are You are sure ? Do you want to remove this item from your shopping cart',
-  photo: 'Are You are sure ? Do you want to remove this photo form your account'
+  photo: 'Are You are sure ? Do you want to remove this photo form your account',
+  comment: 'Are You are sure ? Do you want to remove this comment'
 }
 
 export const File_Type: string[] = ['image/png','image/jpg','image/peg','image/jpeg'];

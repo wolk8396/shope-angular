@@ -1,5 +1,6 @@
 <app-modal-items [isModal]="isOpen" [isItem]="isItem" [date]="onSetDateModal(item, false)"></app-modal-items>
 <app-registration></app-registration>
+<app-modal-delete></app-modal-delete>
 <div class="wrapper">
   <div class="wrapper__container">
     <div class="block-photo">
@@ -34,6 +35,8 @@
   </div>
   <div class="container-todo">
     <app-create-todo-component [bookId]="item?.bookId" (openModal)='onOpenModal($event)'></app-create-todo-component>
-    <app-comments-todo-component  *ngFor="let item of post" [dateComments]="item"></app-comments-todo-component>
+    <app-comments-todo-component  *ngFor="let item of post" [dateComments]="item"
+    (isValue)="onDelete($event)"
+    ></app-comments-todo-component>
   </div>
 </div>

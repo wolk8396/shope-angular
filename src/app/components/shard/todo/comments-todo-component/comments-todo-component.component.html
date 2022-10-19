@@ -1,10 +1,27 @@
 <div class="todo-list">
-  <div class="todo-list__avatar"></div>
+  <div class="todo-list__avatar">
+    <img class="photo" [src]="dateComments.photoUrl">
+    <div>{{isFullName}}</div>
+  </div>
   <div class="todo-list__information">
     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
-      [disabled]="true"
+      [ngStyle]="{border: isInput ? 'none' : '1px solid'}"
+      [disabled]="isInput"
       [(ngModel)]="dateComments.comment"
-    ></textarea>
+    >
+    </textarea>
+    <i class="bi bi-pen-fill" *ngIf="isCheck" (click)="isInput = !isInput;"></i>
+    <div class="block-btns" *ngIf="isCheck">
+      <button type="button" class="btn btn-primary" *ngIf="!isInput"
+        (click)="onChangeComment(dateComments)"
+      >
+        <i class="bi bi-send-plus"></i>Send
+      </button>
+      <button type="button" class="btn btn-primary" *ngIf="isInput"
+        (click)="onRemoveTodo(dateComments.item_id)"
+      >
+        <i class="bi bi-x-square-fill"></i>{{isBtn}}
+      </button>
+    </div>
   </div>
 </div>
-

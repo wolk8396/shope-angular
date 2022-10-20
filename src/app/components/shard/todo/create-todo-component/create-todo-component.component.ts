@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import * as moment from 'moment';
 import { Operation } from '../../function/function';
 import { createToDo, UserDate, UserDate2 } from '../../interface/interface-const';
 import { LocalService } from '../../local-storage-service/local-storage';
@@ -42,7 +41,6 @@ export class CreateTodoComponentComponent implements OnInit {
       this.isValue = true;
     }
   }
-
 
   addDate (): createToDo {
    const { authId }  = this.userDate;

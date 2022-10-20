@@ -1,6 +1,6 @@
 import { Component,  OnChanges, OnInit, DoCheck} from '@angular/core';
 
-import { Product } from '../shard/interface/interface-const';
+import { itemsBooks, Product } from '../shard/interface/interface-const';
 import { books } from '../shard/product/books';
 import { LocalService } from "../shard/local-storage-service/local-storage";
 import { Operation } from '../shard/function/function';
@@ -9,14 +9,13 @@ import { ServicesService } from '../shard/services/services.service';
 import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
 import { modal_delete } from '../shard/const/const';
 import { HeaderCounter } from '../shard/services/header.servis';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { ItemService } from '../shard/modal/modal-items/modal-items-service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: [ServicesService]
+  providers: [ServicesService, ItemService]
 })
 export class HomeComponent implements OnInit {
   items = books;
@@ -29,13 +28,14 @@ export class HomeComponent implements OnInit {
   isItem: Product;
   isElement:Product;
   isValue: number = 0;
+  isElObj: itemsBooks;
 
   constructor(
     private routing: Router,
     private simpleService: ServicesService,
     private headerService : HeaderCounter,
     private api: AipHandlers,
-    private http: HttpClient,
+    private element: ItemService
     ) {}
 
   ngOnInit(): void {
@@ -47,6 +47,8 @@ export class HomeComponent implements OnInit {
   addCart(item: Product): void  {
     this.isOpen = !this.isOpen;
     this.isItem = item;
+
+    this.element.onShowItemModal(true, item);
 
     (!item.exist) ? this.setLocalStorage(item) :
       this.routing.navigate(['cart']);

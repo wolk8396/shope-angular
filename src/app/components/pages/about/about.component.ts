@@ -4,6 +4,7 @@ import { BehaviorSubject, of, Subject } from 'rxjs';
 import { Operation } from '../../shard/function/function';
 import { commentUser, createToDo, InputModal, Product, UserDate, UserDate2 } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
+import { ItemService } from '../../shard/modal/modal-items/modal-items-service';
 import { AipHandlers, CartItem } from '../../shard/services/aip-handlers';
 import { HeaderCounter } from '../../shard/services/header.servis';
 import { ServicesService } from '../../shard/services/services.service';
@@ -12,7 +13,7 @@ import { ServicesService } from '../../shard/services/services.service';
   selector: 'app-about',
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss'],
-  providers: [ServicesService]
+  providers: [ServicesService, ItemService]
 })
 export class AboutComponent implements OnInit {
   item: Product | undefined;
@@ -38,6 +39,7 @@ export class AboutComponent implements OnInit {
     private headerService : HeaderCounter,
     private service: ServicesService,
     private api: AipHandlers,
+    private serviceItem: ItemService
   ) { }
 
   ngOnInit(): void {
@@ -83,7 +85,10 @@ export class AboutComponent implements OnInit {
 
   addToCart(): void {
     this.#exist = this.defineCondition()?.exist;
-    this.isItem = this.item;
+
+    if (typeof this.item !== 'undefined') {
+      this.serviceItem.onShowItemModal(true, this.item)
+    }
 
     if (this.#exist) {
       this.routing.navigate(['cart']);

@@ -114,3 +114,8 @@ export interface commentUser {
   first_name: string,
   last_name: string
 }
+
+export interface itemsBooks {
+  value: boolean,
+  elements: Product
+}

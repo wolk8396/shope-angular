@@ -16,18 +16,12 @@ import { initializeApp,provideFirebaseApp } from '@angular/fire/app';
 import { environment } from '../environments/environment';
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideDatabase,getDatabase } from '@angular/fire/database';
-import { provideFirestore,getFirestore } from '@angular/fire/firestore';
-import { SpinnerComponent } from './components/shard/spinner/spinner.component';
-import { NotificationsComponent } from './components/shard/notifications/notifications.component';
+import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { AccountComponent } from './components/pages/account/account.component';
 import { ShardModule } from './components/shard/shard-module/shard-modal';
 import { ErrorPageComponent } from './components/pages/error-page/error-page.component';
-import { AboutComponent } from './components/pages/about/about.component';
-import { ServicesService } from './components/shard/services/services.service';
 import { ProfileComponent } from './components/pages/profile/profile.component';
-import { CreateTodoComponentComponent } from './components/shard/todo/create-todo-component/create-todo-component.component';
-import { CommentsTodoComponentComponent } from './components/shard/todo/comments-todo-component/comments-todo-component.component';
-
+import { AboutModule } from './components/pages/about/abot-module';
 
 @NgModule({
   declarations: [
@@ -38,23 +32,20 @@ import { CommentsTodoComponentComponent } from './components/shard/todo/comments
     SearchProductComponent,
     SignInComponent,
     SignUpComponent,
-    SpinnerComponent,
-    NotificationsComponent,
     AccountComponent,
     ErrorPageComponent,
-    AboutComponent,
     ProfileComponent,
-    CreateTodoComponentComponent,
-    CommentsTodoComponentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AppRoutingModule,
+    FormsModule,
     NgbModule,
     ShardModule,
+    AboutModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),

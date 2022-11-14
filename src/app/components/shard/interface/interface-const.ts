@@ -98,7 +98,7 @@ export interface  createToDo {
     userId: string,
     comment: string,
     time: Date | string,
-    likes?: string[],
+    likes: string[] | number,
     authId?: string
   }
 }
@@ -110,7 +110,7 @@ export interface commentUser {
   userId: string,
   comment: string
   time: Date | string,
-  likes?: string[]
+  likes: string[]
   first_name: string,
   last_name: string
 }

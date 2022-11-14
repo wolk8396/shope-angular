@@ -1,4 +1,4 @@
-import { Component,  OnChanges, OnInit, DoCheck} from '@angular/core';
+import { Component,  OnChanges, OnInit, DoCheck, OnDestroy} from '@angular/core';
 
 import { itemsBooks, Product } from '../shard/interface/interface-const';
 import { books } from '../shard/product/books';
@@ -10,6 +10,7 @@ import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
 import { modal_delete } from '../shard/const/const';
 import { HeaderCounter } from '../shard/services/header.servis';
 import { ItemService } from '../shard/modal/modal-items/modal-items-service';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,7 @@ import { ItemService } from '../shard/modal/modal-items/modal-items-service';
   styleUrls: ['./home.component.scss'],
   providers: [ServicesService, ItemService]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   items = books;
   cartArray: Product[] = LocalService.getData();
   removeEl: Product[] = [];
@@ -28,7 +29,9 @@ export class HomeComponent implements OnInit {
   isItem: Product;
   isElement:Product;
   isValue: number = 0;
-  isElObj: itemsBooks;
+  private sub_getItem$: Subscription;
+  private sun_upDate$: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private routing: Router,
@@ -102,11 +105,19 @@ export class HomeComponent implements OnInit {
       const { authId } = LocalService.getUserDate();
       this.cartArray = LocalService.getData();
 
-      this.api.getProduct().subscribe((el: CartItem | any): void => {
+     this.sub_getItem$ = this.api.getProduct().subscribe((el: CartItem | any): void => {
         const {idCart} = Operation.dynamicKeyHttp(el, authId);
-        this.api.upDateCart(idCart,  this.cartArray, authId).subscribe();
+        this.sun_upDate$ = this.api.upDateCart(idCart, this.cartArray, authId).subscribe();
+        this.subscriptions.push(this.sun_upDate$)
       });
+
+      this.subscriptions.push(this.sub_getItem$);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.simpleService.isDelete$.unsubscribe();
+    this.subscriptions.forEach(stream => stream.unsubscribe());
   }
 
 }

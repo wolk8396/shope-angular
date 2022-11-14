@@ -40,8 +40,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    console.log('header');
-
+    console.log('heder');
     this.header.count$.unsubscribe();
   }
 

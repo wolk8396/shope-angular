@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { errorsMessages, massage_advance } from '../../shard/const/const';
@@ -6,19 +6,20 @@ import { AipHandlers } from '../../shard/services/aip-handlers';
 import { MyValidator } from '../../shard/validators/my-validators';
 import { FormValue, SignInResponse, Product } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent implements OnInit, DoCheck {
+export class SignUpComponent implements OnInit, DoCheck, OnDestroy {
   form: FormGroup;
   error:Map<string, string> = errorsMessages;
-  first_name: string | undefined = this.error.get('first_name');
-  last_name: string | undefined = this.error.get('last_name');
-  required: string | undefined = this.error.get('required');
-  email: string | undefined = this.error.get('email');
+  first_name: string | undefined = errorsMessages.get('first_name');
+  last_name: string | undefined = errorsMessages.get('last_name');
+  required: string | undefined = errorsMessages.get('required');
+  email: string | undefined = errorsMessages.get('email');
   password: string | undefined;
   Match_password: string | undefined;
   str_massages: string = '';
@@ -28,6 +29,8 @@ export class SignUpComponent implements OnInit, DoCheck {
   completed: string = massage_advance.completed;
   sing_in: string = "I've already have an account";
   userId:string = '';
+  destroy_user$: Subject<void> = new Subject<void>();
+  destroy_addCart$: Subject<void> = new Subject<void>();
 
   constructor(
     private routing: Router,
@@ -81,11 +84,14 @@ export class SignUpComponent implements OnInit, DoCheck {
       if (isRequestCount === 2) {
         const addItems: Product[] = LocalService.getData();
 
-        this.api.addUser(this.form.value).subscribe((res): void => {
+        this.api.addUser(this.form.value)
+                .pipe(takeUntil(this.destroy_user$)).subscribe((res): void => {
+
           this.form.value['idLink'] = res.name;
           LocalService.setUserDate(this.form.value);
 
-          this.api.addCart(addItems, this.userId).subscribe();
+          this.api.addCart(addItems, this.userId)
+                  .pipe(takeUntil(this.destroy_addCart$)).subscribe();
           this.routing.navigate(['/']);
         });
       }
@@ -94,5 +100,12 @@ export class SignUpComponent implements OnInit, DoCheck {
 
   onSign_in (): void {
     this.routing.navigate(['sign-in']);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy_user$.next();
+    this.destroy_user$.complete();
+    this.destroy_addCart$.next();
+    this.destroy_addCart$.complete();
   }
 }

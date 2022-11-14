@@ -11,7 +11,7 @@
   &__avatar {
     width: 270px;
     height: 100%;
-    border: 1px solid;
+    // border: 1px solid;
 
     .photo {
       width: 260px;
@@ -30,29 +30,67 @@
       height: 70% !important;
       border: none;
       background-color: white;
-    }
-
-    .bi-pen-fill{
-      position: absolute;
-      right: 13px;
-      bottom: 286px;
-      cursor: pointer;
+      resize: none;
     }
 
     .block-btns {
-      width: 35%;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      margin-left: auto;
+      // margin-left: auto;
       margin-top: 34px;
-    }
 
-    .btn-primary {
-      margin-left: auto;
-      i {
-        margin-right: 6px;
+      &__menu {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        width: 204px;
+
+        .btn-like {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+          align-items: center;
+          width: 77px;
+          height: 35px;
+          border-radius: 50px;
+          background-color: #FFEDED;
+
+          .mat-mini-fab {
+            width: 29px;
+            height: 29px;
+
+
+            .like-incon {
+              font-size: 18px;
+            }
+          }
+
+          .count-likes {
+            width: 16px;
+            color: #FF3347;
+          }
+        }
+
+        .edit {
+          width: 41px;
+          height: 33px;
+          border-radius: 15px;
+        }
+
+        .btn-outline-dark {
+          width: 41px;
+          height: 33px;
+          border-radius: 15px;
+        }
+      }
+
+      .btn-primary {
+        i {
+          margin-right: 6px;
+        }
       }
     }
+
   }
 }

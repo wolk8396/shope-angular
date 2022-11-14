@@ -4,6 +4,8 @@ import { commentUser } from '../../interface/interface-const';
 import { LocalService } from '../../local-storage-service/local-storage';
 import { AipHandlers } from '../../services/aip-handlers';
 import { ServicesService } from '../../services/services.service';
+import {MatButtonModule} from '@angular/material/button';
+import { Operation } from '../../function/function';
 
 @Component({
   selector: 'app-comments-todo-component',
@@ -17,6 +19,7 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges {
   isCheck: boolean = false;
   isInput: boolean = true;
   isID: string | undefined;
+  likesCount: number = 0
 
   constructor(
     private api: AipHandlers,
@@ -54,8 +57,6 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges {
   }
 
   onDelete(value: boolean, id: string | undefined): void {
-    console.log('test');
-
     if (!value) {
      this.api.removeComment(id).subscribe({
         complete: (() => {
@@ -64,4 +65,23 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges {
       });
     }
   }
+
+  onAddLike(date: commentUser): void {
+    const { authId } = LocalService.getUserDate();
+    if (typeof date.likes === 'number') {
+      date.likes = [authId, '85698756221']
+      this.likesCount = date.likes.length
+    } else if(Array.isArray(date.likes)) {
+      this.likesCount = date.likes.push(authId)
+    }
+
+
+    console.log(Operation.onCancelLike(date.likes, authId))
+    // date.likes = Operation.onCancelLike(date.likes, authId);
+    console.log(date.likes);
+
+
+  }
+
+
 }

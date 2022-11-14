@@ -1,4 +1,5 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
+import { Subscription } from 'rxjs';
 import { cart_massage, modal_delete } from '../shard/const/const';
 import { Operation } from '../shard/function/function';
 import { Product } from '../shard/interface/interface-const';
@@ -13,7 +14,7 @@ import { ServicesService } from '../shard/services/services.service';
   styleUrls: ['./cart.component.scss'],
   providers: [ServicesService]
 })
-export class CartComponent implements OnInit {
+export class CartComponent implements OnInit, OnDestroy {
   items: Product[] = LocalService.getData();
   getDateAll: any = LocalService.getDateAll();
   getItem : Product;
@@ -27,6 +28,9 @@ export class CartComponent implements OnInit {
   countCarts: number = 0;
   isDelete:boolean = false;
   isRemove:boolean;
+  private sub_getItem$: Subscription;
+  private sun_upDate$: Subscription;
+  private subscriptions: Subscription[] = [];
 
   constructor(
     private simpleService: ServicesService,
@@ -76,16 +80,23 @@ export class CartComponent implements OnInit {
     if (Operation.isCheckAcc()) {
       const{ authId } = LocalService.getUserDate();
 
-      this.api.getProduct().subscribe((el:CartItem | any): void => {
+     this.sub_getItem$ = this.api.getProduct().subscribe((el:CartItem | any): void => {
         const { idCart } = Operation.dynamicKeyHttp(el, authId);
 
-        this.api.upDateCart(idCart, this.items, authId).subscribe((res) => {
+      this.sun_upDate$ = this.api.upDateCart(idCart, this.items, authId).subscribe((res) => {
           this.simpleService.Notification(true, this.isUpDate, false)
         });
+        this.subscriptions.push(this.sun_upDate$)
+
       });
+      this.subscriptions.push(this.sub_getItem$)
 
     } else this.simpleService.Registration(true);
 
   }
 
+  ngOnDestroy(): void {
+    this.simpleService.isDelete$.unsubscribe();
+    this.subscriptions.forEach(item => item.unsubscribe());
+  }
 }

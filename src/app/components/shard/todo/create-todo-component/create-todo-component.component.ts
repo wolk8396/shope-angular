@@ -52,7 +52,7 @@ export class CreateTodoComponentComponent implements OnInit {
           userId: authId,
           comment: this.getInputValue,
           time: new Date(),
-          likes: []
+          likes: 0
       }
     }
 

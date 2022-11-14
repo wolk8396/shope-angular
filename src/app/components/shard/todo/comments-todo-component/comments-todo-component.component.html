@@ -10,8 +10,21 @@
       [(ngModel)]="dateComments.comment"
     >
     </textarea>
-    <i class="bi bi-pen-fill" *ngIf="isCheck" (click)="isInput = !isInput;"></i>
     <div class="block-btns" *ngIf="isCheck">
+      <div class="block-btns__menu">
+        <div class="btn-like">
+          <button mat-mini-fab color="accent" (click)="onAddLike(dateComments)">
+            <mat-icon class="like-incon">favorite</mat-icon>
+          </button>
+          <span class="count-likes">{{likesCount}}</span>
+        </div>
+        <button class="edit" (click)="isInput = !isInput;">
+          <i class="bi bi-pen-fill"></i>
+        </button>
+        <button type="button" class="btn btn-outline-dark">
+          <i class="bi bi-chat-left"></i>
+        </button>
+      </div>
       <button type="button" class="btn btn-primary" *ngIf="!isInput"
         (click)="onChangeComment(dateComments)"
       >

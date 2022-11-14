@@ -8,6 +8,8 @@ import { AipHandlers } from '../../shard/services/aip-handlers';
 import { Operation } from '../../shard/function/function';
 import { Router } from '@angular/router';
 import { AccountService } from '../../shard/services/routing-service';
+import { Subscription } from 'rxjs/internal/Subscription';
+import { Subject } from 'rxjs';
 
 
 @Component({
@@ -16,7 +18,7 @@ import { AccountService } from '../../shard/services/routing-service';
   styleUrls: ['./account.component.scss'],
   providers: [ServicesService, AccountService]
 })
-export class AccountComponent implements OnInit {
+export class AccountComponent implements OnInit, OnDestroy {
   avatar: string  = '';
   dateUser: UserDate;
   fullName: string = '';
@@ -31,6 +33,8 @@ export class AccountComponent implements OnInit {
   isModal: boolean;
   getDate: UserDate;
   isProfile: boolean = false;
+  private sub_upDateUser$: Subscription;
+  private subscriptions: Array<Subject<boolean> | Subscription> = [];
 
 
   constructor(
@@ -46,6 +50,7 @@ export class AccountComponent implements OnInit {
     this.getDateUser();
     this.onSetAvatar();
     this.simpleService.isDelete$.subscribe((value) => this.onDelete(value));
+    this.subscriptions.push(this.account.value$, this.simpleService.isDelete$);
   }
 
   getDateUser(): void {
@@ -93,8 +98,9 @@ export class AccountComponent implements OnInit {
     if (value === false) {
       this.api.onDeletePhoto(this.getDate.photoUrl)
       this.getDate = Operation.onSetPhoto(this.getDate, 'none')
-      this.api.upDateUser(this.getDate.idLink, this.getDate).subscribe();
+      this.sub_upDateUser$ = this.api.upDateUser(this.getDate.idLink, this.getDate).subscribe();
       this.onSetAvatar();
+      this.subscriptions.push(this.sub_upDateUser$);
     }
   }
 
@@ -120,5 +126,9 @@ export class AccountComponent implements OnInit {
   onCheckPage(url: string) {
     (this.routing.url === url) ?
       this.isProfile = true : this.isProfile = false
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(destroy$ => destroy$.unsubscribe());
   }
 }

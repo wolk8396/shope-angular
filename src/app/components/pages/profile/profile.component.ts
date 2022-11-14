@@ -1,6 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { upUser_massage } from '../../shard/const/const';
 import { UserDate } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
@@ -14,7 +15,7 @@ import { ServicesService } from '../../shard/services/services.service';
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
   form: FormGroup;
   getUserDate: UserDate;
   firstName: string = '';
@@ -24,6 +25,7 @@ export class ProfileComponent implements OnInit {
   country: string | undefined;
   isAccount: boolean = false;
   additional :FormArray;
+  destroy$: Subject<void> = new Subject<void>();
 
   constructor(
     private routing: Router,
@@ -61,17 +63,17 @@ export class ProfileComponent implements OnInit {
     this.getUserDate = Object.assign(this.getUserDate, this.form.value)
 
 
-    this.api.upDateUser(this.getUserDate.idLink, this.getUserDate).subscribe({
-      next: () => {
-        this.service.Notification(true, update, false);
-        LocalService.setUserDate(this.getUserDate);
-      },
+    this.api.upDateUser(this.getUserDate.idLink, this.getUserDate)
+        .pipe(takeUntil(this.destroy$)).subscribe({
+            next: () => {
+              this.service.Notification(true, update, false);
+              LocalService.setUserDate(this.getUserDate);
+            },
 
-      error: () => {
-        this.service.Notification(true, error, true);
-      }
-
-    });
+            error: () => {
+              this.service.Notification(true, error, true);
+            }
+          });
   }
 
   onForm (): void {
@@ -98,6 +100,11 @@ export class ProfileComponent implements OnInit {
   onAddDate () {
     const control = new FormControl('');
     this.additional.push(control)
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { BehaviorSubject, of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject, Subscription, takeUntil } from 'rxjs';
 import { Operation } from '../../shard/function/function';
 import { commentUser, createToDo, InputModal, Product, UserDate, UserDate2 } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
@@ -15,7 +15,7 @@ import { ServicesService } from '../../shard/services/services.service';
   styleUrls: ['./about.component.scss'],
   providers: [ServicesService, ItemService]
 })
-export class AboutComponent implements OnInit {
+export class AboutComponent implements OnInit, OnDestroy {
   item: Product | undefined;
   ChangeStr: string = '';
   isFlag: boolean = false;
@@ -32,6 +32,12 @@ export class AboutComponent implements OnInit {
   post: commentUser[] = [];
   todo: commentUser[] = [];
   usersDate:UserDate[] = [];
+  private sub_users$: Subscription;
+  private sun_comment$: Subscription;
+  private sub_update$: Subscription;
+  private sub_getItems$: Subscription;
+  private subscriptions: Subscription[] = [];
+  destroy_router$: Subject<void> = new Subject<void>();
 
   constructor(
     private routerActive:ActivatedRoute,
@@ -46,9 +52,12 @@ export class AboutComponent implements OnInit {
     this.onGetComments();
     this.service.Registration(true);
 
-    this.routerActive.params.subscribe((params: Params) => {
+    this.routerActive.params.pipe(takeUntil(this.destroy_router$))
+                            .subscribe((params: Params) => {
       this.item = this.service.FindBookPage(params.product);
     });
+    console.log(this.destroy_router$, 'sub');
+
 
     this.onRedirect(this.item);
     this.onSetStr();
@@ -112,17 +121,19 @@ export class AboutComponent implements OnInit {
 
     if (Operation.isCheckAcc()) {
       this.isSpinner = true;
-      this.api.getProduct().subscribe({
+      this.sub_getItems$ = this.api.getProduct().subscribe({
         next: (el) => {
           const { idCart } = Operation.dynamicKeyHttp(el, authId);
           this.isSpinner = false;
-          this.api.upDateCart(idCart, this.#product, authId).subscribe();
+          this.sub_update$ = this.api.upDateCart(idCart, this.#product, authId).subscribe();
+          this.subscriptions.push(this.sub_update$)
         },
         complete: () => {
           this.onSetDateModal(el, true);
           this.isOpen = !this.isOpen;
         }
       })
+      this.subscriptions.push(this.sub_getItems$)
 
     } else {
       this.isOpen = !this.isOpen;
@@ -142,38 +153,46 @@ export class AboutComponent implements OnInit {
     }
   }
 
+  onUpDate(values : any): void {
+    const date = new Map();
+
+    this.sub_users$ = this.api.getUsersDate().subscribe({
+      next: ((res) => {
+        this.usersDate = Object.values(res).filter(({authId}) => authId === values.get(authId));
+
+        this.usersDate.forEach(({authId, first_name, last_name, photoUrl}) => {
+          date.set(authId, {first_name, last_name, photoUrl});
+        });
+
+        this.post = this.todo.map((item) => {
+          const {first_name, last_name, photoUrl} = date.get(item.userId);
+
+          return {...item,
+            photoUrl:photoUrl,
+            first_name: first_name,
+            last_name: last_name
+          }
+        })
+      })
+    })
+    this.subscriptions.push(this.sub_users$);
+  }
+
   onGetComments(): void {
     const values = new Map();
     const date = new Map();
 
-    this.api.getComments().subscribe({
+   this.sun_comment$ = this.api.getComments().subscribe({
       next: ((res) => {
       this.todo = Operation.responseMapper(res, 'item_id')
                               .filter((el) => el.book_id === this.item?.bookId);
 
         this.todo.forEach(element => values.set(element.userId, element.userId));
 
-        this.api.getUsersDate().subscribe({
-          next: ((res) => {
-            this.usersDate = Object.values(res).filter(({authId}) => authId === values.get(authId));
-
-            this.usersDate.forEach(({authId, first_name, last_name, photoUrl}) => {
-              date.set(authId, {first_name, last_name, photoUrl});
-            });
-
-            this.post = this.todo.map((item) => {
-              const {first_name, last_name, photoUrl} = date.get(item.userId);
-
-              return {...item,
-                photoUrl:photoUrl,
-                first_name: first_name,
-                last_name: last_name
-              }
-            })
-          })
-        })
+        this.onUpDate(values);
       })
     })
+    this.subscriptions.push(this.sun_comment$)
   }
 
 
@@ -181,6 +200,12 @@ export class AboutComponent implements OnInit {
     if (value) {
       this.onGetComments()
     }
+  }
+
+  ngOnDestroy(): void {
+    this.destroy_router$.next();
+    this.destroy_router$.complete();
+    this.subscriptions.forEach(destroy$ => destroy$.unsubscribe());
   }
 
 }

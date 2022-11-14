@@ -2,6 +2,8 @@ import { CommonModule } from "@angular/common";
 import { HttpClientModule } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 import { RouterModule } from "@angular/router";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppRoutingModule } from "src/app/app-routing.module";
@@ -20,7 +22,9 @@ import { AboutComponent } from "./about.component";
     CommonModule,
     NgbModule,
     FormsModule,
-    ShardModule
+    ShardModule,
+    MatIconModule,
+    MatButtonModule,
   ],
 })
 

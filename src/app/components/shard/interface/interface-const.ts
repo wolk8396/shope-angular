@@ -110,7 +110,7 @@ export interface commentUser {
   userId: string,
   comment: string
   time: Date | string,
-  likes: string[]
+  likes: string[] | number,
   first_name: string,
   last_name: string
 }

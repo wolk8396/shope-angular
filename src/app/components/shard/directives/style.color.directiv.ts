@@ -5,7 +5,7 @@ import { LocalService } from "../local-storage-service/local-storage";
 
 
 @Directive({
-  selector: '[appADDbtn]'
+  selector: '[appStyleColor]'
 })
 
 export class addBtnDirective {

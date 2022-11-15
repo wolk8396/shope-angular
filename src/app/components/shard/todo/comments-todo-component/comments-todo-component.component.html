@@ -11,21 +11,29 @@
     >
     </textarea>
     <div class="block-btns" *ngIf="isCheck">
-      <div class="block-btns__menu">
-        <div class="btn-like">
-          <button mat-mini-fab color="accent" (click)="onAddLike(dateComments)">
+      <div class="block-btns__menu" >
+        <div class="btn-like"
+        [ngStyle]="{'background-color': isColor ? '#FFEDED' : '#80808040'}"
+        >
+          <button mat-mini-fab color="accent"
+          (click)="onAddLike(dateComments)"
+          [ngStyle]="{'background-color': isColor ? '#ff4081' : 'gray'}"
+          >
             <mat-icon class="like-incon">favorite</mat-icon>
           </button>
-          <span class="count-likes">{{likesCount}}</span>
+          <span class="count-likes"
+            [ngStyle]="{'color': isColor ? 'red' : 'black'}"
+          >{{likesCount}}</span>
         </div>
-        <button class="edit" (click)="isInput = !isInput;">
+        <button class="edit" (click)="isInput = !isInput;" *ngIf="isEdit">
           <i class="bi bi-pen-fill"></i>
         </button>
         <button type="button" class="btn btn-outline-dark">
           <i class="bi bi-chat-left"></i>
         </button>
       </div>
-      <button type="button" class="btn btn-primary" *ngIf="!isInput"
+      <div class="btn-block-delete" *ngIf="isEdit">
+        <button type="button" class="btn btn-primary" *ngIf="!isInput"
         (click)="onChangeComment(dateComments)"
       >
         <i class="bi bi-send-plus"></i>Send
@@ -36,5 +44,6 @@
         <i class="bi bi-x-square-fill"></i>{{isBtn}}
       </button>
     </div>
+      </div>
   </div>
 </div>

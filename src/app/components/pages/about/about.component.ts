@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { BehaviorSubject, of, Subject, Subscription, takeUntil } from 'rxjs';
 import { Operation } from '../../shard/function/function';
@@ -15,7 +15,7 @@ import { ServicesService } from '../../shard/services/services.service';
   styleUrls: ['./about.component.scss'],
   providers: [ServicesService, ItemService]
 })
-export class AboutComponent implements OnInit, OnDestroy {
+export class AboutComponent implements OnInit, OnDestroy, OnChanges {
   item: Product | undefined;
   ChangeStr: string = '';
   isFlag: boolean = false;
@@ -47,6 +47,12 @@ export class AboutComponent implements OnInit, OnDestroy {
     private api: AipHandlers,
     private serviceItem: ItemService
   ) { }
+
+
+  ngOnChanges(): void {
+    console.log('chjj');
+
+  }
 
   ngOnInit(): void {
     this.onGetComments();

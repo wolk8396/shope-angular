@@ -93,13 +93,9 @@ export class Operation {
     return LocalService.getUserDate();
   }
 
-  static onCancelLike(date: string[] , id: string): any  {
-    const str: string | undefined = date.find(item => item === id);
-    console.log(str);
-
-
-    // if (str !== undefined) {
-    //   return  date.filter(item => item !== str)
-    // }
+  static onFindLike(date: string[] | number , id: string):  string | undefined  {
+    if (Array.isArray(date)) {
+      return date.find(item => item === id);
+    } else return;
   }
 }

@@ -40,14 +40,15 @@
       width: 26px;
       height: 27px;
       background-color: rgba(0, 0, 0, 0.48);
-      border-radius: 0 2px 0 2px;
-      bottom: 316px;
-      left: 192px;
+      bottom: 315px;
+      left: 194px;
       right: 0;
       text-align: center;
       color: whitesmoke;
-      font-weight: bold;
-      font-size: 20px;
+
+      &__btn {
+        font-size: 30px;
+      }
     }
 
     .menu-photo {
@@ -61,7 +62,6 @@
         cursor: pointer;
         list-style: none;
         color: whitesmoke;
-        font-weight: bold;
         margin-left: 36px;
       }
 

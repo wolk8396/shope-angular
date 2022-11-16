@@ -13,7 +13,8 @@ import { ServicesService } from '../../shard/services/services.service';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
+  providers: []
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   form: FormGroup;

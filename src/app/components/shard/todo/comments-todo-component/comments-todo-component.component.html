@@ -3,7 +3,7 @@
     <img class="photo" [src]="dateComments.photoUrl">
     <div>{{isFullName}}</div>
   </div>
-  <div class="todo-list__information">
+  <div class="todo-list__information" >
     <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2"
       [ngStyle]="{border: isInput ? 'none' : '1px solid'}"
       [disabled]="isInput"
@@ -11,18 +11,13 @@
     >
     </textarea>
     <div class="block-btns" *ngIf="isCheck">
-      <div class="block-btns__menu" >
-        <div class="btn-like"
-        [ngStyle]="{'background-color': isColor ? '#FFEDED' : '#80808040'}"
-        >
+      <div class="block-btns__menu" [appStyleColor]="isColor">
+        <div class="btn-like">
           <button mat-mini-fab color="accent"
-          (click)="onAddLike(dateComments)"
-          [ngStyle]="{'background-color': isColor ? '#ff4081' : 'gray'}"
-          >
+            (click)="onAddLike(dateComments)">
             <mat-icon class="like-incon">favorite</mat-icon>
           </button>
           <span class="count-likes"
-            [ngStyle]="{'color': isColor ? 'red' : 'black'}"
           >{{likesCount}}</span>
         </div>
         <button class="edit" (click)="isInput = !isInput;" *ngIf="isEdit">
@@ -47,3 +42,6 @@
       </div>
   </div>
 </div>
+<!-- [ngStyle]="{'background-color': isColor ? '#FFEDED' : '#80808040'}" -->
+<!-- [ngStyle]="{'background-color': isColor ? '#ff4081' : 'gray'}" -->
+<!-- [ngStyle]="{'color': isColor ? 'red' : 'black'}" -->

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { appMenuStyle } from '../directives/menu.style.directiv';
 import { ModalAddPhotoComponent } from '../modal/modal-add-photo/modal-add-photo.component';
 import { ModalDeleteComponent } from '../modal/modal-delete/modal-delete.component';
 import { ModalItemsComponent } from '../modal/modal-items/modal-items.component';

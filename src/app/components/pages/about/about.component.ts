@@ -50,7 +50,6 @@ export class AboutComponent implements OnInit, OnDestroy, OnChanges {
 
 
   ngOnChanges(): void {
-    console.log('chjj');
 
   }
 
@@ -62,8 +61,6 @@ export class AboutComponent implements OnInit, OnDestroy, OnChanges {
                             .subscribe((params: Params) => {
       this.item = this.service.FindBookPage(params.product);
     });
-    console.log(this.destroy_router$, 'sub');
-
 
     this.onRedirect(this.item);
     this.onSetStr();

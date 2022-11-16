@@ -23,6 +23,8 @@ import { ProfileComponent } from './components/pages/profile/profile.component';
 import { AboutModule } from './components/pages/about/abot-module';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
+import { appMenuStyle } from './components/shard/directives/menu.style.directiv';
+import { StyleDirective } from './components/shard/directives/style.color.directiv';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,7 @@ import {MatButtonModule} from '@angular/material/button';
     AccountComponent,
     ErrorPageComponent,
     ProfileComponent,
+    appMenuStyle,
   ],
   imports: [
     BrowserModule,

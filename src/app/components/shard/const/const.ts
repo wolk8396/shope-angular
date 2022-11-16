@@ -79,6 +79,7 @@ export const modal_delete = {
   comment: 'Are You are sure ? Do you want to remove this comment'
 }
 
+
 export const File_Type: string[] = ['image/png','image/jpg','image/peg','image/jpeg'];
 
 

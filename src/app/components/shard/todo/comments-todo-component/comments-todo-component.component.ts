@@ -6,6 +6,8 @@ import { AipHandlers } from '../../services/aip-handlers';
 import { ServicesService } from '../../services/services.service';
 import { Operation } from '../../function/function';
 import { Subscription } from 'rxjs';
+import { StyleDirective } from '../../directives/style.color.directiv';
+
 
 @Component({
   selector: 'app-comments-todo-component',
@@ -30,7 +32,7 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges, OnDest
   constructor(
     private api: AipHandlers,
     private service: ServicesService,
-  ) { }
+  ) {}
 
   @Input() dateComments: commentUser;
   @Output() isValue = new EventEmitter<boolean>();
@@ -119,9 +121,6 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges, OnDest
 
     Operation.onFindLike(likes, authId) ?
       this.isColor = true : this.isColor = false;
-
-      console.log(this.isColor);
-
   }
 
   ngOnDestroy(): void {

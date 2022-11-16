@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
+import { Component, OnChanges, OnDestroy, OnInit} from '@angular/core';
 import { UserDate } from '../../shard/interface/interface-const';
 import { Url_img } from '../../shard/url-img/url-photo';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
@@ -16,7 +16,7 @@ import { Subject } from 'rxjs';
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss'],
-  providers: [ServicesService, AccountService]
+  providers: [ServicesService]
 })
 export class AccountComponent implements OnInit, OnDestroy {
   avatar: string  = '';
@@ -29,7 +29,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   city: string | undefined = '';
   country: string = '';
   address: string = '';
-  isMouse: boolean = false;
+  isMouse: boolean = true;
   isModal: boolean;
   getDate: UserDate;
   isProfile: boolean = false;
@@ -51,6 +51,8 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.onSetAvatar();
     this.simpleService.isDelete$.subscribe((value) => this.onDelete(value));
     this.subscriptions.push(this.account.value$, this.simpleService.isDelete$);
+    this.isProfile = false;
+    console.log(this.isProfile);
   }
 
   getDateUser(): void {
@@ -119,7 +121,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   onShowAccount(value: boolean) {
     this.isProfile = value;
-
+    console.log(this.isProfile, 'on');
     this.getDateUser();
   }
 

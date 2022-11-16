@@ -4,14 +4,12 @@
   (isHiddenModal)="onHiddenModal($event)"
 ></app-modal-add-photo>
 <div class="account" *ngIf="!isProfile;">
-  <div class="account__block-photo"
-    (mouseleave)="isMouse = false"
-    >
-    <img [src]="avatar"
-    (mouseover)="isMouse = !isMouse"
-    >
-    <div class="delete"*ngIf="isMouse" (click)="onRemovePhoto()">X</div>
-    <ul class="menu-photo" *ngIf="isMouse" (click)="onAddPhoto()">
+  <div class="account__block-photo" isDisplay>
+    <img [src]="avatar">
+    <div class="delete" (click)="onRemovePhoto()">
+      <samp class="delete__btn">x</samp>
+    </div>
+    <ul class="menu-photo" (click)="onAddPhoto()">
       <li>Add photo</li>
     </ul>
     <div class="menu-photo"></div>
@@ -54,6 +52,3 @@
   </div>
 </div>
 <router-outlet></router-outlet>
-
-
-

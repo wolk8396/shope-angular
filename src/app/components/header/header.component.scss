@@ -24,6 +24,10 @@
       text-decoration: none;
     }
 
+    .active {
+      text-decoration: underline;
+    }
+
     a:hover {
       text-decoration: underline;
     }

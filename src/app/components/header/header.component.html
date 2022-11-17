@@ -1,10 +1,15 @@
 <nav class="header">
   <div class="header__menu">
-    <a routerLink="/" class="link-home">Home page</a>
-    <a routerLink="cart" class="link-cart">in cart</a>
-    <a routerLink="sign-in">sing in</a>
-    <a routerLink="sign-up">sing up</a>
-    <a (click)="onAccount()">account</a>
+    <a routerLink="/" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact:true}">Home page</a>
+    <a routerLink="cart"  routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact:true}" >in cart</a>
+    <a  routerLink="sign-in" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact:true}">sing in</a>
+    <a  routerLink="sign-up" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact:true}">sing up</a>
+    <a (click)="onAccount()" routerLink="account" routerLinkActive="active"
+      [routerLinkActiveOptions]="{exact:true}">account</a>
     <a routerLink="/" (click)="onOut()">Log out</a>
   </div>
   <div class="header__count">

@@ -1,11 +1,10 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { upUser_massage } from '../../shard/const/const';
 import { UserDate } from '../../shard/interface/interface-const';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
-import { NotificationsComponent } from '../../shard/notifications/notifications.component';
 import { AipHandlers } from '../../shard/services/aip-handlers';
 import { AccountService } from '../../shard/services/routing-service';
 import { ServicesService } from '../../shard/services/services.service';
@@ -14,7 +13,7 @@ import { ServicesService } from '../../shard/services/services.service';
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  providers: []
+  providers:[ServicesService]
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   form: FormGroup;
@@ -93,10 +92,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   onBack () {
     this.routing.navigate(['account']);
     this.isAccount =!this.isAccount;
-
     this.showAccount.showAccount(false);
   }
-
 
   onAddDate () {
     const control = new FormControl('');
@@ -105,7 +102,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.destroy$.next();
-    this.destroy$.complete();
   }
 
 }

@@ -43,5 +43,4 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log('heder');
     this.header.count$.unsubscribe();
   }
-
 }

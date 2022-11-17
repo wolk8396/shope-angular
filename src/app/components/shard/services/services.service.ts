@@ -8,7 +8,7 @@ import { books } from '../product/books'
 })
 export class ServicesService {
   count1$ = new Subject<number>();
-  spinner$ = new Subject<boolean>();
+  // spinner$ = new Subject<boolean>();
   isShowModal$ = new Subject<boolean>();
   isMassages$ = new Subject<string>();
   isShowMassage$ = new Subject<boolean>();
@@ -24,9 +24,9 @@ export class ServicesService {
     this.count1$.next(count);
   }
 
-  SpinnerShow(isShow: boolean): void {
-    this.spinner$.next(isShow)
-  }
+  // SpinnerShow(isShow: boolean): void {
+  //   this.spinner$.next(isShow)
+  // }
 
   Registration (value: boolean): void {
     this.isShowModal$.next(value)
@@ -35,7 +35,7 @@ export class ServicesService {
   Notification(value: boolean, str: string, error: boolean): void {
     this.isShowMassage$.next(value);
     this.isMassages$.next(str);
-    this.error$.next(error)
+    this.error$.next(error);
   }
 
   delete(value: boolean, massage: string): void {

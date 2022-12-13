@@ -3,7 +3,7 @@
   [isShowModal]="isModal"
   (isHiddenModal)="onHiddenModal($event)"
 ></app-modal-add-photo>
-<div class="account" *ngIf="!isProfile;">
+<div class="account">
   <div class="account__block-photo" isDisplay>
     <img [src]="avatar">
     <div class="delete" (click)="onRemovePhoto()">
@@ -20,9 +20,9 @@
     </div>
   </div>
   <div class="account__information">
-    <h2 class="fullName">{{fullName| titlecase}}</h2>
+    <h2 class="fullName" *ngIf="!isProfile">{{fullName| titlecase}}</h2>
     <div class="additional-information">
-      <ul>
+      <ul *ngIf="!isProfile else profile">
         <li>
           <strong>birth:</strong>
            {{birth | date}}
@@ -48,7 +48,10 @@
           {{address}}
         </li>
       </ul>
+      <ng-template #profile>
+        <app-profile (isHiddenProfile)="onShowAccount($event)"></app-profile>
+      </ng-template>
     </div>
   </div>
 </div>
-<router-outlet></router-outlet>
+<!-- <router-outlet></router-outlet> -->

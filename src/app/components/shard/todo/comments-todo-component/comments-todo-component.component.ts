@@ -6,8 +6,6 @@ import { AipHandlers } from '../../services/aip-handlers';
 import { ServicesService } from '../../services/services.service';
 import { Operation } from '../../function/function';
 import { Subscription } from 'rxjs';
-import { StyleDirective } from '../../directives/style.color.directiv';
-
 
 @Component({
   selector: 'app-comments-todo-component',
@@ -50,7 +48,7 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges, OnDest
 
   onCountLikes(): void {
     (!Array.isArray(this.dateComments.likes)) ?
-      this.likesCount = 0 : this.likesCount = this.dateComments.likes.length
+      this.likesCount = 0 : this.likesCount = this.dateComments.likes.length;
   }
 
   onRemoveTodo(el: string | undefined): void {
@@ -62,7 +60,7 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges, OnDest
    this.upDate_comments$ = this.api.upDateComments(date.item_id, date).subscribe({
       complete: () => this.isInput = !this.isInput
     })
-    this.subscriptions.push(this.upDate_comments$)
+    this.subscriptions.push(this.upDate_comments$);
   }
 
   onRenderBtn(): void {
@@ -83,7 +81,7 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges, OnDest
         })
       });
 
-    this.subscriptions.push(this.delete_comments$)
+    this.subscriptions.push(this.delete_comments$);
     }
   }
 
@@ -94,7 +92,7 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges, OnDest
        if (Array.isArray(date.likes)) {
          date.likes = date.likes.filter(item => item !== authId)
          if (date.likes.length === 0) {
-          date.likes = 0
+          date.likes = 0;
          }
        }
 
@@ -124,7 +122,7 @@ export class CommentsTodoComponentComponent implements OnInit, OnChanges, OnDest
   }
 
   ngOnDestroy(): void {
-    this.service.isDelete$.unsubscribe()
+    this.service.isDelete$.unsubscribe();
     this.subscriptions.forEach(item =>  item.unsubscribe());
   }
 }

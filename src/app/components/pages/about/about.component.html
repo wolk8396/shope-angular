@@ -10,13 +10,13 @@
       </div>
       <div class="block-btns">
         <button type="button" class="btn btn-dark"
-        (click)=" addToCart()"
+        (click)="addToCart()"
         >
         <span *ngIf="isSpinner" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
         {{title_btn_add}}
         </button>
-        <button type="button" class="btn btn-dark">
-          <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        <button type="button" class="btn btn-dark" (click)="onAddWishList()">
+          <span *ngIf="isSpinner_wish" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           ADD TO WISH LIST
         </button>
       </div>

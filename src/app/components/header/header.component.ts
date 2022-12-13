@@ -1,4 +1,4 @@
-import { Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Operation } from '../shard/function/function';
 import { LocalService } from '../shard/local-storage-service/local-storage';
@@ -12,7 +12,7 @@ import { ServicesService } from '../shard/services/services.service';
   providers: [ServicesService, HeaderCounter]
 })
 export class HeaderComponent implements OnInit, OnDestroy {
- countCart: number = LocalService.countNumber();
+  countCart: number = LocalService.countNumber();
 
   constructor(
     private  service: ServicesService,

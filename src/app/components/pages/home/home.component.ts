@@ -1,16 +1,15 @@
-import { Component,  OnChanges, OnInit, DoCheck, OnDestroy} from '@angular/core';
-
-import { itemsBooks, Product } from '../shard/interface/interface-const';
-import { books } from '../shard/product/books';
-import { LocalService } from "../shard/local-storage-service/local-storage";
-import { Operation } from '../shard/function/function';
-import { Route, Router } from '@angular/router';
-import { ServicesService } from '../shard/services/services.service';
-import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
-import { modal_delete } from '../shard/const/const';
-import { HeaderCounter } from '../shard/services/header.servis';
-import { ItemService } from '../shard/modal/modal-items/modal-items-service';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy} from '@angular/core';
+import { Product } from '../../shard/interface/interface-const';
+import { books } from '../../shard/product/books';
+import { LocalService } from "../../shard/local-storage-service/local-storage";
+import { Operation } from '../../shard/function/function';
+import { Router } from '@angular/router';
+import { ServicesService } from '../../shard/services/services.service';
+import { AipHandlers, CartItem } from '../../shard/services/aip-handlers';
+import { modal_delete } from '../../shard/const/const';
+import { HeaderCounter } from '../../shard/services/header.servis';
+import { ItemService } from '../../shard/modal/modal-items/modal-items-service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -108,7 +107,7 @@ export class HomeComponent implements OnInit, OnDestroy {
      this.sub_getItem$ = this.api.getProduct().subscribe((el: CartItem | any): void => {
         const {idCart} = Operation.dynamicKeyHttp(el, authId);
         this.sun_upDate$ = this.api.upDateCart(idCart, this.cartArray, authId).subscribe();
-        this.subscriptions.push(this.sun_upDate$)
+        this.subscriptions.push(this.sun_upDate$);
       });
 
       this.subscriptions.push(this.sub_getItem$);

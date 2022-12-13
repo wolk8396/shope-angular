@@ -1,5 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { appMenuStyle } from '../directives/menu.style.directiv';
 import { ModalAddPhotoComponent } from '../modal/modal-add-photo/modal-add-photo.component';
@@ -29,6 +31,8 @@ import { SpinnerComponent } from '../spinner/spinner.component';
   imports:[
     CommonModule,
     NgbModule,
+    MatIconModule,
+    MatButtonModule,
   ],
   exports: [
     ModalAddPhotoComponent,

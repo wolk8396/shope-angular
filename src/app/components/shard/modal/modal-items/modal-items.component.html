@@ -10,8 +10,16 @@
           <div class="information__title">{{isItem.product}}</div>
         </div>
         <div class="additional">
-          <span class="additional__cost">{{isItem.cost |currency}}</span>
-          <p>is now in your cart</p>
+          <div class="additional__btns">
+            <samp class="count-items">0
+              <button class="increase-btn" mat-mini-fab color="accent"></button>
+              <button class="decrease" mat-mini-fab color="accent"></button>
+            </samp>
+          </div>
+          <div class="additional__cost">
+            <span class="price">{{isItem.cost |currency}}</span>
+            <p>is now in your cart</p>
+          </div>
         </div>
         <div class="block_btns">
           <button type="button" class="btn btn-outline-primary"

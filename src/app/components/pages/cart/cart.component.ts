@@ -1,18 +1,19 @@
 import { Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
-import { cart_massage, modal_delete } from '../shard/const/const';
-import { Operation } from '../shard/function/function';
-import { Product } from '../shard/interface/interface-const';
-import { LocalService } from '../shard/local-storage-service/local-storage';
-import { AipHandlers, CartItem } from '../shard/services/aip-handlers';
-import { HeaderCounter } from '../shard/services/header.servis';
-import { ServicesService } from '../shard/services/services.service';
+import { cart_massage, modal_delete } from '../../shard/const/const';
+import { Operation } from '../../shard/function/function';
+import { Product } from '../../shard/interface/interface-const';
+import { LocalService } from '../../shard/local-storage-service/local-storage';
+import { AipHandlers, CartItem } from '../../shard/services/aip-handlers';
+import { HeaderCounter } from '../../shard/services/header.servis';
+import { NotificationService } from '../../shard/services/notification.service';
+import { ServicesService } from '../../shard/services/services.service';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.scss'],
-  providers: [ServicesService]
+  providers: [ServicesService, NotificationService]
 })
 export class CartComponent implements OnInit, OnDestroy {
   items: Product[] = LocalService.getData();
@@ -22,8 +23,8 @@ export class CartComponent implements OnInit, OnDestroy {
   minus: number = 1;
   plus_str: string = '+';
   minus_str: string = '-';
-  isUpDate: string = cart_massage.upDate
-  errorCart: string = cart_massage.error
+  isUpDate: string = cart_massage.upDate;
+  errorCart: string = cart_massage.error;
   price: number = 0;
   countCarts: number = 0;
   isDelete:boolean = false;
@@ -36,6 +37,7 @@ export class CartComponent implements OnInit, OnDestroy {
     private simpleService: ServicesService,
     private headerService : HeaderCounter,
     private api: AipHandlers,
+    private Notification_Service: NotificationService
     ) { }
 
   ngOnInit(): void {
@@ -74,7 +76,6 @@ export class CartComponent implements OnInit, OnDestroy {
     }
   }
 
-
   onUpDateCart():void {
 
     if (Operation.isCheckAcc()) {
@@ -83,20 +84,24 @@ export class CartComponent implements OnInit, OnDestroy {
      this.sub_getItem$ = this.api.getProduct().subscribe((el:CartItem | any): void => {
         const { idCart } = Operation.dynamicKeyHttp(el, authId);
 
-      this.sun_upDate$ = this.api.upDateCart(idCart, this.items, authId).subscribe((res) => {
-          this.simpleService.Notification(true, this.isUpDate, false)
-        });
-        this.subscriptions.push(this.sun_upDate$)
+      this.sun_upDate$ = this.api.upDateCart(idCart, this.items, authId).subscribe({
+          next:() => {
+            this.Notification_Service.Notification(true, this.isUpDate, false);
+          },
 
+          error:() => {
+            this.Notification_Service.Notification(true, this.errorCart, true);
+          }
+        });
+        this.subscriptions.push(this.sun_upDate$);
       });
-      this.subscriptions.push(this.sub_getItem$)
+      this.subscriptions.push(this.sub_getItem$);
 
     } else this.simpleService.Registration(true);
-
   }
 
   ngOnDestroy(): void {
     this.simpleService.isDelete$.unsubscribe();
-    this.subscriptions.forEach(item => item.unsubscribe());
+    this.subscriptions.forEach(destroy$ => destroy$.unsubscribe());
   }
 }

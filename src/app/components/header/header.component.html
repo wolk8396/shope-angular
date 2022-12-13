@@ -1,23 +1,32 @@
-<nav class="header">
-  <div class="header__menu">
-    <a routerLink="/" routerLinkActive="active"
-      [routerLinkActiveOptions]="{exact:true}">Home page</a>
-    <a routerLink="cart"  routerLinkActive="active"
-      [routerLinkActiveOptions]="{exact:true}" >in cart</a>
-    <a  routerLink="sign-in" routerLinkActive="active"
-      [routerLinkActiveOptions]="{exact:true}">sing in</a>
-    <a  routerLink="sign-up" routerLinkActive="active"
-      [routerLinkActiveOptions]="{exact:true}">sing up</a>
-    <a (click)="onAccount()" routerLink="account" routerLinkActive="active"
-      [routerLinkActiveOptions]="{exact:true}">account</a>
-    <a routerLink="/" (click)="onOut()">Log out</a>
-  </div>
-  <div class="header__count">
-    <div class="container-number">
-      <span  class="number">{{countCart}}</span>
+<div class="wrapper">
+  <nav class="header">
+    <div class="header-wrapper">
+      <div class="header-wrapper__menu">
+        <a routerLink="/" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">Home page</a>
+        <a routerLink="cart"  routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}" >in cart</a>
+        <a  routerLink="sign-in" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">sing in</a>
+        <a  routerLink="sign-up" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">sing up</a>
+        <a (click)="onAccount()" routerLink="account" routerLinkActive="active"
+          [routerLinkActiveOptions]="{exact:true}">account</a>
+        <a routerLink="/" (click)="onOut()">Log out</a>
+      </div>
+      <div class="header-wrapper__count">
+        <div class="container-number">
+          <span  class="number">{{countCart}}</span>
+        </div>
+        <img class="cart" src="../../../assets/basket3-fill (1).svg">
+      </div>
     </div>
-    <img class="cart" src="../../../assets/basket3-fill (1).svg">
-  </div>
-</nav>
-<router-outlet></router-outlet>
-<app-registration></app-registration>
+  </nav>
+  <router-outlet></router-outlet>
+  <app-registration></app-registration>
+</div>
+
+
+
+
+

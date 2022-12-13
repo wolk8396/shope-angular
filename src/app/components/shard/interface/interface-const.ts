@@ -9,8 +9,9 @@ export interface Product {
   author: string,
   category: string,
   cost: number ,
-  count: number
+  count: number,
   exist?:boolean,
+  userId?: string | undefined,
   [searchField:string]: any
   }
 

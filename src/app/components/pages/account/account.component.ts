@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, DoCheck, OnChanges, OnDestroy, OnInit, SimpleChanges} from '@angular/core';
 import { UserDate } from '../../shard/interface/interface-const';
 import { Url_img } from '../../shard/url-img/url-photo';
 import { LocalService } from '../../shard/local-storage-service/local-storage';
@@ -17,7 +17,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./account.component.scss'],
   providers: [ServicesService, AccountService]
 })
-export class AccountComponent implements OnInit, OnDestroy {
+export class AccountComponent implements OnInit, OnChanges,  OnDestroy {
   avatar: string  = '';
   dateUser: UserDate;
   fullName: string = '';
@@ -32,6 +32,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   isModal: boolean;
   getDate: UserDate;
   isProfile: boolean = false;
+  isAccount:boolean = false;
   private sub_upDateUser$: Subscription;
   private desValue$: Subscription;
   private delete$: Subscription
@@ -44,13 +45,17 @@ export class AccountComponent implements OnInit, OnDestroy {
     private account: AccountService
   ) { }
 
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+
+  }
+
   ngOnInit(): void {
-    this.desValue$ = this.account.value$.subscribe((res)=> this.onShowAccount(res));
+    this.desValue$ = this.account.value$.subscribe((res)=> console.log(res))
     this.delete$ = this.simpleService.isDelete$.subscribe((value) => this.onDelete(value));
-    this.onCheckPage(this.isUrl);
     this.getDateUser();
     this.onSetAvatar();
-
     this.subscriptions.push(this.desValue$);
     this.subscriptions.push(this.delete$);
   }
@@ -77,7 +82,7 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.city = '---': this.city = city;
 
     (country === undefined) ?
-      this.country = '---': this.country = country
+      this.country = '---': this.country = country;
   }
 
   onAddPhoto(): void {
@@ -87,7 +92,6 @@ export class AccountComponent implements OnInit, OnDestroy {
   onHiddenModal(event: boolean): void {
     this.isModal = event;
     this.onSetAvatar();
-
   }
 
   onRemovePhoto(): void {
@@ -115,18 +119,12 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   goToProfile (): void {
-    this.isProfile = !this.isProfile
-    this.routing.navigate(['account','profile']);
+    this.isProfile = !this.isProfile;
   }
 
   onShowAccount(value: boolean) {
     this.isProfile = value;
     this.getDateUser();
-  }
-
-  onCheckPage(url: string) {
-    (this.routing.url === url) ?
-      this.isProfile = true : this.isProfile = false
   }
 
   ngOnDestroy(): void {

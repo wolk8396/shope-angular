@@ -3,6 +3,7 @@
   flex-direction: column;
   width: 1348px;
   background-color: #e5ebf1;
+  margin: 0 auto;
 
   &__container {
     display: flex;
@@ -38,7 +39,6 @@
           font-weight: bold;
         }
       }
-
 
       .block-btns {
         display: flex;
@@ -76,5 +76,3 @@
     margin-top: 100px;
   }
 }
-
-

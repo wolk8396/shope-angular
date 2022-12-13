@@ -1,64 +1,77 @@
-.header {
-  position: fixed;
-  top: 0px;
-  display: flex;
-  justify-content: space-between;
-  flex-direction: row;
-  align-items: center;
-  width: 1348px;
-  height: 50px;
-  background-color: gray;
-  z-index: 99999;
+.wrapper{
 
-  &__menu {
-    width: 405px;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
+  .header {
+    position: fixed;
+    top: 0px;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: gray;
+    z-index: 99999;
+    margin: 0 auto;
 
-    a {
-      font-weight: 400;
-      color: white;
-      margin-left: 5px;
-      cursor: pointer;
-      text-decoration: none;
-    }
-
-    .active {
-      text-decoration: underline;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-  }
-
-  &__count {
-    position: relative;
-    width: 65px;
-    height: 40px;
-
-    .container-number {
+    .header-wrapper {
       display: flex;
-      width: 23px;
-      height: 22px;
-      border-radius: 50%;
-      background-color: whitesmoke;
-      color: black;
-      position: absolute;
-      left: 13px;
+      justify-content: space-between;
+      flex-direction: row;
+      width: 1200px;
+      margin: 0 auto;
+      align-items: center;
 
-      .number {
-        margin: 0 auto;
-        text-align: center;
-        font-size: 12px;
-        font-weight: bold;
+
+      &__menu {
+        width: 405px;
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row;
+
+        a {
+          font-weight: 400;
+          color: white;
+          margin-left: 5px;
+          cursor: pointer;
+          text-decoration: none;
+        }
+
+        .active {
+          text-decoration: underline;
+        }
+
+        a:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &__count {
+        position: relative;
+        width: 65px;
+        height: 40px;
+
+        .container-number {
+          display: flex;
+          width: 23px;
+          height: 22px;
+          border-radius: 50%;
+          background-color: whitesmoke;
+          color: black;
+          position: absolute;
+          left: 13px;
+
+          .number {
+            margin: 0 auto;
+            text-align: center;
+            font-size: 12px;
+            font-weight: bold;
+          }
+        }
+
+        .cart {
+          position: absolute;
+          top: 15px;
+        }
       }
     }
 
-    .cart {
-      position: absolute;
-      top: 15px;
-    }
   }
+
 }

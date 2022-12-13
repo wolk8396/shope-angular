@@ -15,13 +15,14 @@ import { ServicesService } from '../../shard/services/services.service';
   styleUrls: ['./about.component.scss'],
   providers: [ServicesService, ItemService]
 })
-export class AboutComponent implements OnInit, OnDestroy, OnChanges {
+export class AboutComponent implements OnInit, OnDestroy {
   item: Product | undefined;
   ChangeStr: string = '';
   isFlag: boolean = false;
-  isCheckStory: boolean =  false;
+  isCheckStory: boolean = false;
   isOpen: boolean;
   isSpinner: boolean = false;
+  isSpinner_wish: boolean = false;
   isItem: Product | undefined;
   countItems: number = LocalService.countNumber();
   #exist: boolean | undefined = false;
@@ -47,11 +48,6 @@ export class AboutComponent implements OnInit, OnDestroy, OnChanges {
     private api: AipHandlers,
     private serviceItem: ItemService
   ) { }
-
-
-  ngOnChanges(): void {
-
-  }
 
   ngOnInit(): void {
     this.onGetComments();
@@ -203,6 +199,23 @@ export class AboutComponent implements OnInit, OnDestroy, OnChanges {
     if (value) {
       this.onGetComments()
     }
+  }
+
+  onAddWishList():void {
+    const { authId } = LocalService.getUserDate();
+    this.isSpinner_wish = true;
+    (typeof this.item !== 'undefined' ) ?
+      this.item['userId'] = authId: null;
+
+    this.api.addWishList(this.item).subscribe({
+      next: () => {
+
+      },
+
+      complete: () => {
+        this.isSpinner_wish = false;
+      }
+    });
   }
 
   ngOnDestroy(): void {

@@ -2,24 +2,22 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 500px;
-  height: 455px;
+  width: 486px;
+  height: 367px;
   margin: 0 auto;
-  margin-top: 150px;
 
   .wrapper {
-    width: 500px;
-    height: 406px;
-    border: #ccc 1px dotted;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 352px;
 
     .block-input {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      // border: 1px solid;
       width: 376px;
       margin: 0 auto;
-      margin-top: 22px;
 
       .block-title {
         margin-top: 7px;
@@ -33,14 +31,12 @@
 
     .block-BtnSubmit {
       display: flex;
-      margin-left: auto;
-      width: 80px;
-      margin-top: 59px;
+      justify-content: space-between;
+      flex-direction: row;
+      margin: 0 auto;
+      width: 377px;
+      margin-top: 24px;
     }
   }
 
-  .block-btn-back {
-    width: 300px;
-    height: 39px;
-  }
 }

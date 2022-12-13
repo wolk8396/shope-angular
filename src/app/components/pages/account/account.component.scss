@@ -1,21 +1,12 @@
-// .wrapper-account {
-//   height: 1900px;
-//   background-color: #edeef0;
-
-
-// }
-
 .account {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 800px;
-  height: 400px;
+  height: 483px;
   margin: 0 auto;
   margin-top: 69px;
-  // background-color: #edeef0;
   align-items: center;
-
 
   &__block-photo {
     position: relative;
@@ -23,7 +14,7 @@
     flex-direction: column;
     justify-content: space-around;
     width: 240px;
-    height: 354px;
+    height: 380px;
     background-color: #edeef0;
     border-radius: 10px;
 
@@ -40,7 +31,7 @@
       width: 26px;
       height: 27px;
       background-color: rgba(0, 0, 0, 0.48);
-      bottom: 315px;
+      bottom: 335px;
       left: 194px;
       right: 0;
       text-align: center;
@@ -70,12 +61,9 @@
       }
     }
 
-
     .block-btn {
       display: flex;
       margin: 0 auto;
-
-
       width: 199px;
 
       .btn-primary {
@@ -86,13 +74,14 @@
 
   &__information {
     width: 500px;
-    height: 350px;
+    height: 380px;
     border-radius: 10px;
     // background-color: white;
     background-color: #edeef0;
 
     .fullName {
-      margin-left: 14px;
+      margin-left: 32px;
+      margin-top: 35px;
     }
 
     ul {

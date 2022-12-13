@@ -1,19 +1,18 @@
-import { Component, OnDestroy, OnInit} from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { upUser_massage } from '../../shard/const/const';
-import { UserDate } from '../../shard/interface/interface-const';
-import { LocalService } from '../../shard/local-storage-service/local-storage';
-import { AipHandlers } from '../../shard/services/aip-handlers';
-import { AccountService } from '../../shard/services/routing-service';
-import { ServicesService } from '../../shard/services/services.service';
+import { upUser_massage } from '../const/const';
+import { UserDate } from '../interface/interface-const';
+import { LocalService } from '../local-storage-service/local-storage';
+import { AipHandlers } from '../services/aip-handlers';
+import { NotificationService } from '../services/notification.service';
+import { ServicesService } from '../services/services.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss'],
-  providers:[ServicesService]
+  providers:[ServicesService, NotificationService]
 })
 export class ProfileComponent implements OnInit, OnDestroy {
   form: FormGroup;
@@ -23,16 +22,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
   birth: string = '';
   city: string | undefined;
   country: string | undefined;
-  isAccount: boolean = false;
+  isProfile: boolean = false;
   additional :FormArray;
   destroy$: Subject<void> = new Subject<void>();
 
   constructor(
-    private routing: Router,
-    private service: ServicesService,
-    private showAccount: AccountService,
     private api: AipHandlers,
-  ) { }
+    private Notification_Service: NotificationService
+  ) {}
+
+  @Output() isHiddenProfile = new EventEmitter<boolean>();
 
   ngOnInit(): void {
     this.onSetValue();
@@ -58,20 +57,19 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     const {update, error} = upUser_massage;
+    const obj = Object.assign(LocalService.getUserDate())
+    const date = LocalService.getUserDate();
+    const joinDate: UserDate = Object.assign(date, this.form.value);
 
-    this.getUserDate = LocalService.getUserDate();
-    this.getUserDate = Object.assign(this.getUserDate, this.form.value)
-
-
-    this.api.upDateUser(this.getUserDate.idLink, this.getUserDate)
+    this.api.upDateUser(joinDate.idLink, joinDate)
         .pipe(takeUntil(this.destroy$)).subscribe({
             next: () => {
-              this.service.Notification(true, update, false);
-              LocalService.setUserDate(this.getUserDate);
+              LocalService.setUserDate(obj);
+              this.Notification_Service.Notification(true, update, false);
             },
 
             error: () => {
-              this.service.Notification(true, error, true);
+              this.Notification_Service.Notification(true, error, true);
             }
           });
   }
@@ -83,16 +81,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       birth: new FormControl(this.birth),
       country: new FormControl(this.country),
       city: new FormControl(this.city),
-      addInform: new FormArray([])
     })
-
-    this.additional = this.form.controls["addInform"] as FormArray
   }
 
   onBack () {
-    this.routing.navigate(['account']);
-    this.isAccount =!this.isAccount;
-    this.showAccount.showAccount(false);
+    this.isHiddenProfile.emit(false);
   }
 
   onAddDate () {

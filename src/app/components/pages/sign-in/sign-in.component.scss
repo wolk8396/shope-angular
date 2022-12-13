@@ -1,9 +1,8 @@
 .container-sign-in {
   display: flex;
-  background-color: #e1e1e3;
   width: 1348px;
   height: 900px;
-
+  margin: 0 auto;
 
   .form {
     border: 1px solid;
@@ -68,15 +67,7 @@
           color: red;
         }
       }
-
-      // input:focus ~ label,
-      // input:valid ~ label {
-      //   transform: translateY(-1.20rem);
-      //   // font-size: .7rem;
-      // }
     }
-
-
 
     ul {
       li {
